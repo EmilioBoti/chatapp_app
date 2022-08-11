@@ -5,13 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatapp.R
+import com.example.chatapp.helpers.OnClickItem
 import com.example.chatapp.model.UserModel
 
-class UserAdapter(private val listContacts: MutableList<UserModel>): RecyclerView.Adapter<UserViewHolder>() {
+class UserAdapter(private val listContacts: MutableList<UserModel>, private val listener: OnClickItem?): RecyclerView.Adapter<UserViewHolder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.user_item, null)
-        return UserViewHolder(view)
+        return UserViewHolder(view, listener)
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {

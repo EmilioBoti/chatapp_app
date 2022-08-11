@@ -6,6 +6,7 @@ import com.example.chatapp.model.UserModel
 
 class Session {
     companion object {
+         const val ROOMID: String = "roomId"
          const val ID: String = "id"
          const val NAME: String = "name"
          const val EMAIL: String = "email"
@@ -25,6 +26,11 @@ class Session {
         fun getUserLogin(context: Context): Boolean? {
            val prefe = context.getSharedPreferences(context.getString(R.string.userData), Context.MODE_PRIVATE)
             return prefe?.contains(ID)
+        }
+
+        fun logout(context: Context): Boolean? {
+           val prefe = context.getSharedPreferences(context.getString(R.string.userData), Context.MODE_PRIVATE).edit().clear()
+            return prefe?.commit()
         }
 
         fun getUserId(context: Context): String? {

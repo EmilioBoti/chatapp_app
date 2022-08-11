@@ -1,4 +1,4 @@
-package com.example.chatapp
+package com.example.chatapp.api
 
 import com.example.chatapp.model.UserModel
 import com.example.chatapp.model.login.LoginResponse

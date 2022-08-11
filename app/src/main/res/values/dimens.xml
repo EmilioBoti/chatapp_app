@@ -8,4 +8,7 @@
     <dimen name="dimen_50">50dp</dimen>
     <dimen name="dimen_150">150dp</dimen>
     <dimen name="dimen_12">12dp</dimen>
+    <dimen name="dimen_0">0dp</dimen>
+    <dimen name="dimen_2">2dp</dimen>
+    <dimen name="dimen_5">5dp</dimen>
 </resources>

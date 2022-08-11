@@ -15,4 +15,8 @@
         android:title="@string/settings"
         app:iconTint="@color/purple_700"
         app:showAsAction="withText" />
+    <item
+        android:id="@+id/logout"
+        android:title="@string/logout"
+        app:showAsAction="withText" />
 </menu>

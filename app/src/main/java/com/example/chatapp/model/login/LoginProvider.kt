@@ -1,11 +1,8 @@
 package com.example.chatapp.model.login
 
-import com.example.chatapp.ApiEndPoint
-import com.example.chatapp.helpers.utils.Consts
+import com.example.chatapp.api.ApiEndPoint
 import com.example.chatapp.helpers.utils.Utils
 import retrofit2.Call
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class LoginProvider: LoginModel {
 

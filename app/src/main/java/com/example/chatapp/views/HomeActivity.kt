@@ -4,20 +4,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
-import android.widget.LinearLayout
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatapp.R
-import com.example.chatapp.SocketCon
 import com.example.chatapp.databinding.ActivityMainBinding
+import com.example.chatapp.helpers.OnClickItem
 import com.example.chatapp.helpers.Session
 import com.example.chatapp.model.UserModel
 import com.example.chatapp.viewModels.home.HomeViewModel
 import com.example.chatapp.viewModels.home.UserAdapter
-import com.google.gson.Gson
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -55,8 +55,21 @@ class HomeActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.logout -> {
+                homeViewModel.logout(this)
+            }
+        }
+        return true
+    }
+
     private fun setAdapter(contacts: MutableList<UserModel>) {
-         val adapter = UserAdapter(contacts)
+         val adapter = UserAdapter(contacts, object : OnClickItem {
+             override fun onClick(pos: Int) {
+                 homeViewModel.navigateChatRoom(this@HomeActivity, pos)
+             }
+         })
 
         binding.userContainer.apply {
             this.layoutManager = LinearLayoutManager(this@HomeActivity, RecyclerView.VERTICAL, false)

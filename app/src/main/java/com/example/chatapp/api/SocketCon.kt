@@ -1,4 +1,4 @@
-package com.example.chatapp
+package com.example.chatapp.api
 
 import android.util.Log
 import com.example.chatapp.helpers.utils.Consts
