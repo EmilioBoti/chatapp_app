@@ -7,4 +7,41 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+
+    <color name="green_200">#84DD99</color>
+    <color name="green_500">#4CAF50</color>
+    <color name="yellow_200">#F7F3E8</color>
+    <color name="yellow_dark">#FFC107</color>
+    <color name="black_200">#333439</color>
+    <color name="blue_200">#00A3FF</color>
+    <color name="red_200">#F83A44</color>
+    <color name="red_400">#F72631</color>
+    <color name="red_500">#D90812</color>
+    <color name="red_pink_400">#FF6B6B</color>
+
+    <!--others color -->
+    <color name="rich_Black">#011627</color>
+    <color name="baby_powder">#FDFFFC</color>
+    <color name="floral_white">#EFF6EE</color>
+    <color name="ghost_white">#F7F7FF</color>
+    <color name="gray">#393E41</color>
+    <color name="gray_cultured">#EAECEC</color>
+    <color name="indigo_blue">#124E78</color>
+    <color name="dark_blue">#13293D</color>
+    <color name="darker_green">#031926</color>
+    <color name="oxford_blue">#05204A</color>
+
+    <color name="transparent">#00000000</color>
+
+    <color name="light_cyan">#CBF3F0</color>
+    <color name="gray_200">#828A95</color>
+    <color name="green_turquoise">#4ECDC4</color>
+    <color name="blue_50">#DEF7F5</color>
+    <color name="blue_20">#EFFBFA</color>
+    <color name="green_turquoise_darker">#3CBBB1</color>
+    <color name="green_caribbean">#03CEA4</color>
+    <color name="tiffany_blue">#2EC4B6</color>
+    <color name="light_sea_green">#00A6A6</color>
+
 </resources>
