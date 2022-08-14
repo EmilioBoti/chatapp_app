@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_15"
+        android:layout_marginTop="@dimen/dimen_5"
+        android:layout_marginEnd="@dimen/dimen_100"
+        android:elevation="@dimen/dimen_1"
+        app:cardCornerRadius="@dimen/dimen_15"
+        app:contentPadding="@dimen/dimen_5"
+        app:cardBackgroundColor="@color/gray_cultured"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="start"
+            >
+
+            <TextView
+                android:id="@+id/messageText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/messenge"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimenst_16"
+                android:layout_margin="@dimen/dimen_4"
+                />
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="@string/from"
+                android:textSize="@dimen/dimenst_12"
+                android:textColor="@color/black_200"
+                android:layout_marginStart="@dimen/dimen_4"
+                />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
