@@ -73,7 +73,6 @@ class HomeActivity : AppCompatActivity() {
 
         binding.userContainer.apply {
             this.layoutManager = LinearLayoutManager(this@HomeActivity, RecyclerView.VERTICAL, false)
-            this.addItemDecoration(DividerItemDecoration(this@HomeActivity, RecyclerView.VERTICAL))
             this.adapter = adapter
         }
     }

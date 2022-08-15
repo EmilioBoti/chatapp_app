@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import com.example.chatapp.api.SocketCon
 import com.example.chatapp.helpers.Session
 import com.example.chatapp.model.UserModel
+import com.example.chatapp.model.chat.MessageModel
 import com.example.chatapp.model.home.HomeProvider
 import com.example.chatapp.views.ui.BaseActivity
 import com.example.chatapp.views.ui.chatRoom.ChatRoom
@@ -36,6 +37,16 @@ class HomeViewModel: ViewModel(), IHomeViewModel {
             map[Session.SOCKETID] = mSocket.id()
 
             mSocket.emit("user", Gson().toJson(map))
+        }
+
+        mSocket.on("message") {
+            val user = Gson().fromJson(it[0].toString(), MessageModel::class.java)
+            contacts.value?.forEach {
+                if (it.id == user.fromU) {
+                    it.lastMessage = user.message
+                }
+            }
+            contacts.postValue(contacts.value)
         }
     }
 
