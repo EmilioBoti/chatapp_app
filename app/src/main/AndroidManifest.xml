@@ -15,8 +15,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
-            android:name=".views.ui.chatRoom.ChatRoom"
+            android:name=".views.ui.browser.BrowserActivity"
+            android:theme="@style/Theme.Material3.DayNight.NoActionBar"
             android:exported="false" />
+        <activity
+            android:name=".views.ui.chatRoom.ChatRoom"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.DayNight.NoActionBar" />
         <activity
             android:name=".views.ui.BaseActivity"
             android:exported="true"

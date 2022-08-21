@@ -4,35 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.ui.chatRoom.ChatRoom"
-    >
+    tools:context=".views.ui.chatRoom.ChatRoom">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolbarContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:liftOnScroll="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/purple_500"
+            app:contentInsetStart="@dimen/dimen_10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/room_menu"
+            app:navigationIconTint="@color/white"
+            app:titleCentered="false"
+            app:titleMarginStart="@dimen/dimen_15"
+            app:titleTextColor="@color/white" />
+    </com.google.android.material.appbar.AppBarLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messageContainer"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_0"
-        app:layout_constraintBottom_toTopOf="@id/divider"
+        app:layout_constraintBottom_toTopOf="@id/inputContainer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintTop_toBottomOf="@id/toolbarContainer"
+        android:paddingVertical="@dimen/dimen_3"
         tools:listitem="@layout/message_item" />
 
-    <com.google.android.material.divider.MaterialDivider
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/inputContainer"
-        />
+
     <RelativeLayout
         android:id="@+id/inputContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        >
+        app:layout_constraintStart_toStartOf="parent">
 
         <EditText
             android:id="@+id/boxMessage"
@@ -58,9 +78,10 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/dimen_15"
             android:layout_marginEnd="@dimen/dimen_15"
-            android:src="@drawable/send_24"
+            android:background="@drawable/radius_corner"
+            android:contentDescription="@string/fab_content_desc"
             android:padding="10dp"
-            app:tint="@color/cardview_dark_background"
-            android:contentDescription="@string/fab_content_desc" />
+            android:src="@drawable/send_24"
+            app:tint="@color/white" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

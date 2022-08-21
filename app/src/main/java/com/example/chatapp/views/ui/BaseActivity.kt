@@ -7,6 +7,7 @@ import com.example.chatapp.R
 import com.example.chatapp.databinding.ActivityBaseBinding
 import com.example.chatapp.helpers.Session
 import com.example.chatapp.views.HomeActivity
+import com.example.chatapp.views.ui.login.LoginFragment
 
 class BaseActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBaseBinding

@@ -1,16 +1,19 @@
 package com.example.chatapp.viewModels.home
 
 import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.chatapp.R
 import com.example.chatapp.api.SocketCon
 import com.example.chatapp.helpers.Session
 import com.example.chatapp.model.UserModel
 import com.example.chatapp.model.chat.MessageModel
 import com.example.chatapp.model.home.HomeProvider
+import com.example.chatapp.router.Router
 import com.example.chatapp.views.ui.BaseActivity
 import com.example.chatapp.views.ui.chatRoom.ChatRoom
 import com.google.gson.Gson
@@ -38,6 +41,7 @@ class HomeViewModel: ViewModel(), IHomeViewModel {
 
             mSocket.emit("user", Gson().toJson(map))
         }
+
 
         mSocket.on("message") {
             val user = Gson().fromJson(it[0].toString(), MessageModel::class.java)
@@ -70,6 +74,10 @@ class HomeViewModel: ViewModel(), IHomeViewModel {
 
     }
 
+    fun disconnectSocket() {
+        mSocket.disconnect()
+    }
+
     fun navigateChatRoom(activity: Activity, pos: Int) {
         val userModel: UserModel? = contacts.value?.get(pos)
         val data: Bundle = Bundle().apply {
@@ -78,10 +86,9 @@ class HomeViewModel: ViewModel(), IHomeViewModel {
             putString(Session.NAME, userModel?.name)
             putString(Session.SOCKETID, userModel?.socketId)
         }
-
         Intent(activity, ChatRoom::class.java).apply {
             this.putExtra(DATA_USER, data)
-            activity.startActivity(this)
+            activity.startActivity(this);
         }
     }
 

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="@dimen/dimen_100"
-        android:layout_marginTop="@dimen/dimen_3"
+        android:layout_marginTop="@dimen/dimen_2"
         android:layout_marginEnd="@dimen/dimen_15"
-        android:elevation="@dimen/dimen_4"
-        app:cardBackgroundColor="@color/purple_700"
+        android:elevation="@dimen/dimen_1"
+        app:cardBackgroundColor="@color/purple_500"
         app:cardCornerRadius="@dimen/dimen_15"
         app:contentPaddingBottom="@dimen/dimen_5"
         app:contentPaddingLeft="@dimen/dimen_10"
@@ -30,10 +30,9 @@
                 android:id="@+id/messageText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_4"
                 android:text="@string/messenge"
                 android:textColor="@color/white"
-                android:textIsSelectable="true"
+                android:textIsSelectable="false"
                 android:textSize="@dimen/dimenst_16" />
 
             <TextView
@@ -42,9 +41,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginEnd="@dimen/dimen_4"
-                android:text="@string/time"
                 android:textColor="@color/white"
-                android:textSize="@dimen/dimenst_12" />
+                android:textIsSelectable="false"
+                android:textSize="@dimen/dimenst_12"
+                tools:text="@string/time" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

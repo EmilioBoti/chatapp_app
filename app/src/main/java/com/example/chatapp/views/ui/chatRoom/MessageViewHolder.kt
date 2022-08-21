@@ -16,7 +16,7 @@ class MessageViewHolder(itemView: View,private val longListener: OnLongClickItem
         this.time.text = message.times
 
         itemView.setOnLongClickListener{
-            longListener?.onLongClick(message.id)
+            longListener?.onLongClick(message.messageId)
             true
         }
     }

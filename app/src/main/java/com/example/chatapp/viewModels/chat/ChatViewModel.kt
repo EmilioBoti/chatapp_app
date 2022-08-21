@@ -56,6 +56,11 @@ class ChatViewModel: ViewModel(), IChat.Presenter {
                 listMessages.postValue(listMessages.value)
             }
         }
+
+        mSocket.on("disconnect") {
+            it[0]
+        }
+
     }
 
     override fun sendMessage(text: String) {
