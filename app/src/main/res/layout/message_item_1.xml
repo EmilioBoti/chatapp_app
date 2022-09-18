@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="end"
+    android:gravity="center_vertical"
+    android:padding="@dimen/dimen_3"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="@dimen/dimen_100"
+        android:layout_marginTop="@dimen/dimen_2"
+        android:layout_marginEnd="@dimen/dimen_10">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/dimen_1"
+            app:cardBackgroundColor="@color/purple_500"
+            app:cardCornerRadius="@dimen/dimen_10"
+            app:contentPaddingBottom="@dimen/dimen_3"
+            app:contentPaddingLeft="@dimen/dimen_8"
+            app:contentPaddingRight="@dimen/dimen_8"
+            app:contentPaddingTop="@dimen/dimen_3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <TextView
+                android:id="@+id/messageText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/messenge"
+                android:textColor="@color/white"
+                android:textIsSelectable="false"
+                android:textSize="@dimen/dimenst_16"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/time"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cardBox"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/dimen_15"
+        android:text="@string/time"
+        android:textSize="@dimen/dimenst_12"
+        />
+
+</RelativeLayout>

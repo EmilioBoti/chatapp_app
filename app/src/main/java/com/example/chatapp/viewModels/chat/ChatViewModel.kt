@@ -1,38 +1,41 @@
 package com.example.chatapp.viewModels.chat
 
+import android.app.Application
 import android.content.Context
 import android.os.Bundle
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.chatapp.api.SocketCon
 import com.example.chatapp.helpers.Session
-import com.example.chatapp.model.chat.ChatProvider
-import com.example.chatapp.model.chat.MessageModel
+import com.example.chatapp.repositoryApi.chat.ChatProvider
+import com.example.chatapp.repositoryApi.chat.MessageModel
 import com.google.gson.Gson
 import io.socket.client.Socket
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ChatViewModel: ViewModel(), IChat.Presenter {
+class ChatViewModel(application: Application): AndroidViewModel(application), IChat.Presenter {
     private lateinit var mSocket: Socket
     private var bundle: Bundle? = null
-    private lateinit var context: Context
     val listMessages: MutableLiveData<MutableList<MessageModel>> = MutableLiveData<MutableList<MessageModel>>()
-    private lateinit var chatProvider: ChatProvider
+    private var chatProvider: IChat.ModelPresenter
     private var currentUser: String? = null
-    val ROOMID = "roomId"
-    val FROM = "fromU"
-    val TO = "toU"
-    val MESSAGE = "message"
+    private val ROOMID = "roomId"
+    private val FROM = "fromU"
+    private val TO = "toU"
+    private val MESSAGE = "message"
+
+    init {
+        currentUser = Session.getUserId(application.applicationContext)
+        chatProvider = ChatProvider()
+    }
 
     override fun setUpSocket(bundle: Bundle?, context: Context) {
         mSocket = SocketCon.getSocket()
         this.bundle = bundle
-        this.context = context
-        currentUser = Session.getUserId(context)
 
-        chatProvider = ChatProvider()
         bundle?.getString(ROOMID)?.let {
             chatProvider.getMessages(it).enqueue(object : Callback<MutableList<MessageModel>> {
                 override fun onResponse(call: Call<MutableList<MessageModel>>, response: Response<MutableList<MessageModel>>) {

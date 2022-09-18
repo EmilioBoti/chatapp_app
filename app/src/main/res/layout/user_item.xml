@@ -8,7 +8,9 @@
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:contentPadding="@dimen/dimen_12">
+        app:contentPadding="@dimen/dimen_12"
+        app:cardBackgroundColor="@color/blue_20"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"

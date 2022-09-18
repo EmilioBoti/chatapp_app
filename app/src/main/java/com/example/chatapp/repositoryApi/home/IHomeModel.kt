@@ -1,6 +1,6 @@
-package com.example.chatapp.model.home
+package com.example.chatapp.repositoryApi.home
 
-import com.example.chatapp.model.UserModel
+import com.example.chatapp.repositoryApi.models.UserModel
 import retrofit2.Call
 
 interface IHomeModel {

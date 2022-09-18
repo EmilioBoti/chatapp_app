@@ -1,4 +1,4 @@
-package com.example.chatapp.factory
+package com.example.chatapp.factory.adapter
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

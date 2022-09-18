@@ -2,8 +2,7 @@ package com.example.chatapp.viewModels.chat
 
 import android.content.Context
 import android.os.Bundle
-import com.example.chatapp.model.UserModel
-import com.example.chatapp.model.chat.MessageModel
+import com.example.chatapp.repositoryApi.chat.MessageModel
 import retrofit2.Call
 
 interface IChat {

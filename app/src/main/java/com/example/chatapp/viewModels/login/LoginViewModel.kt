@@ -2,22 +2,24 @@ package com.example.chatapp.viewModels.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.chatapp.model.login.LoginProvider
-import com.example.chatapp.model.login.LoginResponse
-import com.example.chatapp.model.login.UserLogin
-import com.example.chatapp.model.UserModel
+import com.example.chatapp.repositoryApi.login.LoginProvider
+import com.example.chatapp.repositoryApi.login.LoginResponse
+import com.example.chatapp.repositoryApi.login.UserLogin
+import com.example.chatapp.repositoryApi.models.UserModel
+import com.example.chatapp.repositoryApi.login.LoginModel
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 
 class LoginViewModel: ViewModel(), ILogin {
 
-    private lateinit var modelProvider: LoginProvider
+    private val modelProvider: LoginModel = LoginProvider()
     val user: MutableLiveData<UserModel> = MutableLiveData<UserModel>()
     val error: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    private val regexEmail: String = "^[A-Za-z0-9]+@([a-zA-Z]+)(.)[a-zA-Z]{1,3}$"
 
 
     override fun login (userLogin: UserLogin) {
-        modelProvider = LoginProvider()
 
         modelProvider.login(userLogin).enqueue(object: retrofit2.Callback<LoginResponse> {
 
@@ -33,6 +35,37 @@ class LoginViewModel: ViewModel(), ILogin {
 
         })
 
+    }
+
+    override fun singin(newUser: HashMap<String, String>) {
+        modelProvider.signin(newUser).enqueue(object : Callback<LoginResponse> {
+            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                if (response.isSuccessful && response.body()?.OK == true) {
+                    user.postValue(response.body()?.body)
+                }
+            }
+
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+
+            }
+
+        })
+    }
+
+    fun registerUser(newUser: HashMap<String, String>) {
+        newUser["email"]?.let {
+            if (validateEmail(it)) {
+                singin(newUser)
+            }
+        }
+    }
+
+    private fun validatePassword(pw: String, confirmPw: String): Boolean {
+        return (pw == confirmPw)
+    }
+
+    private fun validateEmail(mail: String): Boolean {
+        return regexEmail.toRegex().matches(mail)
     }
 
 }

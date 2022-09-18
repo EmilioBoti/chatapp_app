@@ -58,7 +58,7 @@ class ChatRoom : AppCompatActivity() {
                 setHasFixedSize(true)
                 adapter = messageAdapter
             }
-            binding.boxMessage.text.clear()
+            binding.boxMessage.text?.clear()
         })
 
         binding.btnSender.setOnClickListener {

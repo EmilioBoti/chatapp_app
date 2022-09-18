@@ -5,14 +5,24 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chatapp.R
 import com.example.chatapp.databinding.ActivityBrowserBinding
+import com.example.chatapp.factory.adapter.FactoryBuilder
+import com.example.chatapp.factory.adapter.ModelAdapter
+import com.example.chatapp.helpers.OnClickItem
+import com.example.chatapp.repositoryApi.models.UserModel
+import com.example.chatapp.viewModels.browser.BrowserViewModel
 
 class BrowserActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityBrowserBinding
+    private val browserViewModel: BrowserViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +36,24 @@ class BrowserActivity : AppCompatActivity() {
         super.onStart()
 
         setUpToolbar()
+
+
+        browserViewModel.listUserFound.observe(this, Observer {
+            val adapter = ModelAdapter<UserModel>(it, FactoryBuilder.SEARCH)
+            adapter.setLayout(R.layout.user_search_item)
+
+            adapter.setListener(object : OnClickItem {
+                override fun onClick(pos: Int) {
+                    browserViewModel.sendRequest(pos)
+                }
+
+            })
+
+            binding.userContainer.apply {
+                this.layoutManager = LinearLayoutManager(this@BrowserActivity)
+                this.adapter = adapter
+            }
+        })
 
     }
 
@@ -46,14 +74,28 @@ class BrowserActivity : AppCompatActivity() {
             }
             true
         }
+
+        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    browserViewModel.search(it)
+                }
+                return true
+            }
+
+        })
+
     }
 
     override fun onBackPressed() {
 
-        if (binding.search.visibility == View.VISIBLE) {
-            binding.search.visibility = View.GONE
-        } else {
-            this.finish()
+        when(binding.search.visibility) {
+            View.VISIBLE -> binding.search.visibility = View.GONE
+            View.GONE -> this.finish()
         }
     }
 }

@@ -1,19 +1,16 @@
 package com.example.chatapp.viewModels.home
 
 import android.app.Activity
-import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.chatapp.R
 import com.example.chatapp.api.SocketCon
 import com.example.chatapp.helpers.Session
-import com.example.chatapp.model.UserModel
-import com.example.chatapp.model.chat.MessageModel
-import com.example.chatapp.model.home.HomeProvider
-import com.example.chatapp.router.Router
+import com.example.chatapp.repositoryApi.models.UserModel
+import com.example.chatapp.repositoryApi.chat.MessageModel
+import com.example.chatapp.repositoryApi.home.HomeProvider
 import com.example.chatapp.views.ui.BaseActivity
 import com.example.chatapp.views.ui.chatRoom.ChatRoom
 import com.google.gson.Gson
@@ -30,9 +27,11 @@ class HomeViewModel: ViewModel(), IHomeViewModel {
 
 
     override fun updateSocket(id: String) {
-        SocketCon.setSocket()
         mSocket = SocketCon.getSocket()
-        mSocket.connect()
+        val con = mSocket.connected()
+
+        if(!con) mSocket.connect()
+
 
         mSocket.on("connect") {
             val map = HashMap<String, String>()
@@ -52,6 +51,7 @@ class HomeViewModel: ViewModel(), IHomeViewModel {
             }
             contacts.postValue(contacts.value)
         }
+
     }
 
     override fun getContacts(currentUser: String) {
@@ -88,7 +88,7 @@ class HomeViewModel: ViewModel(), IHomeViewModel {
         }
         Intent(activity, ChatRoom::class.java).apply {
             this.putExtra(DATA_USER, data)
-            activity.startActivity(this);
+            activity.startActivity(this)
         }
     }
 

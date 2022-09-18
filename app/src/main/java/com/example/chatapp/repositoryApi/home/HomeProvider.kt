@@ -1,8 +1,8 @@
-package com.example.chatapp.model.home
+package com.example.chatapp.repositoryApi.home
 
 import com.example.chatapp.api.ApiEndPoint
 import com.example.chatapp.helpers.utils.Utils
-import com.example.chatapp.model.UserModel
+import com.example.chatapp.repositoryApi.models.UserModel
 import retrofit2.Call
 
 class HomeProvider: IHomeModel {

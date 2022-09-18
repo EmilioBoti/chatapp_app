@@ -1,8 +1,9 @@
 package com.example.chatapp.helpers
 
 import android.content.Context
+import android.os.Bundle
 import com.example.chatapp.R
-import com.example.chatapp.model.UserModel
+import com.example.chatapp.repositoryApi.models.UserModel
 
 class Session {
     companion object {
@@ -21,6 +22,11 @@ class Session {
                    apply()
                }
             
+        }
+
+        fun getSession(context: Context): Map<String, *>? {
+            return context.getSharedPreferences(context.getString(R.string.userData), Context.MODE_PRIVATE)
+                .all
         }
 
         fun getUserLogin(context: Context): Boolean? {

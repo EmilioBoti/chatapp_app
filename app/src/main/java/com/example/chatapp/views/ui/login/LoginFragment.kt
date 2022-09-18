@@ -9,11 +9,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.example.chatapp.R
 import com.example.chatapp.databinding.FragmentLoginBinding
 import com.example.chatapp.helpers.Session
-import com.example.chatapp.model.login.UserLogin
+import com.example.chatapp.repositoryApi.login.UserLogin
 import com.example.chatapp.viewModels.login.LoginViewModel
-import com.example.chatapp.views.HomeActivity
+import com.example.chatapp.views.home.HomeActivity
+import com.example.chatapp.views.ui.signin.SignInFragment
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
@@ -47,7 +49,16 @@ class LoginFragment : Fragment() {
 
 
         binding.btnLogin.setOnClickListener {
-            loginViewModel.login(UserLogin(binding.emailInput.text.toString().trim(), binding.pwInput.text.toString().trim()))
+            loginViewModel.login(UserLogin(binding.emailInput.text.toString().trim(),
+                binding.pwInput.text.toString().trim()))
+        }
+
+        binding.btnSignIn.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.addToBackStack("signIn")
+                ?.setCustomAnimations(R.anim.slide_in,R.anim.fade_out, R.anim.slide_out, R.anim.fade_in)
+                ?.replace(R.id.fragmentContainerView, SignInFragment())
+                ?.commit()
         }
 
     }

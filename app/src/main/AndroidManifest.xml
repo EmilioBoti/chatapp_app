@@ -15,9 +15,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
-            android:name=".views.ui.browser.BrowserActivity"
-            android:theme="@style/Theme.Material3.DayNight.NoActionBar"
+            android:name=".views.ui.notification.NotificationActivity"
             android:exported="false" />
+        <activity
+            android:name=".views.ui.browser.BrowserActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.DayNight.NoActionBar" />
         <activity
             android:name=".views.ui.chatRoom.ChatRoom"
             android:exported="false"
@@ -33,7 +36,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".views.HomeActivity"
+            android:name=".views.home.HomeActivity"
             android:exported="false" />
     </application>
 

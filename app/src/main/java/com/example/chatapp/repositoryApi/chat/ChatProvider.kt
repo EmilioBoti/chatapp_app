@@ -1,4 +1,4 @@
-package com.example.chatapp.model.chat
+package com.example.chatapp.repositoryApi.chat
 
 import com.example.chatapp.api.ApiEndPoint
 import com.example.chatapp.helpers.utils.Utils

@@ -1,4 +1,4 @@
-package com.example.chatapp.factory
+package com.example.chatapp.factory.adapter
 
 enum class FactoryBuilder {
     CONTACT,

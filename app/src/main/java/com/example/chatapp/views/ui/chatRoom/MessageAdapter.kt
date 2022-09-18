@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatapp.R
 import com.example.chatapp.helpers.OnLongClickItem
-import com.example.chatapp.model.chat.MessageModel
+import com.example.chatapp.repositoryApi.chat.MessageModel
 
 class MessageAdapter(private val listMessage: MutableList<MessageModel>, private val from: String,
                      ): RecyclerView.Adapter<MessageViewHolder>() {
@@ -19,15 +19,15 @@ class MessageAdapter(private val listMessage: MutableList<MessageModel>, private
 
         return when (viewType) {
             typeOne -> {
-                view = LayoutInflater.from(parent.context).inflate(R.layout.message_item, null)
+                view = LayoutInflater.from(parent.context).inflate(R.layout.message_item_1, null)
                 MessageViewHolder(view, longListener)
             }
             typeTwo -> {
-                view = LayoutInflater.from(parent.context).inflate(R.layout.message_item2, null)
+                view = LayoutInflater.from(parent.context).inflate(R.layout.message_item2_2, null)
                 MessageViewHolder(view, longListener)
             }
             else -> {
-                val view = LayoutInflater.from(parent.context).inflate(R.layout.message_item, null)
+                view = LayoutInflater.from(parent.context).inflate(R.layout.message_item, null)
                 MessageViewHolder(view, longListener)
             }
         }

@@ -1,16 +1,17 @@
-package com.example.chatapp.factory
+package com.example.chatapp.factory.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.chatapp.views.ui.browser.adapter.BrowserHolder
+import com.example.chatapp.helpers.OnClickItem
 
-class ModelAdapter<in T>(private val list: MutableList<T>): RecyclerView.Adapter<ModelViewHolder>() {
+class ModelAdapter<in T>(private val list: MutableList<T>, private val factoryBuilder: FactoryBuilder): RecyclerView.Adapter<ModelViewHolder>() {
     private var layout: Int = 0
+    private var onClickItem: OnClickItem? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ModelViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(layout, null)
-        return ViewHolderFactory.buildFactory(FactoryBuilder.CONTACT, view)
+        return ViewHolderFactory.buildFactory(factoryBuilder, view, onClickItem)
     }
 
     override fun onBindViewHolder(holder: ModelViewHolder, position: Int) {
@@ -21,6 +22,10 @@ class ModelAdapter<in T>(private val list: MutableList<T>): RecyclerView.Adapter
 
     fun setLayout(layout: Int) {
         this.layout = layout
+    }
+
+    fun setListener(onClickItem: OnClickItem?) {
+        this.onClickItem = onClickItem
     }
 
 }
