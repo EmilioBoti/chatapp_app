@@ -10,14 +10,14 @@ import com.example.chatapp.api.SocketCon
 import com.example.chatapp.helpers.Session
 import com.example.chatapp.repositoryApi.chat.ChatProvider
 import com.example.chatapp.repositoryApi.chat.MessageModel
+import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
 import com.google.gson.Gson
 import io.socket.client.Socket
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ChatViewModel(application: Application): AndroidViewModel(application), IChat.Presenter {
-    private lateinit var mSocket: Socket
+class ChatViewModel(application: Application): SocketEvent(application), IChat.Presenter {
     private var bundle: Bundle? = null
     val listMessages: MutableLiveData<MutableList<MessageModel>> = MutableLiveData<MutableList<MessageModel>>()
     private var chatProvider: IChat.ModelPresenter
@@ -30,6 +30,19 @@ class ChatViewModel(application: Application): AndroidViewModel(application), IC
     init {
         currentUser = Session.getUserId(application.applicationContext)
         chatProvider = ChatProvider()
+
+        mSocket.on("message") {
+            val user = Gson().fromJson(it[0].toString(), MessageModel::class.java)
+            if (user.roomId == bundle?.getString(ROOMID)) {
+                listMessages.value?.add(user)
+                listMessages.postValue(listMessages.value)
+            }
+        }
+
+        mSocket.on("disconnect") {
+            it[0]
+        }
+
     }
 
     override fun setUpSocket(bundle: Bundle?, context: Context) {
@@ -49,19 +62,6 @@ class ChatViewModel(application: Application): AndroidViewModel(application), IC
                 }
 
             })
-        }
-
-
-        mSocket.on("message") {
-            val user = Gson().fromJson(it[0].toString(), MessageModel::class.java)
-            if (user.roomId == bundle?.getString(ROOMID)) {
-                listMessages.value?.add(user)
-                listMessages.postValue(listMessages.value)
-            }
-        }
-
-        mSocket.on("disconnect") {
-            it[0]
         }
 
     }

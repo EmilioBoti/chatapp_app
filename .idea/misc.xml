@@ -12,6 +12,8 @@
         <entry key="..\:/Users/emili/AndroidStudioProjects/chatapp/app/src/main/res/layout/message_item.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/chatapp/app/src/main/res/layout/user_item.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/chatapp/app/src/main/res/menu/main_menu.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/emili/Desktop/Emilio/chatapp/app/src/main/res/drawable/bubble_item_left.xml" value="0.2965" />
+        <entry key="..\:/Users/emili/Desktop/Emilio/chatapp/app/src/main/res/drawable/buble_item.xml" value="0.2965" />
         <entry key="..\:/Users/emili/Desktop/Emilio/chatapp/app/src/main/res/drawable/login_input_corner.xml" value="0.1315" />
         <entry key="..\:/Users/emili/Desktop/Emilio/chatapp/app/src/main/res/drawable/radius_corner.xml" value="0.253" />
         <entry key="..\:/Users/emili/Desktop/Emilio/chatapp/app/src/main/res/drawable/radius_corner_btn.xml" value="0.253" />
@@ -19,13 +21,17 @@
         <entry key="..\:/Users/emili/Desktop/Emilio/chatapp/app/src/main/res/layout/activity_browser.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/emili/Desktop/Emilio/chatapp/app/src/main/res/layout/activity_chat_room.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/emili/Desktop/Emilio/chatapp/app/src/main/res/layout/activity_main.xml" value="0.38229166666666664" />
-        <entry key="..\:/Users/emili/Desktop/Emilio/chatapp/app/src/main/res/layout/activity_notification.xml" value="0.24343015214384509" />
+        <entry key="..\:/Users/emili/Desktop/Emilio/chatapp/app/src/main/res/layout/activity_notification.xml" value="0.33" />
+        <entry key="..\:/Users/emili/Desktop/Emilio/chatapp/app/src/main/res/layout/emoji_text_view.xml" value="0.3138093202223172" />
         <entry key="..\:/Users/emili/Desktop/Emilio/chatapp/app/src/main/res/layout/fragment_login.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/emili/Desktop/Emilio/chatapp/app/src/main/res/layout/fragment_sign_in.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/emili/Desktop/Emilio/chatapp/app/src/main/res/layout/message_item.xml" value="0.33" />
         <entry key="..\:/Users/emili/Desktop/Emilio/chatapp/app/src/main/res/layout/message_item2.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/emili/Desktop/Emilio/chatapp/app/src/main/res/layout/message_item2_2.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/emili/Desktop/Emilio/chatapp/app/src/main/res/layout/message_item_1.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/emili/Desktop/Emilio/chatapp/app/src/main/res/layout/message_item_left_2.xml" value="0.3138093202223172" />
+        <entry key="..\:/Users/emili/Desktop/Emilio/chatapp/app/src/main/res/layout/message_item_right_1.xml" value="0.3138093202223172" />
+        <entry key="..\:/Users/emili/Desktop/Emilio/chatapp/app/src/main/res/layout/notification_item.xml" value="0.5" />
         <entry key="..\:/Users/emili/Desktop/Emilio/chatapp/app/src/main/res/layout/user_item.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/emili/Desktop/Emilio/chatapp/app/src/main/res/layout/user_search_item.xml" value="0.5" />
         <entry key="..\:/Users/emili/Desktop/Emilio/chatapp/app/src/main/res/menu/browser_menu.xml" value="0.38229166666666664" />

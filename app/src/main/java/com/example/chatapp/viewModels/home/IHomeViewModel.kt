@@ -5,6 +5,6 @@ import android.content.Context
 
 interface IHomeViewModel {
     fun updateSocket(id: String)
-    fun getContacts(currentUser: String)
+    fun getContacts()
     fun logout(activity: Activity)
 }

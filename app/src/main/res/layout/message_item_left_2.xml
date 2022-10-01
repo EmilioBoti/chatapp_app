@@ -6,29 +6,24 @@
     android:layout_height="wrap_content"
     android:layout_gravity="start"
     android:gravity="center_vertical"
-    android:padding="@dimen/dimen_3"
-    >
+    android:padding="@dimen/dimen_3">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cardBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_marginStart="@dimen/dimen_15"
         android:layout_marginTop="@dimen/dimen_2"
-        android:layout_marginEnd="@dimen/dimen_100"
-        android:layout_alignParentStart="true"
-        >
+        android:layout_marginEnd="@dimen/dimen_100">
 
-        <androidx.cardview.widget.CardView
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="@dimen/dimen_0"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="@dimen/dimen_15"
-            app:contentPaddingBottom="@dimen/dimen_3"
-            app:contentPaddingLeft="@dimen/dimen_8"
-            app:contentPaddingRight="@dimen/dimen_8"
-            app:contentPaddingTop="@dimen/dimen_3"
+            android:background="@drawable/bubble_item_left"
+            android:paddingHorizontal="@dimen/dimen_10"
+            android:paddingVertical="@dimen/dimen_5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -46,7 +41,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.cardview.widget.CardView>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -58,7 +53,6 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="@dimen/dimen_15"
         android:text="@string/time"
-        android:textSize="@dimen/dimenst_12"
-        />
+        android:textSize="@dimen/dimenst_12" />
 
 </RelativeLayout>

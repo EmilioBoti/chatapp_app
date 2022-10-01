@@ -15,8 +15,9 @@ import com.example.chatapp.R
 import com.example.chatapp.databinding.ActivityMainBinding
 import com.example.chatapp.factory.adapter.FactoryBuilder
 import com.example.chatapp.factory.adapter.ModelAdapter
-import com.example.chatapp.helpers.OnClickItem
+import com.example.chatapp.helpers.common.OnClickItem
 import com.example.chatapp.helpers.Session
+import com.example.chatapp.repositoryApi.models.NotificationModel
 import com.example.chatapp.repositoryApi.models.UserModel
 import com.example.chatapp.viewModels.home.HomeViewModel
 import com.example.chatapp.views.ui.browser.BrowserActivity
@@ -45,10 +46,7 @@ class HomeActivity : AppCompatActivity() {
         val id: String? = Session.getUserId(this)
         id?.let { homeViewModel.updateSocket(it) }
 
-        val currentUser: String? = Session.getUserId(this)
-        currentUser?.let {
-            homeViewModel.getContacts(it)
-        }
+        homeViewModel.getContacts()
 
         binding.btnBrowser.setOnClickListener {
             Intent(this, BrowserActivity::class.java).apply {
@@ -85,6 +83,13 @@ class HomeActivity : AppCompatActivity() {
             override fun onClick(pos: Int) {
                 homeViewModel.navigateChatRoom(this@HomeActivity, pos)
             }
+
+            override fun onAccept(notification: NotificationModel) {
+            }
+
+            override fun onReject(notification: NotificationModel) {
+            }
+
         })
 
         binding.userContainer.apply {

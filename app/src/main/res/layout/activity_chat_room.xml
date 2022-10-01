@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.ui.chatRoom.ChatRoom">
+    tools:context=".views.ui.chatRoom.ChatRoom"
+    android:id="@+id/root_view"
+    android:background="@color/blue_20"
+    >
 
 
     <com.google.android.material.appbar.AppBarLayout
@@ -29,7 +32,7 @@
             app:menu="@menu/room_menu"
             app:navigationIconTint="@color/white"
             app:titleCentered="false"
-            app:titleMarginStart="@dimen/dimen_15"
+            app:titleMarginStart="@dimen/dimen_5"
             app:titleTextColor="@color/white" />
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -43,7 +46,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbarContainer"
         android:paddingVertical="@dimen/dimen_3"
-        tools:listitem="@layout/message_item_1" />
+        tools:listitem="@layout/message_item_right_1" />
 
 
     <RelativeLayout
@@ -52,24 +55,42 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@null"
+        >
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <ImageView
+            android:id="@+id/btEmoji"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/boxMessage"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="@dimen/dimen_15"
+            android:contentDescription="@string/fab_content_desc"
+            android:padding="@dimen/dimen_8"
+            android:src="@drawable/ic_emoji"
+            app:tint="@color/black_200" />
+
+
+        <com.vanniktech.emoji.EmojiEditText
             android:id="@+id/boxMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_15"
+            android:layout_marginStart="@dimen/dimen_5"
             android:layout_marginTop="@dimen/dimen_15"
             android:layout_marginEnd="@dimen/dimen_15"
             android:layout_marginBottom="@dimen/dimen_15"
             android:layout_toStartOf="@id/btnSender"
+            android:layout_toEndOf="@id/btEmoji"
             android:background="@drawable/login_input_corner"
+            android:cursorVisible="true"
             android:hint="@string/message"
-            android:textCursorDrawable="@color/purple_700"
             android:maxLines="7"
-            android:padding="@dimen/dimen_8"
+            android:paddingVertical="@dimen/dimen_8"
+            android:paddingHorizontal="@dimen/dimen_15"
             android:textColor="@color/black"
-            android:textColorHint="@color/cardview_shadow_start_color" />
+            android:textColorHint="@color/cardview_shadow_start_color"
+            android:textCursorDrawable="@color/purple_700" />
 
         <ImageView
             android:id="@+id/btnSender"

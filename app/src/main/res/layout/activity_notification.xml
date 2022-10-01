@@ -7,16 +7,37 @@
     tools:context=".views.ui.notification.NotificationActivity">
 
 
-
-    <com.example.chatapp.components.BubbleView
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolbarContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="@string/request"
-        android:background="@color/blue_20"
+        app:liftOnScroll="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarNotification"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/purple_500"
+            app:contentInsetStart="@dimen/dimen_10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIconTint="@color/white"
+            app:titleCentered="false"
+            app:titleMarginStart="@dimen/dimen_15"
+            app:titleTextColor="@color/white" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/notificationContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/notification_item"
+        app:layout_constraintTop_toBottomOf="@id/toolbarContainer"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

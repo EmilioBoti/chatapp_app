@@ -3,7 +3,7 @@ package com.example.chatapp.factory.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.chatapp.helpers.OnClickItem
+import com.example.chatapp.helpers.common.OnClickItem
 
 class ModelAdapter<in T>(private val list: MutableList<T>, private val factoryBuilder: FactoryBuilder): RecyclerView.Adapter<ModelViewHolder>() {
     private var layout: Int = 0

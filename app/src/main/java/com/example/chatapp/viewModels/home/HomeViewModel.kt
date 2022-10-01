@@ -1,6 +1,7 @@
 package com.example.chatapp.viewModels.home
 
 import android.app.Activity
+import android.app.Application
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,8 @@ import com.example.chatapp.helpers.Session
 import com.example.chatapp.repositoryApi.models.UserModel
 import com.example.chatapp.repositoryApi.chat.MessageModel
 import com.example.chatapp.repositoryApi.home.HomeProvider
+import com.example.chatapp.router.Router
+import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
 import com.example.chatapp.views.ui.BaseActivity
 import com.example.chatapp.views.ui.chatRoom.ChatRoom
 import com.google.gson.Gson
@@ -18,16 +21,19 @@ import io.socket.client.Socket
 import retrofit2.Call
 import retrofit2.Response
 
-class HomeViewModel: ViewModel(), IHomeViewModel {
+class HomeViewModel(application: Application): SocketEvent(application), IHomeViewModel {
     val contacts: MutableLiveData<MutableList<UserModel>> = MutableLiveData<MutableList<UserModel>>()
-    lateinit var mSocket: Socket
-    lateinit var currentUser: String
+    private var currentUser: String? = null
     lateinit var provider: HomeProvider
     val DATA_USER: String = "data"
 
 
+    init {
+        notificationChannel()
+        currentUser = Session.getUserId(application.applicationContext)
+    }
+
     override fun updateSocket(id: String) {
-        mSocket = SocketCon.getSocket()
         val con = mSocket.connected()
 
         if(!con) mSocket.connect()
@@ -54,23 +60,25 @@ class HomeViewModel: ViewModel(), IHomeViewModel {
 
     }
 
-    override fun getContacts(currentUser: String) {
-        this.currentUser = currentUser
+    override fun getContacts() {
         provider = HomeProvider()
-        val call = provider.getUserContacts(currentUser)
 
-        call.enqueue(object : retrofit2.Callback<MutableList<UserModel>> {
-            override fun onResponse(call: Call<MutableList<UserModel>>, response: Response<MutableList<UserModel>>) {
-                if (response.isSuccessful) {
-                    contacts.postValue(response.body())
+        currentUser?.let {
+            val call = provider.getUserContacts(it)
+
+            call.enqueue(object : retrofit2.Callback<MutableList<UserModel>> {
+                override fun onResponse(call: Call<MutableList<UserModel>>, response: Response<MutableList<UserModel>>) {
+                    if (response.isSuccessful) {
+                        contacts.postValue(response.body())
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<MutableList<UserModel>>, t: Throwable) {
-                Log.e("error", "", t.cause)
-            }
+                override fun onFailure(call: Call<MutableList<UserModel>>, t: Throwable) {
+                    Log.e("error", "", t.cause)
+                }
 
-        })
+            })
+        }
 
     }
 
@@ -85,6 +93,17 @@ class HomeViewModel: ViewModel(), IHomeViewModel {
             putString(Session.ID, userModel?.id)
             putString(Session.NAME, userModel?.name)
             putString(Session.SOCKETID, userModel?.socketId)
+        }
+        Intent(activity, ChatRoom::class.java).apply {
+            this.putExtra(DATA_USER, data)
+            activity.startActivity(this)
+        }
+    }
+
+    fun navNotification(activity: Activity) {
+//        val userModel: UserModel? = contacts.value?.get(pos)
+        val data: Bundle = Bundle().apply {
+            putString(Session.ID, currentUser)
         }
         Intent(activity, ChatRoom::class.java).apply {
             this.putExtra(DATA_USER, data)

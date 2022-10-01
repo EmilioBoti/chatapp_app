@@ -5,6 +5,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
@@ -15,7 +16,8 @@ import com.example.chatapp.R
 import com.example.chatapp.databinding.ActivityBrowserBinding
 import com.example.chatapp.factory.adapter.FactoryBuilder
 import com.example.chatapp.factory.adapter.ModelAdapter
-import com.example.chatapp.helpers.OnClickItem
+import com.example.chatapp.helpers.common.OnClickItem
+import com.example.chatapp.repositoryApi.models.NotificationModel
 import com.example.chatapp.repositoryApi.models.UserModel
 import com.example.chatapp.viewModels.browser.BrowserViewModel
 
@@ -47,6 +49,14 @@ class BrowserActivity : AppCompatActivity() {
                     browserViewModel.sendRequest(pos)
                 }
 
+                override fun onAccept(notification: NotificationModel) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onReject(notification: NotificationModel) {
+                    TODO("Not yet implemented")
+                }
+
             })
 
             binding.userContainer.apply {
@@ -61,6 +71,7 @@ class BrowserActivity : AppCompatActivity() {
     private fun setUpToolbar() {
         binding.toolbarBrowser.menu.findItem(R.id.searcher)
             .iconTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.white))
+
         binding.toolbarBrowser.setNavigationOnClickListener {
             this.onBackPressed()
         }

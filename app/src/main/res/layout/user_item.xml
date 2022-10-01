@@ -8,9 +8,8 @@
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:contentPadding="@dimen/dimen_12"
-        app:cardBackgroundColor="@color/blue_20"
-        >
+        app:cardBackgroundColor="@color/white"
+        app:contentPadding="@dimen/dimen_12">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -54,6 +53,20 @@
                 android:layout_toEndOf="@id/circularImg"
                 android:lines="1"
                 android:text="@string/name"
+                android:textColor="@color/black_200"
+                android:textSize="@dimen/dimenst_14" />
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/lastMessage"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/dimen_15"
+                android:layout_marginTop="@dimen/dimen_3"
+                android:lines="1"
+                android:text="@string/name"
+                android:textColor="@color/black_200"
                 android:textSize="@dimen/dimenst_14" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

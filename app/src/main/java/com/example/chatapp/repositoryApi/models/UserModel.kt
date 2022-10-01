@@ -7,5 +7,7 @@ data class UserModel(
     val name: String,
     val email: String,
     val socketId: String?,
-    var lastMessage: String?
+    var lastMessage: String?,
+    val state: Boolean?,
+    val times: String?
     )

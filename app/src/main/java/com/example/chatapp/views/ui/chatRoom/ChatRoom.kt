@@ -4,9 +4,6 @@ import android.content.res.ColorStateList
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.Window
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -16,14 +13,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatapp.R
 import com.example.chatapp.databinding.ActivityChatRoomBinding
-import com.example.chatapp.helpers.OnLongClickItem
+import com.example.chatapp.helpers.common.OnLongClickItem
 import com.example.chatapp.helpers.Session
 import com.example.chatapp.viewModels.chat.ChatViewModel
+import com.vanniktech.emoji.EmojiPopup
 
 class ChatRoom : AppCompatActivity() {
     private lateinit var binding: ActivityChatRoomBinding
     private var bundle: Bundle? = null
     private val chatViewModel: ChatViewModel by viewModels()
+    private val DATA: String = "data"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,34 +30,39 @@ class ChatRoom : AppCompatActivity() {
         binding = ActivityChatRoomBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
         super.onStart()
 
-        bundle = intent.getBundleExtra("data")
+        bundle = intent.getBundleExtra(DATA)
         chatViewModel.setUpSocket(bundle, this)
 
         setToolbar()
 
-        chatViewModel.listMessages.observe(this, Observer {
-            val messageAdapter = MessageAdapter(it, Session.getUserId(this.applicationContext)!!)
-            messageAdapter.setLongListener(object : OnLongClickItem {
-                override fun onLongClick(value: String) {
-                    Toast.makeText(this@ChatRoom,  value, Toast.LENGTH_SHORT).show()
+        val emojiPopup = EmojiPopup(binding.rootView, binding.boxMessage)
+
+        chatViewModel.listMessages.observe(this, Observer { messages ->
+
+            Session.getUserId(this.applicationContext)?.let { userId ->
+
+                val messageAdapter = MessageAdapter(messages, userId)
+                messageAdapter.setLongListener(object : OnLongClickItem {
+                    override fun onLongClick(value: String) {
+                        Toast.makeText(this@ChatRoom,  value, Toast.LENGTH_SHORT).show()
+                    }
+
+                })
+
+                binding.messageContainer.apply {
+                    layoutManager = LinearLayoutManager(this@ChatRoom, RecyclerView.VERTICAL, false)
+                    scrollToPosition(messages.size - 1)
+                    setHasFixedSize(true)
+                    adapter = messageAdapter
                 }
-
-            })
-
-            binding.messageContainer.apply {
-                layoutManager = LinearLayoutManager(this@ChatRoom, RecyclerView.VERTICAL, false)
-                scrollToPosition(it.size - 1)
-                setHasFixedSize(true)
-                adapter = messageAdapter
+                binding.boxMessage.text?.clear()
             }
-            binding.boxMessage.text?.clear()
         })
 
         binding.btnSender.setOnClickListener {
@@ -66,6 +70,10 @@ class ChatRoom : AppCompatActivity() {
             if (text.isNotEmpty()) {
                 chatViewModel.sendMessage(text)
             }
+        }
+
+        binding.btEmoji.setOnClickListener {
+            emojiPopup.toggle()
         }
     }
 
@@ -79,7 +87,7 @@ class ChatRoom : AppCompatActivity() {
         bundle?.let {
             binding.toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.keyboard_backspace_24)
             binding.toolbar.setNavigationOnClickListener {
-                onBackPressed()
+                this.onBackPressed()
             }
             binding.toolbar.menu.findItem(R.id.call)
                 .iconTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.white))

@@ -8,6 +8,6 @@
         android:bottomLeftRadius="@dimen/dimen_25"
         />
     <solid
-        android:color="@color/purple_700"
+        android:color="@color/purple_500"
         />
 </shape>

@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.TextView
 import com.example.chatapp.R
 import com.example.chatapp.factory.adapter.ModelViewHolder
-import com.example.chatapp.helpers.OnClickItem
+import com.example.chatapp.helpers.common.OnClickItem
 import com.example.chatapp.repositoryApi.models.UserModel
 
 class BrowserHolder(itemView: View, private val listener: OnClickItem?): ModelViewHolder(itemView) {
@@ -15,9 +15,21 @@ class BrowserHolder(itemView: View, private val listener: OnClickItem?): ModelVi
         val user = value as UserModel
         name.text = user.name
 
+        changeNotification(user)
+
         request.setOnClickListener {
             listener?.onClick(absoluteAdapterPosition)
         }
 
+    }
+
+    private fun changeNotification(user: UserModel) {
+        user.state?.let {
+            if (it) {
+                request.text = "Friend"
+            } else {
+                request.text = "Pending"
+            }
+        }
     }
 }
