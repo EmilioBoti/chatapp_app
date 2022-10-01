@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="@dimen/dimen_0"
-            app:cardBackgroundColor="@color/gray_cultured"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/dimen_15"
             app:contentPaddingBottom="@dimen/dimen_3"
             app:contentPaddingLeft="@dimen/dimen_8"
