@@ -9,4 +9,7 @@
     <solid
         android:color="@color/white"
         />
+    <stroke android:width="@dimen/dimen_1"
+        android:color="@color/material_on_surface_stroke"
+        />
 </shape>

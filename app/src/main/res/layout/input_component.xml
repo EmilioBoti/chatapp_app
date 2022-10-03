@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@null"
+    >
+
+    <ImageView
+        android:id="@+id/btEmoji"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="@dimen/dimen_15"
+        android:layout_marginStart="@dimen/dimen_10"
+        android:contentDescription="@string/fab_content_desc"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_emoji"
+        app:tint="@color/black_200" />
+
+
+    <com.vanniktech.emoji.EmojiEditText
+        android:id="@+id/boxMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_5"
+        android:layout_marginEnd="@dimen/dimen_15"
+        android:layout_toStartOf="@id/btnSender"
+        android:layout_toEndOf="@id/btEmoji"
+        android:background="@drawable/login_input_corner"
+        android:cursorVisible="true"
+        android:hint="@string/message"
+        android:layout_centerVertical="true"
+        android:maxLines="7"
+        android:paddingHorizontal="@dimen/dimen_15"
+        android:paddingVertical="@dimen/dimen_8"
+        android:textColor="@color/black"
+        android:textColorHint="@color/cardview_shadow_start_color"
+        android:textCursorDrawable="@color/purple_700" />
+
+    <ImageView
+        android:id="@+id/btnSender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/dimen_15"
+        android:layout_marginEnd="@dimen/dimen_15"
+        android:background="@drawable/radius_corner"
+        android:contentDescription="@string/fab_content_desc"
+        android:padding="@dimen/dimen_4"
+        android:src="@drawable/send_24"
+        app:tint="@color/white" />
+
+</RelativeLayout>

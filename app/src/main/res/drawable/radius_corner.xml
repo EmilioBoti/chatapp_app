@@ -2,14 +2,13 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval"
     >
-    <solid android:color="@color/purple_500"/>
     <stroke android:width="1dp"
-        android:color="@color/purple_700"
+        android:color="@color/indigo_dark"
         />
     <gradient
-        android:centerColor="@color/purple_700"
-        android:endColor="@color/purple_500"
-        android:startColor="@color/purple_500"
+        android:centerColor="@color/indigo_dark"
+        android:endColor="@color/indigo"
+        android:startColor="@color/indigo"
         android:type="radial"
         android:centerX="@integer/material_motion_duration_long_1"
         android:centerY="@integer/material_motion_duration_long_2"

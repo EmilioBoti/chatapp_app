@@ -7,7 +7,7 @@ import retrofit2.Call
 
 interface IChat {
     interface Presenter {
-        fun setUpSocket(bundle: Bundle?, context: Context)
+        fun getMessages(bundle: Bundle?)
         fun sendMessage(text: String)
     }
 

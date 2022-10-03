@@ -37,11 +37,9 @@ class ChatRoom : AppCompatActivity() {
         super.onStart()
 
         bundle = intent.getBundleExtra(DATA)
-        chatViewModel.setUpSocket(bundle, this)
+        chatViewModel.getMessages(bundle)
 
         setToolbar()
-
-        val emojiPopup = EmojiPopup(binding.rootView, binding.boxMessage)
 
         chatViewModel.listMessages.observe(this, Observer { messages ->
 
@@ -50,7 +48,7 @@ class ChatRoom : AppCompatActivity() {
                 val messageAdapter = MessageAdapter(messages, userId)
                 messageAdapter.setLongListener(object : OnLongClickItem {
                     override fun onLongClick(value: String) {
-                        Toast.makeText(this@ChatRoom,  value, Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(this@ChatRoom,  value, Toast.LENGTH_SHORT).show()
                     }
 
                 })
@@ -61,28 +59,22 @@ class ChatRoom : AppCompatActivity() {
                     setHasFixedSize(true)
                     adapter = messageAdapter
                 }
-                binding.boxMessage.text?.clear()
+
             }
         })
 
-        binding.btnSender.setOnClickListener {
-            val text: String = binding.boxMessage.text.toString()
-            if (text.isNotEmpty()) {
-                chatViewModel.sendMessage(text)
-            }
-        }
+        val emojiPopup = EmojiPopup(binding.rootView, binding.inputContainer.getEmojiEditText())
+        binding.inputContainer.setViewModel(chatViewModel)
+        binding.inputContainer.setEmojiPopup(emojiPopup)
 
-        binding.btEmoji.setOnClickListener {
-            emojiPopup.toggle()
-        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setToolbar() {
 
-        window.apply {
-            this.statusBarColor = ContextCompat.getColor(this@ChatRoom, R.color.purple_500)
-        }
+//        window.apply {
+//            this.statusBarColor = ContextCompat.getColor(this@ChatRoom, R.color.purple_500)
+//        }
 
         bundle?.let {
             binding.toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.keyboard_backspace_24)

@@ -3,16 +3,12 @@ package com.example.chatapp.viewModels.chat
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.chatapp.api.SocketCon
 import com.example.chatapp.helpers.Session
 import com.example.chatapp.repositoryApi.chat.ChatProvider
 import com.example.chatapp.repositoryApi.chat.MessageModel
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
 import com.google.gson.Gson
-import io.socket.client.Socket
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,34 +18,37 @@ class ChatViewModel(application: Application): SocketEvent(application), IChat.P
     val listMessages: MutableLiveData<MutableList<MessageModel>> = MutableLiveData<MutableList<MessageModel>>()
     private var chatProvider: IChat.ModelPresenter
     private var currentUser: String? = null
-    private val ROOMID = "roomId"
-    private val FROM = "fromU"
-    private val TO = "toU"
-    private val MESSAGE = "message"
+
+    companion object {
+        private const val ROOM_ID = "roomId"
+        private const val FROM = "fromU"
+        private const val TO = "toU"
+        private const val MESSAGE = "message"
+        private const val PRIVATE_SMS = "private"
+    }
 
     init {
         currentUser = Session.getUserId(application.applicationContext)
         chatProvider = ChatProvider()
 
-        mSocket.on("message") {
+        mSocket.on(MESSAGE) {
             val user = Gson().fromJson(it[0].toString(), MessageModel::class.java)
-            if (user.roomId == bundle?.getString(ROOMID)) {
+            if (isRoomUser(user.roomId)) {
                 listMessages.value?.add(user)
                 listMessages.postValue(listMessages.value)
             }
         }
 
         mSocket.on("disconnect") {
-            it[0]
+
         }
 
     }
 
-    override fun setUpSocket(bundle: Bundle?, context: Context) {
-        mSocket = SocketCon.getSocket()
+    override fun getMessages(bundle: Bundle?) {
         this.bundle = bundle
 
-        bundle?.getString(ROOMID)?.let {
+        bundle?.getString(ROOM_ID)?.let {
             chatProvider.getMessages(it).enqueue(object : Callback<MutableList<MessageModel>> {
                 override fun onResponse(call: Call<MutableList<MessageModel>>, response: Response<MutableList<MessageModel>>) {
                     if(response.isSuccessful) {
@@ -70,15 +69,18 @@ class ChatViewModel(application: Application): SocketEvent(application), IChat.P
         this.bundle?.let {
             currentUser?.let {currentUser ->
                 val map: HashMap<String, String?> = HashMap<String, String?>()
-                map[ROOMID] = it.getString(ROOMID)
+                map[ROOM_ID] = it.getString(ROOM_ID)
                 map[FROM] = currentUser
                 map[TO] = it.getString(Session.ID)
                 map[MESSAGE] = text
 
-                mSocket.emit("private", Gson().toJson(map))
+                mSocket.emit(PRIVATE_SMS, Gson().toJson(map))
             }
         }
     }
 
+    private fun isRoomUser(roomId: String): Boolean {
+        return roomId == bundle?.getString(ROOM_ID)
+    }
 
 }

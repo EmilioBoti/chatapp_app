@@ -8,6 +8,9 @@
         android:bottomLeftRadius="@dimen/dimen_25"
         />
     <solid
-        android:color="@color/purple_500"
+        android:color="@color/indigo"
+        />
+    <stroke android:width="@dimen/dimen_1"
+        android:color="@color/material_on_surface_stroke"
         />
 </shape>
