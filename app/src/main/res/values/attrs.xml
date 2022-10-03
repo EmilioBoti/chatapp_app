@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="InputSmsComponent">
+        <attr name="icon_btnSender" format="reference"/>
+        <attr name="icon_btnEmoji" format="reference"/>
+    </declare-styleable>
+</resources>

@@ -48,7 +48,6 @@ class ChatRoom : AppCompatActivity() {
                 val messageAdapter = MessageAdapter(messages, userId)
                 messageAdapter.setLongListener(object : OnLongClickItem {
                     override fun onLongClick(value: String) {
-                        //Toast.makeText(this@ChatRoom,  value, Toast.LENGTH_SHORT).show()
                     }
 
                 })
@@ -64,8 +63,12 @@ class ChatRoom : AppCompatActivity() {
         })
 
         val emojiPopup = EmojiPopup(binding.rootView, binding.inputContainer.getEmojiEditText())
-        binding.inputContainer.setViewModel(chatViewModel)
-        binding.inputContainer.setEmojiPopup(emojiPopup)
+        binding.inputContainer.run {
+            setViewModel(chatViewModel)
+            setEmojiPopup(emojiPopup)
+            setIconBtnSender(R.drawable.send_24)
+            setIconEmojis(R.drawable.ic_emoji)
+        }
 
     }
 
