@@ -75,9 +75,9 @@ class ChatRoom : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setToolbar() {
 
-//        window.apply {
-//            this.statusBarColor = ContextCompat.getColor(this@ChatRoom, R.color.purple_500)
-//        }
+        window.apply {
+            this.statusBarColor = ContextCompat.getColor(this@ChatRoom, R.color.indigo)
+        }
 
         bundle?.let {
             binding.toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.keyboard_backspace_24)

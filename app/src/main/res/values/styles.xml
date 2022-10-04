@@ -2,15 +2,15 @@
 <resources>
 
     <style name="chatRoom_inputText" parent="Theme.Chatapp">
-        <item name="paddingStart">@dimen/dimen_15</item>
-        <item name="paddingEnd">@dimen/dimen_15</item>
+        <item name="android:paddingStart">@dimen/dimen_15</item>
+        <item name="android:paddingEnd">@dimen/dimen_15</item>
         <item name="android:paddingTop">@dimen/dimen_8</item>
         <item name="android:paddingBottom">@dimen/dimen_8</item>
-        <item name="maxLines">7</item>
+        <item name="android:maxLines">7</item>
         <item name="android:textColor">@color/black_200</item>
         <item name="android:hint">@string/message</item>
         <item name="android:textColorHint">@color/cardview_shadow_start_color</item>
-        <item name="background">@drawable/login_input_corner</item>
+        <item name="android:background">@drawable/login_input_corner</item>
         <item name="android:layout_marginStart">@dimen/dimen_5</item>
         <item name="android:layout_marginEnd">@dimen/dimen_15</item>
     </style>

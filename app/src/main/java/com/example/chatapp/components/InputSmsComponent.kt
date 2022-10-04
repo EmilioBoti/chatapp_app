@@ -7,8 +7,6 @@ import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.example.chatapp.R
-import com.example.chatapp.databinding.InputComponentBinding
-import com.example.chatapp.viewModels.chat.ChatViewModel
 import com.example.chatapp.viewModels.chat.IChat
 import com.vanniktech.emoji.EmojiEditText
 import com.vanniktech.emoji.EmojiPopup
@@ -21,7 +19,7 @@ class InputSmsComponent(context: Context, attrs: AttributeSet?): RelativeLayout(
     private var inputText: EmojiEditText
     private var chatViewModel: IChat.Presenter? = null
     private lateinit var emojiPopup : EmojiPopup
-    private lateinit var attribute: TypedArray
+    private var attribute: TypedArray
 
     init {
         inflater.inflate(R.layout.input_component, this, true)
@@ -29,6 +27,7 @@ class InputSmsComponent(context: Context, attrs: AttributeSet?): RelativeLayout(
         inputText = findViewById(R.id.boxMessage)
         btnSender = findViewById(R.id.btnSender)
         btnEmoji = findViewById(R.id.btEmoji)
+        inputText.showSoftInputOnFocus = true
 
         attribute = context.obtainStyledAttributes(attrs, R.styleable.InputSmsComponent)
 
