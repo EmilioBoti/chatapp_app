@@ -64,10 +64,18 @@ class ChatRoom : AppCompatActivity() {
 
         val emojiPopup = EmojiPopup(binding.rootView, binding.inputContainer.getEmojiEditText())
         binding.inputContainer.run {
-            setViewModel(chatViewModel)
-            setEmojiPopup(emojiPopup)
             setIconBtnSender(R.drawable.send_24)
             setIconEmojis(R.drawable.ic_emoji)
+            setSenderOnClick {
+                val text: String = getEmojiEditText().text.toString()
+                if (text.isNotEmpty()) {
+                    chatViewModel.sendMessage(text)
+                    getEmojiEditText().text?.clear()
+                }
+            }
+            setEmojiOnClick {
+                emojiPopup.toggle()
+            }
         }
 
     }

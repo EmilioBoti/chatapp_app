@@ -7,9 +7,7 @@ import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.example.chatapp.R
-import com.example.chatapp.viewModels.chat.IChat
 import com.vanniktech.emoji.EmojiEditText
-import com.vanniktech.emoji.EmojiPopup
 
 
 class InputSmsComponent(context: Context, attrs: AttributeSet?): RelativeLayout(context, attrs) {
@@ -17,8 +15,6 @@ class InputSmsComponent(context: Context, attrs: AttributeSet?): RelativeLayout(
     private var btnSender: ImageView
     private var btnEmoji: ImageView
     private var inputText: EmojiEditText
-    private var chatViewModel: IChat.Presenter? = null
-    private lateinit var emojiPopup : EmojiPopup
     private var attribute: TypedArray
 
     init {
@@ -37,22 +33,14 @@ class InputSmsComponent(context: Context, attrs: AttributeSet?): RelativeLayout(
         setIconBtnSender(iconSender)
         setIconEmojis(iconEmoji)
 
-        setClickListener()
-
     }
 
-    private fun setClickListener() {
-        btnSender.setOnClickListener {
-            val text: String = inputText.text.toString()
-            if (text.isNotEmpty()) {
-                chatViewModel?.sendMessage(text)
-                inputText.text?.clear()
-            }
-        }
+    fun setSenderOnClick(listener: OnClickListener) {
+        btnSender.setOnClickListener(listener)
+    }
 
-        btnEmoji.setOnClickListener {
-            emojiPopup.toggle()
-        }
+    fun setEmojiOnClick(listener: OnClickListener) {
+        btnEmoji.setOnClickListener(listener)
     }
 
     fun setIconEmojis(refId: Int) {
@@ -64,13 +52,5 @@ class InputSmsComponent(context: Context, attrs: AttributeSet?): RelativeLayout(
     }
 
     fun getEmojiEditText() : EmojiEditText = inputText
-
-    fun setViewModel(chatViewModel: IChat.Presenter?) {
-        this.chatViewModel = chatViewModel
-    }
-
-    fun setEmojiPopup(emojiPopup: EmojiPopup) {
-        this.emojiPopup = emojiPopup
-    }
 
 }
