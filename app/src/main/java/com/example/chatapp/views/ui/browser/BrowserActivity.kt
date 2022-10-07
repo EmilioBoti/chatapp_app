@@ -33,7 +33,6 @@ class BrowserActivity : AppCompatActivity() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
         super.onStart()
 
@@ -50,11 +49,9 @@ class BrowserActivity : AppCompatActivity() {
                 }
 
                 override fun onAccept(notification: NotificationModel) {
-                    TODO("Not yet implemented")
                 }
 
                 override fun onReject(notification: NotificationModel) {
-                    TODO("Not yet implemented")
                 }
 
             })
@@ -65,12 +62,26 @@ class BrowserActivity : AppCompatActivity() {
             }
         })
 
+        binding.recentContainer.setOnClick(object : OnClickItem {
+            override fun onClick(pos: Int) {
+                Toast.makeText(this@BrowserActivity, "oook", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onAccept(notification: NotificationModel) {
+            }
+
+            override fun onReject(notification: NotificationModel) {
+            }
+        })
+
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+
     private fun setUpToolbar() {
-        binding.toolbarBrowser.menu.findItem(R.id.searcher)
-            .iconTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.white))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            binding.toolbarBrowser.menu.findItem(R.id.searcher)
+                .iconTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.white))
+        }
 
         binding.toolbarBrowser.setNavigationOnClickListener {
             this.onBackPressed()

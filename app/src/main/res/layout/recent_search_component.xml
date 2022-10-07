@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    >
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/recentTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/recent_search"
+        android:textColor="@color/black_200"
+        android:textSize="@dimen/dimenSt_18"
+        android:textStyle="bold"
+        android:paddingVertical="@dimen/dimen_8"
+        android:paddingHorizontal="@dimen/dimen_15"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recentUsersContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/recentTitle"
+        android:paddingVertical="@dimen/dimen_10"
+        />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
