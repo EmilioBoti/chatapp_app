@@ -1,4 +1,4 @@
-package com.example.chatapp.views.ui
+package com.example.chatapp.views.home
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,7 +7,6 @@ import com.example.chatapp.R
 import com.example.chatapp.api.SocketCon
 import com.example.chatapp.databinding.ActivityBaseBinding
 import com.example.chatapp.helpers.Session
-import com.example.chatapp.views.home.HomeActivity
 import com.example.chatapp.views.ui.login.LoginFragment
 
 class BaseActivity : AppCompatActivity() {

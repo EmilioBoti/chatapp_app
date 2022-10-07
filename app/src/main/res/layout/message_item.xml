@@ -33,7 +33,7 @@
                 android:text="@string/messenge"
                 android:textColor="@color/white"
                 android:textIsSelectable="false"
-                android:textSize="@dimen/dimenst_16" />
+                android:textSize="@dimen/dimenSt_16" />
 
             <TextView
                 android:id="@+id/time"
@@ -43,7 +43,7 @@
                 android:layout_marginEnd="@dimen/dimen_4"
                 android:textColor="@color/white"
                 android:textIsSelectable="false"
-                android:textSize="@dimen/dimenst_12"
+                android:textSize="@dimen/dimenSt_12"
                 tools:text="@string/time" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

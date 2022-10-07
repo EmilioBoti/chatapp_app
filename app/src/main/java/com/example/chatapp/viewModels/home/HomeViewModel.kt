@@ -6,18 +6,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.chatapp.api.SocketCon
 import com.example.chatapp.helpers.Session
 import com.example.chatapp.repositoryApi.models.UserModel
 import com.example.chatapp.repositoryApi.chat.MessageModel
 import com.example.chatapp.repositoryApi.home.HomeProvider
-import com.example.chatapp.router.Router
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
-import com.example.chatapp.views.ui.BaseActivity
+import com.example.chatapp.views.home.BaseActivity
 import com.example.chatapp.views.ui.chatRoom.ChatRoom
 import com.google.gson.Gson
-import io.socket.client.Socket
 import retrofit2.Call
 import retrofit2.Response
 

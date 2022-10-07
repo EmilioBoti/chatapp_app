@@ -21,7 +21,7 @@
             android:id="@+id/toolbarNotification"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:background="@color/purple_500"
+            android:background="@color/indigo"
             app:contentInsetStart="@dimen/dimen_10"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,9 +35,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notificationContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/dimen_0"
         tools:listitem="@layout/notification_item"
         app:layout_constraintTop_toBottomOf="@id/toolbarContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

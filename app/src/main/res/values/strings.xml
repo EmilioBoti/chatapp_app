@@ -26,4 +26,5 @@
     <string name="request">Request +</string>
     <string name="pending">Pendient -</string>
     <string name="friend">Friend</string>
+    <string name="recent_search">Recent</string>
 </resources>

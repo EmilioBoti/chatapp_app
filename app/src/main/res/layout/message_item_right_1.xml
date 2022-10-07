@@ -37,7 +37,7 @@
                 android:text="@string/messenge"
                 android:textColor="@color/white"
                 android:textIsSelectable="false"
-                android:textSize="@dimen/dimenst_16"
+                android:textSize="@dimen/dimenSt_16"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/time"
                 app:layout_constraintStart_toStartOf="parent"
@@ -54,6 +54,6 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/dimen_15"
         android:text="@string/time"
-        android:textSize="@dimen/dimenst_12" />
+        android:textSize="@dimen/dimenSt_12" />
 
 </RelativeLayout>

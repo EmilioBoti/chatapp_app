@@ -1,30 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dimen_5"
-            >
+            android:padding="@dimen/dimen_5">
 
             <ImageView
                 android:id="@+id/userImg"
                 android:layout_width="@dimen/dimen_50"
                 android:layout_height="@dimen/dimen_50"
-                android:src="@drawable/ic_launcher_foreground"
-                android:contentDescription="@string/imageDesc"
                 android:background="@drawable/radius_corner_img"
-                />
+                android:contentDescription="@string/imageDesc"
+                android:padding="@dimen/dimen_5"
+                android:src="@drawable/ic_person_24" />
 
             <TextView
                 android:id="@+id/userName"
@@ -41,9 +39,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/dimen_10"
                 android:text="@string/request"
                 android:textColor="@color/blue_200"
-                android:layout_marginEnd="@dimen/dimen_10"
                 android:textStyle="italic" />
 
         </RelativeLayout>

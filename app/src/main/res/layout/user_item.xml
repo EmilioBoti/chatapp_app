@@ -27,7 +27,8 @@
                     android:id="@+id/userImage"
                     android:layout_width="@dimen/dimen_50"
                     android:layout_height="@dimen/dimen_50"
-                    android:src="@drawable/ic_launcher_foreground"
+                    android:padding="@dimen/dimen_5"
+                    android:src="@drawable/ic_person_24"
                     android:contentDescription="@string/imageDesc" />
             </androidx.cardview.widget.CardView>
 
@@ -36,11 +37,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_15"
-                android:layout_marginTop="@dimen/dimenst_15"
+                android:layout_marginTop="@dimen/dimenSt_15"
                 android:layout_toEndOf="@id/circularImg"
                 android:text="@string/name"
                 android:textColor="@color/black_200"
-                android:textSize="@dimen/dimenst_16"
+                android:textSize="@dimen/dimenSt_16"
                 android:textStyle="bold" />
 
             <TextView
@@ -54,7 +55,7 @@
                 android:lines="1"
                 android:text="@string/name"
                 android:textColor="@color/black_200"
-                android:textSize="@dimen/dimenst_14" />
+                android:textSize="@dimen/dimenSt_14" />
 
             <TextView
                 android:id="@+id/time"
@@ -67,7 +68,7 @@
                 android:lines="1"
                 android:text="@string/name"
                 android:textColor="@color/black_200"
-                android:textSize="@dimen/dimenst_14" />
+                android:textSize="@dimen/dimenSt_14" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>
