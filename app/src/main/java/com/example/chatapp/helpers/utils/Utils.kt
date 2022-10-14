@@ -8,7 +8,7 @@ class Utils {
 
         fun getRetrofitBuilder(): Retrofit {
             return Retrofit.Builder()
-                .baseUrl(Consts.HOSTENDPOINT)
+                .baseUrl(Const.HOST_ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }

@@ -2,18 +2,18 @@ package com.example.chatapp.viewModels.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.chatapp.repositoryApi.login.LoginProvider
+import com.example.chatapp.repositoryApi.ApiProvider
+import com.example.chatapp.repositoryApi.Repository
 import com.example.chatapp.repositoryApi.login.LoginResponse
 import com.example.chatapp.repositoryApi.login.UserLogin
 import com.example.chatapp.repositoryApi.models.UserModel
-import com.example.chatapp.repositoryApi.login.LoginModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class LoginViewModel: ViewModel(), ILogin {
 
-    private val modelProvider: LoginModel = LoginProvider()
+    private val modelProvider: Repository = ApiProvider()
     val user: MutableLiveData<UserModel> = MutableLiveData<UserModel>()
     val error: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     private val regexEmail: String = "^[A-Za-z0-9]+@([a-zA-Z]+)(.)[a-zA-Z]{1,3}$"
@@ -21,7 +21,7 @@ class LoginViewModel: ViewModel(), ILogin {
 
     override fun login (userLogin: UserLogin) {
 
-        modelProvider.login(userLogin).enqueue(object: retrofit2.Callback<LoginResponse> {
+        modelProvider.login(userLogin).enqueue(object: Callback<LoginResponse> {
 
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful && response.body()?.OK == true) {
@@ -38,7 +38,7 @@ class LoginViewModel: ViewModel(), ILogin {
     }
 
     override fun singin(newUser: HashMap<String, String>) {
-        modelProvider.signin(newUser).enqueue(object : Callback<LoginResponse> {
+        modelProvider.signIn(newUser).enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful && response.body()?.OK == true) {
                     user.postValue(response.body()?.body)

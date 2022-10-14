@@ -15,6 +15,7 @@ import com.example.chatapp.R
 import com.example.chatapp.databinding.ActivityChatRoomBinding
 import com.example.chatapp.helpers.common.OnLongClickItem
 import com.example.chatapp.helpers.Session
+import com.example.chatapp.helpers.utils.Const
 import com.example.chatapp.viewModels.chat.ChatViewModel
 import com.vanniktech.emoji.EmojiPopup
 
@@ -38,6 +39,7 @@ class ChatRoom : AppCompatActivity() {
 
         bundle = intent.getBundleExtra(DATA)
         chatViewModel.getMessages(bundle)
+
 
         setToolbar()
 
@@ -94,7 +96,7 @@ class ChatRoom : AppCompatActivity() {
             }
             binding.toolbar.menu.findItem(R.id.call)
                 .iconTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.white))
-            binding.toolbar.title = it.getString(Session.NAME)
+            binding.toolbar.title = it.getString(Const.NAME_USER)
         }
 
         binding.toolbar.setOnMenuItemClickListener {

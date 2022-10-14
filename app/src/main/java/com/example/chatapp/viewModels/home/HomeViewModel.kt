@@ -7,10 +7,13 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.chatapp.helpers.Session
+import com.example.chatapp.helpers.utils.Const
+import com.example.chatapp.repositoryApi.ApiProvider
+import com.example.chatapp.repositoryApi.Repository
 import com.example.chatapp.repositoryApi.models.UserModel
-import com.example.chatapp.repositoryApi.chat.MessageModel
-import com.example.chatapp.repositoryApi.home.HomeProvider
+import com.example.chatapp.repositoryApi.models.MessageModel
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
+import com.example.chatapp.viewModels.notifications.PushNotification
 import com.example.chatapp.views.home.BaseActivity
 import com.example.chatapp.views.ui.chatRoom.ChatRoom
 import com.google.gson.Gson
@@ -20,13 +23,19 @@ import retrofit2.Response
 class HomeViewModel(application: Application): SocketEvent(application), IHomeViewModel {
     val contacts: MutableLiveData<MutableList<UserModel>> = MutableLiveData<MutableList<UserModel>>()
     private var currentUser: String? = null
-    lateinit var provider: HomeProvider
-    val DATA_USER: String = "data"
+    private var provider: Repository
+    private val pushNotification: PushNotification = PushNotification(application.applicationContext)
 
+
+    companion object {
+        private const val DATA_USER: String = "data"
+    }
 
     init {
-        notificationChannel()
+        pushNotification.notificationChannel()
+        pushNotification.smsNotificationChannel()
         currentUser = Session.getUserId(application.applicationContext)
+        provider = ApiProvider()
     }
 
     override fun updateSocket(id: String) {
@@ -57,7 +66,6 @@ class HomeViewModel(application: Application): SocketEvent(application), IHomeVi
     }
 
     override fun getContacts() {
-        provider = HomeProvider()
 
         currentUser?.let {
             val call = provider.getUserContacts(it)
@@ -78,6 +86,16 @@ class HomeViewModel(application: Application): SocketEvent(application), IHomeVi
 
     }
 
+    override fun receiveMessage(message: MessageModel) {
+        if (currentUser != message.fromU) {
+            pushNotification.showSmsNotification(message)
+        }
+    }
+
+    override fun receiveNotifications(notification: HashMap<String, String>) {
+        pushNotification.showNotification(notification)
+    }
+
     fun disconnectSocket() {
         mSocket.disconnect()
     }
@@ -85,9 +103,9 @@ class HomeViewModel(application: Application): SocketEvent(application), IHomeVi
     fun navigateChatRoom(activity: Activity, pos: Int) {
         val userModel: UserModel? = contacts.value?.get(pos)
         val data: Bundle = Bundle().apply {
-            putString(Session.ROOMID, userModel?.roomId)
-            putString(Session.ID, userModel?.id)
-            putString(Session.NAME, userModel?.name)
+            putString(Const.ROOM_ID, userModel?.roomId)
+            putString(Const.ID_USER, userModel?.id)
+            putString(Const.NAME_USER, userModel?.name)
             putString(Session.SOCKETID, userModel?.socketId)
         }
         Intent(activity, ChatRoom::class.java).apply {

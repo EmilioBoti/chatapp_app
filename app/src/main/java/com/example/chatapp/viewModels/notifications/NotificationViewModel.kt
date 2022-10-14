@@ -1,25 +1,22 @@
 package com.example.chatapp.viewModels.notifications
 
 import android.app.Application
-import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.chatapp.R
 import com.example.chatapp.helpers.Session
+import com.example.chatapp.repositoryApi.ApiProvider
+import com.example.chatapp.repositoryApi.Repository
+import com.example.chatapp.repositoryApi.models.MessageModel
 import com.example.chatapp.repositoryApi.models.NotificationModel
-import com.example.chatapp.repositoryApi.models.NotificationResponse
-import com.example.chatapp.repositoryApi.models.UserModel
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
-import com.example.chatapp.viewModels.notifications.provider.INotificationModel
-import com.example.chatapp.viewModels.notifications.provider.NotificationProvider
 import kotlinx.coroutines.launch
-import okhttp3.internal.notify
 
 class NotificationViewModel(application: Application): SocketEvent(application), INotificationViewModel {
 
     var listNotification: MutableLiveData<MutableList<NotificationModel>> = MutableLiveData<MutableList<NotificationModel>>()
-    private var provider: INotificationModel = NotificationProvider()
+    private var provider: Repository = ApiProvider()
     private var currentUser: String? = null
+    private val pushNotification: PushNotification = PushNotification(application.applicationContext)
 
     init {
         currentUser = Session.getUserId(application.applicationContext)
@@ -42,7 +39,7 @@ class NotificationViewModel(application: Application): SocketEvent(application),
 
     override fun acceptNotification(notification: NotificationModel) {
         viewModelScope.launch {
-           val notificationResponse: NotificationResponse? = provider.acceptNotification(notification)
+           provider.acceptNotification(notification)
         }
     }
 
@@ -51,8 +48,15 @@ class NotificationViewModel(application: Application): SocketEvent(application),
             provider.rejectNotification(notification)
             listNotification.value?.remove(notification)
             listNotification.postValue(listNotification.value)
-
         }
+    }
+
+    override fun receiveMessage(message: MessageModel) {
+
+    }
+
+    override fun receiveNotifications(notification: HashMap<String, String>) {
+        pushNotification.showNotification(notification)
     }
 
 }

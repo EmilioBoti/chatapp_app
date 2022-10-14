@@ -1,7 +1,7 @@
 package com.example.chatapp.api
 
 import com.example.chatapp.repositoryApi.models.UserModel
-import com.example.chatapp.repositoryApi.chat.MessageModel
+import com.example.chatapp.repositoryApi.models.MessageModel
 import com.example.chatapp.repositoryApi.login.LoginResponse
 import com.example.chatapp.repositoryApi.login.UserLogin
 import com.example.chatapp.repositoryApi.models.NotificationModel

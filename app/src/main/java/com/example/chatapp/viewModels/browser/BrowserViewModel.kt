@@ -1,25 +1,16 @@
 package com.example.chatapp.viewModels.browser
 
 import android.app.Application
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
-import android.os.Build
-import androidx.core.app.NotificationManagerCompat
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.example.chatapp.R
-import com.example.chatapp.api.SocketCon
 import com.example.chatapp.helpers.Session
+import com.example.chatapp.repositoryApi.ApiProvider
+import com.example.chatapp.repositoryApi.Repository
 import com.example.chatapp.repositoryApi.models.UserModel
-import com.example.chatapp.repositoryApi.browser.BrowserProvider
 import com.example.chatapp.repositoryApi.browser.IBrowserPresenter
-import com.example.chatapp.repositoryApi.browser.IBrowserModel
+import com.example.chatapp.repositoryApi.models.MessageModel
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
+import com.example.chatapp.viewModels.notifications.PushNotification
 import com.google.gson.Gson
-import io.socket.client.Socket
-import okhttp3.internal.notify
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,7 +18,7 @@ import retrofit2.Response
 class BrowserViewModel(application: Application) : SocketEvent(application), IBrowserPresenter {
 
     val listUserFound: MutableLiveData<MutableList<UserModel>> = MutableLiveData<MutableList<UserModel>>()
-    private var provider: IBrowserModel = BrowserProvider()
+    private var provider: Repository = ApiProvider()
     private lateinit var userId: String
     private lateinit var userName: String
     private val channelId: String = "com.example.chatapp"
@@ -38,6 +29,8 @@ class BrowserViewModel(application: Application) : SocketEvent(application), IBr
     private val NOTIFICATION: String = "notification"
     private val NOTIFY: String = "notify"
     private var context: Application = application
+    private val pushNotification: PushNotification = PushNotification(application.applicationContext)
+
 
     init {
 
@@ -64,6 +57,15 @@ class BrowserViewModel(application: Application) : SocketEvent(application), IBr
 
         })
 
+    }
+
+
+    override fun receiveMessage(message: MessageModel) {
+
+    }
+
+    override fun receiveNotifications(notification: HashMap<String, String>) {
+        pushNotification.showNotification(notification)
     }
 
     override fun sendRequest(pos: Int) {
