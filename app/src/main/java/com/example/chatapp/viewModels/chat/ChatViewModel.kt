@@ -24,22 +24,10 @@ class ChatViewModel(application: Application): SocketEvent(application), IChat.P
     private var currentUser: Map<String, *>? = null
     private val pushNotification: PushNotification = PushNotification(application.applicationContext)
 
-    companion object {
-//        private const val ROOM_ID = "roomId"
-        private const val NAME = "userName"
-        private const val FROM = "fromU"
-        private const val TO = "toU"
-        const val MESSAGE = "message"
-        private const val PRIVATE_SMS = "private"
-    }
-
     init {
         (application as App).getComponent().inject(this)
         currentUser = Session.getSession(application.applicationContext)
-        mSocket.on("disconnect") {
-
-        }
-
+        mSocket.on("disconnect") {}
     }
 
     override fun getMessages(bundle: Bundle?) {
@@ -56,10 +44,8 @@ class ChatViewModel(application: Application): SocketEvent(application), IChat.P
                 override fun onFailure(call: Call<MutableList<MessageModel>>, t: Throwable) {
 
                 }
-
             })
         }
-
     }
 
     override fun sendMessage(text: String) {

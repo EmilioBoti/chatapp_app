@@ -1,6 +1,7 @@
 package com.example.chatapp.viewModels.browser
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.chatapp.App
 import com.example.chatapp.helpers.Session
@@ -22,13 +23,11 @@ class BrowserViewModel(application: Application) : SocketEvent(application), IBr
     val listUserFound: MutableLiveData<MutableList<UserModel>> = MutableLiveData<MutableList<UserModel>>()
     private lateinit var userId: String
     private lateinit var userName: String
-    private val channelId: String = "com.example.chatapp"
     private val TO: String = "toU"
     private val FROM: String = "fromU"
     private val NAME: String = "name"
     private val SOCKETID: String = "toSocketId"
     private val NOTIFICATION: String = "notification"
-    private val NOTIFY: String = "notify"
     private var context: Application = application
     private val pushNotification: PushNotification = PushNotification(application.applicationContext)
 
@@ -54,17 +53,14 @@ class BrowserViewModel(application: Application) : SocketEvent(application), IBr
             }
 
             override fun onFailure(call: Call<MutableList<UserModel>>, t: Throwable) {
-
+                Log.e("error", t.message, t.cause)
             }
 
         })
-
     }
 
 
-    override fun receiveMessage(message: MessageModel) {
-
-    }
+    override fun receiveMessage(message: MessageModel) {}
 
     override fun receiveNotifications(notification: HashMap<String, String>) {
         pushNotification.showNotification(notification)

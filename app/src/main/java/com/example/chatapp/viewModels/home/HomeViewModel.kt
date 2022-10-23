@@ -40,10 +40,7 @@ class HomeViewModel(application: Application): SocketEvent(application), IHomeVi
     }
 
     override fun updateSocket(id: String) {
-        val con = mSocket.connected()
-
-        if(!con) mSocket.connect()
-
+        if(mSocket.connected()) mSocket.connect()
 
         mSocket.on("connect") {
             val map = HashMap<String, String>()
@@ -53,25 +50,12 @@ class HomeViewModel(application: Application): SocketEvent(application), IHomeVi
             mSocket.emit("user", Gson().toJson(map))
         }
 
-
-        mSocket.on("message") { it ->
-            val user = Gson().fromJson(it[0].toString(), MessageModel::class.java)
-            contacts.value?.forEach {
-                if (it.id == user.fromU) {
-                    it.lastMessage = user.message
-                }
-            }
-            contacts.postValue(contacts.value)
-        }
-
     }
 
     override fun getContacts() {
 
         currentUser?.let {
-            val call = provider.getUserContacts(it)
-
-            call.enqueue(object : retrofit2.Callback<MutableList<UserModel>> {
+            provider.getUserContacts(it).enqueue(object : retrofit2.Callback<MutableList<UserModel>> {
                 override fun onResponse(call: Call<MutableList<UserModel>>, response: Response<MutableList<UserModel>>) {
                     if (response.isSuccessful) {
                         contacts.postValue(response.body())
@@ -79,18 +63,19 @@ class HomeViewModel(application: Application): SocketEvent(application), IHomeVi
                 }
 
                 override fun onFailure(call: Call<MutableList<UserModel>>, t: Throwable) {
-                    Log.e("error", "", t.cause)
+                    Log.e("error", t.message, t.cause)
                 }
 
             })
         }
-
     }
 
     override fun receiveMessage(message: MessageModel) {
-        if (currentUser != message.fromU) {
-            pushNotification.showSmsNotification(message)
+        if (currentUser != message.fromU) { pushNotification.showSmsNotification(message) }
+        contacts.value?.forEach {
+            if (it.id == message.fromU) it.lastMessage = message.message
         }
+        contacts.postValue(contacts.value)
     }
 
     override fun receiveNotifications(notification: HashMap<String, String>) {
@@ -115,17 +100,6 @@ class HomeViewModel(application: Application): SocketEvent(application), IHomeVi
         }
     }
 
-    fun navNotification(activity: Activity) {
-//        val userModel: UserModel? = contacts.value?.get(pos)
-        val data: Bundle = Bundle().apply {
-            putString(Session.ID, currentUser)
-        }
-        Intent(activity, ChatRoom::class.java).apply {
-            this.putExtra(DATA_USER, data)
-            activity.startActivity(this)
-        }
-    }
-
     override fun logout(activity: Activity) {
         Session.logout(activity.applicationContext)
         Intent(activity, BaseActivity::class.java).apply {
@@ -133,6 +107,5 @@ class HomeViewModel(application: Application): SocketEvent(application), IHomeVi
         }
         activity.finish()
     }
-
 
 }

@@ -23,7 +23,6 @@ class BaseActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        SocketCon.setSocket()
         checkLogin()
 
     }

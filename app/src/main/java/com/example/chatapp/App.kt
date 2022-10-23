@@ -4,19 +4,25 @@ import android.app.Application
 import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
+import com.example.chatapp.api.SocketCon
 import com.example.chatapp.component.DaggerRepositoryComponent
 import com.example.chatapp.component.RepositoryComponent
 import com.vanniktech.emoji.EmojiManager
 import com.vanniktech.emoji.googlecompat.GoogleCompatEmojiProvider
 import dagger.internal.DaggerCollections
 
-
+/**
+ *  this class is used to initialize the socket client with the server to chat
+ *  and some others dependencies like Dagger for dependency-injection
+ *
+ */
 class App: Application() {
     private lateinit var repositoryComponent: RepositoryComponent
 
     override fun onCreate() {
         super.onCreate()
 
+        SocketCon.setSocket()
         installEmoji()
         repositoryComponent = DaggerRepositoryComponent.create()
 
@@ -24,6 +30,10 @@ class App: Application() {
 
     fun getComponent() = repositoryComponent
 
+
+    /**
+     *  Install Emojis
+     */
     private fun installEmoji() {
         EmojiManager.install(GoogleCompatEmojiProvider(EmojiCompat.init(
             FontRequestEmojiCompatConfig(
