@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -62,13 +63,18 @@ dependencies {
     implementation "com.airbnb.android:lottie:4.1.0"
     //Picasso
     implementation("com.squareup.picasso:picasso:2.71828")
+
+    //Glide to load image
+    implementation 'com.github.bumptech.glide:glide:4.14.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.14.1'
+
     //socket
     implementation ('io.socket:socket.io-client:2.0.0')
     //recyclerView
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     //gson
-    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'com.google.code.gson:gson:2.9.0'
     //coroutine
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
@@ -80,16 +86,11 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
-   // Dagger dependency-injection
-    implementation 'com.google.dagger:dagger:2.28.3'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.28.3'
+    //Dagger
+    def dagger_version = "2.40"
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
-
-//    implementation "com.vanniktech:emoji-google:0.15.0"
     implementation "com.vanniktech:emoji-google-compat:0.15.0"
-//    implementation "com.vanniktech:emoji-facebook:0.15.0"
-//    implementation "com.vanniktech:emoji-ios:0.15.0"
-
-
 
 }

@@ -44,7 +44,7 @@
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.example.chatapp.components.RecentSearchComponent
+    <com.example.chatapp.componentsUi.RecentSearchComponent
         android:id="@+id/recentContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

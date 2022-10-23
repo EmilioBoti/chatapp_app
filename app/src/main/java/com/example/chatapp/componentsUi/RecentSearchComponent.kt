@@ -1,4 +1,4 @@
-package com.example.chatapp.components
+package com.example.chatapp.componentsUi
 
 import android.content.Context
 import android.util.AttributeSet

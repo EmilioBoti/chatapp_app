@@ -1,11 +1,9 @@
-package com.example.chatapp.components
+package com.example.chatapp.componentsUi
 
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
-import androidx.appcompat.widget.AppCompatTextView
-import androidx.cardview.widget.CardView
 
 class BubbleView(context: Context, attrs: AttributeSet?): View(context, attrs) {
     private val paint: Paint = Paint()

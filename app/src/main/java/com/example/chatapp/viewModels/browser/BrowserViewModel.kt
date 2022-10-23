@@ -2,9 +2,9 @@ package com.example.chatapp.viewModels.browser
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import com.example.chatapp.App
 import com.example.chatapp.helpers.Session
-import com.example.chatapp.repositoryApi.ApiProvider
-import com.example.chatapp.repositoryApi.Repository
+import com.example.chatapp.repositoryApi.RemoteDataProvider
 import com.example.chatapp.repositoryApi.models.UserModel
 import com.example.chatapp.repositoryApi.browser.IBrowserPresenter
 import com.example.chatapp.repositoryApi.models.MessageModel
@@ -14,11 +14,12 @@ import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
 class BrowserViewModel(application: Application) : SocketEvent(application), IBrowserPresenter {
-
+    @Inject
+    lateinit var provider: RemoteDataProvider
     val listUserFound: MutableLiveData<MutableList<UserModel>> = MutableLiveData<MutableList<UserModel>>()
-    private var provider: Repository = ApiProvider()
     private lateinit var userId: String
     private lateinit var userName: String
     private val channelId: String = "com.example.chatapp"
@@ -33,6 +34,7 @@ class BrowserViewModel(application: Application) : SocketEvent(application), IBr
 
 
     init {
+        (application as App).getComponent().inject(this)
 
         val map: Map<String, *>? = Session.getSession(context.applicationContext)
         map?.let {

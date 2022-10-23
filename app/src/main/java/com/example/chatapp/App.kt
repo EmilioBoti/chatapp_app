@@ -4,15 +4,27 @@ import android.app.Application
 import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
+import com.example.chatapp.component.DaggerRepositoryComponent
+import com.example.chatapp.component.RepositoryComponent
 import com.vanniktech.emoji.EmojiManager
 import com.vanniktech.emoji.googlecompat.GoogleCompatEmojiProvider
+import dagger.internal.DaggerCollections
 
 
-class EmojiApplication: Application() {
+class App: Application() {
+    private lateinit var repositoryComponent: RepositoryComponent
 
     override fun onCreate() {
         super.onCreate()
 
+        installEmoji()
+        repositoryComponent = DaggerRepositoryComponent.create()
+
+    }
+
+    fun getComponent() = repositoryComponent
+
+    private fun installEmoji() {
         EmojiManager.install(GoogleCompatEmojiProvider(EmojiCompat.init(
             FontRequestEmojiCompatConfig(
                 this,

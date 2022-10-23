@@ -3,10 +3,10 @@ package com.example.chatapp.viewModels.chat
 import android.app.Application
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
+import com.example.chatapp.App
 import com.example.chatapp.helpers.Session
 import com.example.chatapp.helpers.utils.Const
-import com.example.chatapp.repositoryApi.ApiProvider
-import com.example.chatapp.repositoryApi.Repository
+import com.example.chatapp.repositoryApi.RemoteDataProvider
 import com.example.chatapp.repositoryApi.models.MessageModel
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
 import com.example.chatapp.viewModels.notifications.PushNotification
@@ -14,11 +14,13 @@ import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
 class ChatViewModel(application: Application): SocketEvent(application), IChat.Presenter {
-    private var bundle: Bundle? = null
+    @Inject
+    lateinit var chatProvider: RemoteDataProvider
     val listMessages: MutableLiveData<MutableList<MessageModel>> = MutableLiveData<MutableList<MessageModel>>()
-    private var chatProvider: Repository
+    private var bundle: Bundle? = null
     private var currentUser: Map<String, *>? = null
     private val pushNotification: PushNotification = PushNotification(application.applicationContext)
 
@@ -32,10 +34,8 @@ class ChatViewModel(application: Application): SocketEvent(application), IChat.P
     }
 
     init {
+        (application as App).getComponent().inject(this)
         currentUser = Session.getSession(application.applicationContext)
-        chatProvider = ApiProvider()
-
-
         mSocket.on("disconnect") {
 
         }

@@ -6,10 +6,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.chatapp.App
 import com.example.chatapp.helpers.Session
 import com.example.chatapp.helpers.utils.Const
-import com.example.chatapp.repositoryApi.ApiProvider
-import com.example.chatapp.repositoryApi.Repository
+import com.example.chatapp.repositoryApi.RemoteDataProvider
 import com.example.chatapp.repositoryApi.models.UserModel
 import com.example.chatapp.repositoryApi.models.MessageModel
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
@@ -19,23 +19,24 @@ import com.example.chatapp.views.ui.chatRoom.ChatRoom
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Response
+import javax.inject.Inject
 
 class HomeViewModel(application: Application): SocketEvent(application), IHomeViewModel {
+    @Inject
+    lateinit var provider: RemoteDataProvider
     val contacts: MutableLiveData<MutableList<UserModel>> = MutableLiveData<MutableList<UserModel>>()
     private var currentUser: String? = null
-    private var provider: Repository
     private val pushNotification: PushNotification = PushNotification(application.applicationContext)
-
 
     companion object {
         private const val DATA_USER: String = "data"
     }
 
     init {
+        (application as App).getComponent().inject(this)
         pushNotification.notificationChannel()
         pushNotification.smsNotificationChannel()
         currentUser = Session.getUserId(application.applicationContext)
-        provider = ApiProvider()
     }
 
     override fun updateSocket(id: String) {
@@ -53,7 +54,7 @@ class HomeViewModel(application: Application): SocketEvent(application), IHomeVi
         }
 
 
-        mSocket.on("message") {
+        mSocket.on("message") { it ->
             val user = Gson().fromJson(it[0].toString(), MessageModel::class.java)
             contacts.value?.forEach {
                 if (it.id == user.fromU) {

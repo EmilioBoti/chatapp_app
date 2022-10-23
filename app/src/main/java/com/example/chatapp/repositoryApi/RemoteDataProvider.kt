@@ -12,9 +12,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Retrofit
+import javax.inject.Inject
 
-class ApiProvider: Repository {
-    private var retrofit: Retrofit = Utils.getRetrofitBuilder()
+class RemoteDataProvider @Inject constructor(private val retrofit: Retrofit): Repository {
 
     override fun getMessages(roomId: String): Call<MutableList<MessageModel>> {
         return retrofit.create(ApiEndPoint::class.java).getMessage(roomId)
