@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatapp.R
 import com.example.chatapp.helpers.common.OnClickItem
-import com.example.chatapp.repositoryApi.models.UserModel
+import com.example.chatapp.remoteRepository.models.UserModel
 
 class UserAdapter(private val listContacts: MutableList<UserModel>, private val listener: OnClickItem?): RecyclerView.Adapter<UserViewHolder>() {
 

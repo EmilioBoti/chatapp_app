@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatapp.R
 import com.example.chatapp.helpers.common.OnLongClickItem
-import com.example.chatapp.repositoryApi.models.MessageModel
+import com.example.chatapp.remoteRepository.models.MessageModel
 
 class MessageAdapter(private val listMessage: MutableList<MessageModel>, private val from: String,
                      ): RecyclerView.Adapter<MessageViewHolder>() {

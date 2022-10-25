@@ -1,7 +1,7 @@
 package com.example.chatapp.viewModels.notifications.provider
 
-import com.example.chatapp.repositoryApi.models.NotificationModel
-import com.example.chatapp.repositoryApi.models.NotificationResponse
+import com.example.chatapp.remoteRepository.models.NotificationModel
+import com.example.chatapp.remoteRepository.models.NotificationResponse
 
 interface INotificationModel {
     suspend fun getNotification(id: String): MutableList<NotificationModel>?

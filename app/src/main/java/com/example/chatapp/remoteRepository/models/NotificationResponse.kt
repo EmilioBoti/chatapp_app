@@ -1,3 +1,3 @@
-package com.example.chatapp.repositoryApi.models
+package com.example.chatapp.remoteRepository.models
 
 data class NotificationResponse(val accept: Boolean?)

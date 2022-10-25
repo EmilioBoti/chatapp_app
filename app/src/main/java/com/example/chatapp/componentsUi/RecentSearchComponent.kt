@@ -10,7 +10,7 @@ import com.example.chatapp.R
 import com.example.chatapp.factory.adapter.FactoryBuilder
 import com.example.chatapp.factory.adapter.ModelAdapter
 import com.example.chatapp.helpers.common.OnClickItem
-import com.example.chatapp.repositoryApi.models.UserModel
+import com.example.chatapp.remoteRepository.models.UserModel
 
 class RecentSearchComponent(context: Context, attrs: AttributeSet?): LinearLayoutCompat(context, attrs) {
     private var inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater

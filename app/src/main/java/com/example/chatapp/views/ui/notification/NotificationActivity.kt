@@ -1,28 +1,21 @@
 package com.example.chatapp.views.ui.notification
 
-import android.content.res.ColorStateList
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chatapp.R
 import com.example.chatapp.databinding.ActivityNotificationBinding
 import com.example.chatapp.factory.adapter.FactoryBuilder
 import com.example.chatapp.factory.adapter.ModelAdapter
-import com.example.chatapp.helpers.Session
 import com.example.chatapp.helpers.common.OnClickItem
-import com.example.chatapp.repositoryApi.models.NotificationModel
-import com.example.chatapp.repositoryApi.models.UserModel
-import com.example.chatapp.viewModels.notifications.INotificationOnClick
+import com.example.chatapp.remoteRepository.models.NotificationModel
 import com.example.chatapp.viewModels.notifications.NotificationViewModel
-import kotlinx.coroutines.launch
 
 class NotificationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNotificationBinding

@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import com.example.chatapp.App
 import com.example.chatapp.helpers.Session
 import com.example.chatapp.helpers.utils.Const
-import com.example.chatapp.repositoryApi.RemoteDataProvider
-import com.example.chatapp.repositoryApi.models.MessageModel
+import com.example.chatapp.remoteRepository.RemoteDataProvider
+import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
 import com.example.chatapp.viewModels.notifications.PushNotification
 import com.google.gson.Gson

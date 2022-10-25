@@ -1,11 +1,11 @@
-package com.example.chatapp.repositoryApi
+package com.example.chatapp.remoteRepository
 
-import com.example.chatapp.repositoryApi.models.MessageModel
-import com.example.chatapp.repositoryApi.login.LoginResponse
-import com.example.chatapp.repositoryApi.login.UserLogin
-import com.example.chatapp.repositoryApi.models.NotificationModel
-import com.example.chatapp.repositoryApi.models.NotificationResponse
-import com.example.chatapp.repositoryApi.models.UserModel
+import com.example.chatapp.remoteRepository.models.MessageModel
+import com.example.chatapp.remoteRepository.models.LoginResponse
+import com.example.chatapp.remoteRepository.models.UserLogin
+import com.example.chatapp.remoteRepository.models.NotificationModel
+import com.example.chatapp.remoteRepository.models.NotificationResponse
+import com.example.chatapp.remoteRepository.models.UserModel
 import retrofit2.Call
 
 interface Repository {

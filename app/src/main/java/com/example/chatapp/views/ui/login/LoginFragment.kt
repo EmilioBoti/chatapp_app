@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer
 import com.example.chatapp.R
 import com.example.chatapp.databinding.FragmentLoginBinding
 import com.example.chatapp.helpers.Session
-import com.example.chatapp.repositoryApi.login.UserLogin
+import com.example.chatapp.remoteRepository.models.UserLogin
 import com.example.chatapp.viewModels.login.LoginViewModel
 import com.example.chatapp.views.home.HomeActivity
 import com.example.chatapp.views.ui.signin.SignInFragment
@@ -49,8 +49,10 @@ class LoginFragment : Fragment() {
 
 
         binding.btnLogin.setOnClickListener {
-            loginViewModel.login(UserLogin(binding.emailInput.text.toString().trim(),
-                binding.pwInput.text.toString().trim()))
+            loginViewModel.login(
+                UserLogin(binding.emailInput.text.toString().trim(),
+                binding.pwInput.text.toString().trim())
+            )
         }
 
         binding.btnSignIn.setOnClickListener {

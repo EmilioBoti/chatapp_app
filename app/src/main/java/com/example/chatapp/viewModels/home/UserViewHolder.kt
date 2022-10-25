@@ -5,7 +5,7 @@ import android.widget.TextView
 import com.example.chatapp.R
 import com.example.chatapp.factory.adapter.ModelViewHolder
 import com.example.chatapp.helpers.common.OnClickItem
-import com.example.chatapp.repositoryApi.models.UserModel
+import com.example.chatapp.remoteRepository.models.UserModel
 
 class UserViewHolder(itemView: View, private val listener: OnClickItem?) : ModelViewHolder(itemView) {
     private val name: TextView = itemView.findViewById(R.id.userName)

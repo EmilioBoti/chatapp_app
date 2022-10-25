@@ -12,7 +12,7 @@ import android.os.Bundle
 import androidx.core.app.NotificationManagerCompat
 import com.example.chatapp.R
 import com.example.chatapp.helpers.Session
-import com.example.chatapp.repositoryApi.models.MessageModel
+import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.views.ui.chatRoom.ChatRoom
 
 class PushNotification(private val context: Context) {

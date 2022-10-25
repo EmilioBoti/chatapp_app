@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.example.chatapp.api.SocketCon
 import com.example.chatapp.helpers.utils.Const
-import com.example.chatapp.repositoryApi.models.MessageModel
+import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.viewModels.notifications.PushNotification
 import com.google.gson.Gson
 import io.socket.client.Socket

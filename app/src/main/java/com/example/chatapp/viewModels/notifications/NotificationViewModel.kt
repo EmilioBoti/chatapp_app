@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.chatapp.App
 import com.example.chatapp.helpers.Session
-import com.example.chatapp.repositoryApi.RemoteDataProvider
-import com.example.chatapp.repositoryApi.models.MessageModel
-import com.example.chatapp.repositoryApi.models.NotificationModel
+import com.example.chatapp.remoteRepository.RemoteDataProvider
+import com.example.chatapp.remoteRepository.models.MessageModel
+import com.example.chatapp.remoteRepository.models.NotificationModel
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
 import kotlinx.coroutines.launch
 import javax.inject.Inject

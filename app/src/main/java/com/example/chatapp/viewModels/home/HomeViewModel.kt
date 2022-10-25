@@ -9,9 +9,9 @@ import androidx.lifecycle.MutableLiveData
 import com.example.chatapp.App
 import com.example.chatapp.helpers.Session
 import com.example.chatapp.helpers.utils.Const
-import com.example.chatapp.repositoryApi.RemoteDataProvider
-import com.example.chatapp.repositoryApi.models.UserModel
-import com.example.chatapp.repositoryApi.models.MessageModel
+import com.example.chatapp.remoteRepository.RemoteDataProvider
+import com.example.chatapp.remoteRepository.models.UserModel
+import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
 import com.example.chatapp.viewModels.notifications.PushNotification
 import com.example.chatapp.views.home.BaseActivity
@@ -40,7 +40,7 @@ class HomeViewModel(application: Application): SocketEvent(application), IHomeVi
     }
 
     override fun updateSocket(id: String) {
-        if(mSocket.connected()) mSocket.connect()
+        if(!mSocket.connected()) mSocket.connect()
 
         mSocket.on("connect") {
             val map = HashMap<String, String>()

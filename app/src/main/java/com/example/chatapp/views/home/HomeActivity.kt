@@ -17,8 +17,8 @@ import com.example.chatapp.factory.adapter.FactoryBuilder
 import com.example.chatapp.factory.adapter.ModelAdapter
 import com.example.chatapp.helpers.common.OnClickItem
 import com.example.chatapp.helpers.Session
-import com.example.chatapp.repositoryApi.models.NotificationModel
-import com.example.chatapp.repositoryApi.models.UserModel
+import com.example.chatapp.remoteRepository.models.NotificationModel
+import com.example.chatapp.remoteRepository.models.UserModel
 import com.example.chatapp.viewModels.home.HomeViewModel
 import com.example.chatapp.views.ui.browser.BrowserActivity
 import com.example.chatapp.views.ui.notification.NotificationActivity

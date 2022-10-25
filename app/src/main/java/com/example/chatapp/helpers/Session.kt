@@ -1,9 +1,8 @@
 package com.example.chatapp.helpers
 
 import android.content.Context
-import android.os.Bundle
 import com.example.chatapp.R
-import com.example.chatapp.repositoryApi.models.UserModel
+import com.example.chatapp.remoteRepository.models.UserModel
 
 class Session {
     companion object {

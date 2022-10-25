@@ -1,4 +1,4 @@
-package com.example.chatapp.repositoryApi.browser
+package com.example.chatapp.viewModels.browser
 
 interface IBrowserPresenter {
     fun search(value: String)

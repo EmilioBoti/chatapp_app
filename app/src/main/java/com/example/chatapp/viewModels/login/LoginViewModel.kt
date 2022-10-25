@@ -4,10 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.chatapp.App
-import com.example.chatapp.repositoryApi.RemoteDataProvider
-import com.example.chatapp.repositoryApi.login.LoginResponse
-import com.example.chatapp.repositoryApi.login.UserLogin
-import com.example.chatapp.repositoryApi.models.UserModel
+import com.example.chatapp.remoteRepository.RemoteDataProvider
+import com.example.chatapp.remoteRepository.models.LoginResponse
+import com.example.chatapp.remoteRepository.models.UserLogin
+import com.example.chatapp.remoteRepository.models.UserModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -1,7 +1,6 @@
 package com.example.chatapp.viewModels.notifications
 
-import com.example.chatapp.repositoryApi.models.NotificationModel
-import com.example.chatapp.repositoryApi.models.UserModel
+import com.example.chatapp.remoteRepository.models.NotificationModel
 
 interface INotificationViewModel {
     fun getNotification()

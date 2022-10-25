@@ -1,7 +1,7 @@
 package com.example.chatapp.module
 
 import com.example.chatapp.helpers.utils.Utils
-import com.example.chatapp.repositoryApi.RemoteDataProvider
+import com.example.chatapp.remoteRepository.RemoteDataProvider
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
