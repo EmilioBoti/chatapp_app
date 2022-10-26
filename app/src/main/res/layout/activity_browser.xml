@@ -26,7 +26,7 @@
             app:title="@string/newUser"
             app:titleTextColor="@color/white">
 
-            <androidx.appcompat.widget.SearchView
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -35,12 +35,14 @@
                 android:paddingHorizontal="@dimen/dimen_4"
                 android:paddingVertical="@dimen/dimen_8"
                 android:textColor="@color/baby_powder"
-                android:textCursorDrawable="@color/purple_700"
+                android:textCursorDrawable="@color/indigo_dark"
+                android:background="@null"
                 android:visibility="gone"
-                app:closeIcon="@drawable/close_24"
-                app:iconifiedByDefault="false"
-                app:queryHint="@string/search"
-                app:searchIcon="@null" />
+                android:singleLine="true"
+                android:maxLines="1"
+                android:textColorHint="@color/gray_200"
+                android:hint="@string/search"
+                />
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
