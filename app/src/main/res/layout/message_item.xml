@@ -30,7 +30,7 @@
                 android:id="@+id/messageText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/messenge"
+                android:text="@string/message"
                 android:textColor="@color/white"
                 android:textIsSelectable="false"
                 android:textSize="@dimen/dimenSt_16" />
