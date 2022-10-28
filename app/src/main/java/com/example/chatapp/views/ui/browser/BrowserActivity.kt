@@ -51,10 +51,10 @@ class BrowserActivity : AppCompatActivity() {
                     browserViewModel.sendRequest(pos)
                 }
 
-                override fun onAccept(notification: NotificationModel) {
+                override fun onAccept(notification: NotificationModel, view: View, position: Int) {
                 }
 
-                override fun onReject(notification: NotificationModel) {
+                override fun onReject(notification: NotificationModel, view: View, position: Int) {
                 }
 
             })
@@ -70,10 +70,10 @@ class BrowserActivity : AppCompatActivity() {
                 Toast.makeText(this@BrowserActivity, "oook", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onAccept(notification: NotificationModel) {
+            override fun onAccept(notification: NotificationModel, view: View, position: Int) {
             }
 
-            override fun onReject(notification: NotificationModel) {
+            override fun onReject(notification: NotificationModel, view: View, position: Int) {
             }
         })
 

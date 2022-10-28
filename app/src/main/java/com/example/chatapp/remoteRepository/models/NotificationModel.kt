@@ -7,5 +7,5 @@ data class NotificationModel(
     val toU: String,
     val socketId: String?,
     val email: String,
-    val state: Boolean?
+    var state: Boolean?
 )

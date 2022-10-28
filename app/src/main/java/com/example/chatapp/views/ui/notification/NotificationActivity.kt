@@ -3,6 +3,7 @@ package com.example.chatapp.views.ui.notification
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -20,7 +21,6 @@ import com.example.chatapp.viewModels.notifications.NotificationViewModel
 class NotificationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNotificationBinding
     private val notificationViewModel: NotificationViewModel by viewModels()
-    private var data: Bundle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,16 +44,16 @@ class NotificationActivity : AppCompatActivity() {
 
     private fun showNotification(users: MutableList<NotificationModel>) {
         val notificationAdapter = ModelAdapter<NotificationModel>(users, FactoryBuilder.NOTIFICATION)
-        notificationAdapter.setLayout(R.layout.notification_item)
+        notificationAdapter.setLayout(R.layout.notification_item_2)
 
         notificationAdapter.setListener(object : OnClickItem {
 
-            override fun onAccept(notification: NotificationModel) {
-                notificationViewModel.acceptNotification(notification)
+            override fun onAccept(notification: NotificationModel, view: View, position: Int) {
+                notificationViewModel.acceptNotification(notification, position)
             }
 
-            override fun onReject(notification: NotificationModel) {
-                rejectUser(notification)
+            override fun onReject(notification: NotificationModel, view: View, position: Int) {
+                rejectUser(notification, position)
             }
 
             override fun onClick(pos: Int) {
@@ -68,16 +68,15 @@ class NotificationActivity : AppCompatActivity() {
         }
     }
 
-    private fun rejectUser(notification: NotificationModel) {
+    private fun rejectUser(notification: NotificationModel, position: Int) {
         val alert = AlertDialog.Builder(this)
-            .setTitle(R.string.logout)
-            .setMessage(R.string.logoutMessage)
-            .setIcon(R.drawable.logout_24)
+            .setTitle(R.string.removeNotification)
+            .setMessage(R.string.removeNotificationMessage)
             .setNegativeButton("Cancel") { p0, p1 ->
 
             }
             .setPositiveButton("Accept") { p0, p1 ->
-                notificationViewModel.rejectNotification(notification)
+                notificationViewModel.rejectNotification(notification, position)
             }
         alert.show()
     }

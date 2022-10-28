@@ -28,4 +28,6 @@
     <string name="recent_search">Recent</string>
     <string name="add">Add</string>
     <string name="smsNotification">#User wants to be friend</string>
+    <string name="removeNotification">Remove Notification</string>
+    <string name="removeNotificationMessage">Are you sure you want to delete it?</string>
 </resources>

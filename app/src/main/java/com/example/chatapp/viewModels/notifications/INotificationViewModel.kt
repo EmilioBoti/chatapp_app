@@ -4,6 +4,6 @@ import com.example.chatapp.remoteRepository.models.NotificationModel
 
 interface INotificationViewModel {
     fun getNotification()
-    fun acceptNotification(notification: NotificationModel)
-    fun rejectNotification(notification: NotificationModel)
+    fun acceptNotification(notification: NotificationModel, position: Int)
+    fun rejectNotification(notification: NotificationModel, position: Int)
 }
