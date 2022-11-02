@@ -36,9 +36,10 @@
         android:id="@+id/notificationContainer"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_0"
-        tools:listitem="@layout/notification_item"
+        tools:listitem="@layout/notification_item_2"
         app:layout_constraintTop_toBottomOf="@id/toolbarContainer"
         app:layout_constraintEnd_toEndOf="parent"
+        android:paddingVertical="@dimen/dimen_8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         />

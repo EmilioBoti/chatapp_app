@@ -40,13 +40,17 @@ class NotificationViewModel(application: Application): SocketEvent(application),
         }
     }
 
-    override fun acceptNotification(notification: NotificationModel) {
-        viewModelScope.launch {
-           provider.acceptNotification(notification)
+    override fun acceptNotification(notification: NotificationModel, position: Int) {
+        if (notification.state != true) {
+            listNotification.value?.get(position)?.state = true
+            viewModelScope.launch {
+                provider.acceptNotification(notification)
+                listNotification.postValue(listNotification.value)
+            }
         }
     }
 
-    override fun rejectNotification(notification: NotificationModel) {
+    override fun rejectNotification(notification: NotificationModel, position: Int) {
         viewModelScope.launch {
             provider.rejectNotification(notification)
             listNotification.value?.remove(notification)
@@ -55,7 +59,7 @@ class NotificationViewModel(application: Application): SocketEvent(application),
     }
 
     override fun receiveMessage(message: MessageModel) {
-
+        pushNotification.showSmsNotification(message)
     }
 
     override fun receiveNotifications(notification: HashMap<String, String>) {

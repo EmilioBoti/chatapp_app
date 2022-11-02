@@ -23,4 +23,5 @@
     <dimen name="dimen_25">25dp</dimen>
     <dimen name="dimenSt_24">24sp</dimen>
     <dimen name="dimenSt_18">18sp</dimen>
+    <dimen name="dimen_80">80dp</dimen>
 </resources>

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
@@ -84,10 +85,10 @@ class HomeActivity : AppCompatActivity() {
                 homeViewModel.navigateChatRoom(this@HomeActivity, pos)
             }
 
-            override fun onAccept(notification: NotificationModel) {
+            override fun onAccept(notification: NotificationModel, view: View, position: Int) {
             }
 
-            override fun onReject(notification: NotificationModel) {
+            override fun onReject(notification: NotificationModel, view: View, position: Int) {
             }
 
         })

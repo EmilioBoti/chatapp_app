@@ -6,7 +6,6 @@ import com.example.chatapp.viewModels.chat.ChatViewModel
 import com.example.chatapp.viewModels.home.HomeViewModel
 import com.example.chatapp.viewModels.login.LoginViewModel
 import com.example.chatapp.viewModels.notifications.NotificationViewModel
-import com.example.chatapp.views.ui.chatRoom.ChatRoom
 import dagger.Component
 import javax.inject.Singleton
 
