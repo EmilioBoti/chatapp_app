@@ -2,12 +2,15 @@ package com.example.chatapp.viewModels.businessLogic.notification
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import com.example.chatapp.App
 import com.example.chatapp.api.SocketCon
 import com.example.chatapp.helpers.utils.Const
 import com.example.chatapp.remoteRepository.models.MessageModel
+import com.example.chatapp.viewModels.network.ConnectivityState
 import com.example.chatapp.viewModels.notifications.PushNotification
 import com.google.gson.Gson
 import io.socket.client.Socket
+import javax.inject.Inject
 
 abstract class SocketEvent(application: Application): AndroidViewModel(application) {
     protected var mSocket: Socket = SocketCon.getSocket()
@@ -15,9 +18,12 @@ abstract class SocketEvent(application: Application): AndroidViewModel(applicati
 
     private val pushNotification: PushNotification = PushNotification(context.applicationContext)
 
+    @Inject
+    protected lateinit var connectivityState: ConnectivityState
 
     init {
         eventListener()
+        (application as App).getComponent().inject(this)
     }
 
     private fun eventListener() {
@@ -28,8 +34,8 @@ abstract class SocketEvent(application: Application): AndroidViewModel(applicati
             }
         }
         mSocket.on(Const.MESSAGE) {
-            val user = Gson().fromJson(it[0].toString(), MessageModel::class.java)
-            this.receiveMessage(user)
+            val message = Gson().fromJson(it[0].toString(), MessageModel::class.java)
+            this.receiveMessage(message)
         }
     }
 

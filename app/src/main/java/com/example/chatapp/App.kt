@@ -7,6 +7,7 @@ import androidx.emoji.text.FontRequestEmojiCompatConfig
 import com.example.chatapp.api.SocketCon
 import com.example.chatapp.component.DaggerRepositoryComponent
 import com.example.chatapp.component.RepositoryComponent
+import com.example.chatapp.module.RepositoryModule
 import com.vanniktech.emoji.EmojiManager
 import com.vanniktech.emoji.googlecompat.GoogleCompatEmojiProvider
 import dagger.internal.DaggerCollections
@@ -24,7 +25,9 @@ class App: Application() {
 
         SocketCon.setSocket()
         installEmoji()
-        repositoryComponent = DaggerRepositoryComponent.create()
+        repositoryComponent = DaggerRepositoryComponent.builder()
+            .repositoryModule(RepositoryModule(this))
+            .build()
 
     }
 

@@ -17,16 +17,18 @@ import com.example.chatapp.databinding.ActivityMainBinding
 import com.example.chatapp.factory.adapter.FactoryBuilder
 import com.example.chatapp.factory.adapter.ModelAdapter
 import com.example.chatapp.helpers.common.OnClickItem
-import com.example.chatapp.helpers.Session
 import com.example.chatapp.remoteRepository.models.NotificationModel
 import com.example.chatapp.remoteRepository.models.UserModel
 import com.example.chatapp.viewModels.home.HomeViewModel
 import com.example.chatapp.views.ui.browser.BrowserActivity
 import com.example.chatapp.views.ui.notification.NotificationActivity
 
+
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val homeViewModel: HomeViewModel by viewModels()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,11 +45,6 @@ class HomeActivity : AppCompatActivity() {
         homeViewModel.contacts.observe(this, Observer {
             setAdapter(it)
         })
-
-        val id: String? = Session.getUserId(this)
-        id?.let { homeViewModel.updateSocket(it) }
-
-        homeViewModel.getContacts()
 
         binding.btnBrowser.setOnClickListener {
             Intent(this, BrowserActivity::class.java).apply {

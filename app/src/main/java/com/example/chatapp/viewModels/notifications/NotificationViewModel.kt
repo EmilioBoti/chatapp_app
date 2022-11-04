@@ -8,6 +8,10 @@ import com.example.chatapp.helpers.Session
 import com.example.chatapp.remoteRepository.RemoteDataProvider
 import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.remoteRepository.models.NotificationModel
+import com.example.chatapp.remoteRepository.models.NotificationResponse
+import com.example.chatapp.repositoryLocal.database.AppDataBase
+import com.example.chatapp.repositoryLocal.database.dao.ChatDao
+import com.example.chatapp.repositoryLocal.database.entity.UserEntity
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,6 +20,8 @@ class NotificationViewModel(application: Application): SocketEvent(application),
 
     @Inject
     lateinit var provider: RemoteDataProvider
+    @Inject
+    lateinit var db: AppDataBase
     var listNotification: MutableLiveData<MutableList<NotificationModel>> = MutableLiveData<MutableList<NotificationModel>>()
     private var currentUser: String? = null
     private val pushNotification: PushNotification = PushNotification(application.applicationContext)
@@ -44,7 +50,11 @@ class NotificationViewModel(application: Application): SocketEvent(application),
         if (notification.state != true) {
             listNotification.value?.get(position)?.state = true
             viewModelScope.launch {
-                provider.acceptNotification(notification)
+                val  resp: NotificationResponse? = provider.acceptNotification(notification)
+                resp?.roomId?.let { id ->
+                    val user = UserEntity(notification.fromU, notification.name, notification.email, id,  notification.toU)
+                    db.getChatDao().insertUser(user)
+                }
                 listNotification.postValue(listNotification.value)
             }
         }

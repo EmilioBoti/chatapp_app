@@ -1,3 +1,6 @@
 package com.example.chatapp.remoteRepository.models
 
-data class NotificationResponse(val accept: Boolean?)
+data class NotificationResponse(
+    val accept: Boolean?,
+    val roomId: String?
+    )
