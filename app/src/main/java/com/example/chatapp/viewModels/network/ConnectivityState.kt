@@ -9,6 +9,7 @@ import android.net.NetworkRequest
 
 class ConnectivityState(private val context: Context) {
     private val connectivityManager: ConnectivityManager =  context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    private val timeOut: Int = 1000
 
     private val request: NetworkRequest = NetworkRequest.Builder()
         .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
@@ -40,6 +41,6 @@ class ConnectivityState(private val context: Context) {
                 netConnectivity.network(State.UNAVAILABLE)
             }
 
-        }, 1000)
+        }, timeOut)
     }
 }

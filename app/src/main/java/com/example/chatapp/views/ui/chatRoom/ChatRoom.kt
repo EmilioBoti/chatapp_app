@@ -1,12 +1,10 @@
 package com.example.chatapp.views.ui.chatRoom
 
 import android.content.res.ColorStateList
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.chatapp.R
 import com.example.chatapp.databinding.ActivityChatRoomBinding
 import com.example.chatapp.helpers.common.OnLongClickItem
-import com.example.chatapp.helpers.Session
 import com.example.chatapp.helpers.utils.Const
+import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.viewModels.chat.ChatViewModel
 import com.vanniktech.emoji.EmojiPopup
 
@@ -33,56 +31,20 @@ class ChatRoom : AppCompatActivity() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
         super.onStart()
 
         bundle = intent.getBundleExtra(DATA)
-        chatViewModel.getMessages(bundle)
-
-
+        chatViewModel.setUp(bundle)
         setToolbar()
+        setEmoji()
 
         chatViewModel.listMessages.observe(this, Observer { messages ->
-
-            Session.getUserId(this.applicationContext)?.let { userId ->
-
-                val messageAdapter = MessageAdapter(messages, userId)
-                messageAdapter.setLongListener(object : OnLongClickItem {
-                    override fun onLongClick(value: String) {
-                    }
-
-                })
-
-                binding.messageContainer.apply {
-                    layoutManager = LinearLayoutManager(this@ChatRoom, RecyclerView.VERTICAL, false)
-                    scrollToPosition(messages.size - 1)
-                    setHasFixedSize(true)
-                    adapter = messageAdapter
-                }
-
-            }
+            setSmsAdapter(messages)
         })
-
-        val emojiPopup = EmojiPopup(binding.rootView, binding.inputContainer.getEmojiEditText())
-        binding.inputContainer.run {
-            setIconBtnSender(R.drawable.send_24)
-            setIconEmojis(R.drawable.ic_emoji)
-            setSenderOnClick {
-                val text: String = getEmojiEditText().text.toString()
-                if (text.isNotEmpty()) {
-                    chatViewModel.sendMessage(text)
-                    getEmojiEditText().text?.clear()
-                }
-            }
-            setEmojiOnClick {
-                emojiPopup.toggle()
-            }
-        }
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun setToolbar() {
 
         window.apply {
@@ -106,6 +68,40 @@ class ChatRoom : AppCompatActivity() {
                 }
             }
             true
+        }
+    }
+
+    private fun setEmoji() {
+        val emojiPopup = EmojiPopup(binding.rootView, binding.inputContainer.getEmojiEditText())
+        binding.inputContainer.run {
+            setIconBtnSender(R.drawable.send_24)
+            setIconEmojis(R.drawable.ic_emoji)
+            setSenderOnClick {
+                val text: String = getEmojiEditText().text.toString()
+                if (text.isNotEmpty()) {
+                    chatViewModel.sendMessage(text)
+                    getEmojiEditText().text?.clear()
+                }
+            }
+            setEmojiOnClick {
+                emojiPopup.toggle()
+            }
+        }
+    }
+
+    private fun setSmsAdapter(messages: MutableList<MessageModel>) {
+        val messageAdapter = MessageAdapter(messages, chatViewModel.currentUserId)
+        messageAdapter.setLongListener(object : OnLongClickItem {
+            override fun onLongClick(value: String) {
+            }
+
+        })
+
+        binding.messageContainer.apply {
+            layoutManager = LinearLayoutManager(this@ChatRoom, RecyclerView.VERTICAL, false)
+            scrollToPosition(messages.size - 1)
+            setHasFixedSize(true)
+            adapter = messageAdapter
         }
     }
 }
