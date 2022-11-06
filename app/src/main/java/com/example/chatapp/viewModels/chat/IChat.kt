@@ -6,8 +6,10 @@ import retrofit2.Call
 
 interface IChat {
     interface Presenter {
-        fun getMessages(bundle: Bundle?)
+        fun setUp(bundle: Bundle?)
+        fun getMessages()
         fun sendMessage(text: String)
+        fun getContactMessage()
     }
 
     interface ModelPresenter {

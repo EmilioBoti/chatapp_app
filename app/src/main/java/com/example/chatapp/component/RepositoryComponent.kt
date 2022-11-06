@@ -2,6 +2,7 @@ package com.example.chatapp.component
 
 import com.example.chatapp.module.RepositoryModule
 import com.example.chatapp.viewModels.browser.BrowserViewModel
+import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
 import com.example.chatapp.viewModels.chat.ChatViewModel
 import com.example.chatapp.viewModels.home.HomeViewModel
 import com.example.chatapp.viewModels.login.LoginViewModel
@@ -17,4 +18,5 @@ interface RepositoryComponent {
     fun inject(browserViewModel: ChatViewModel)
     fun inject(browserViewModel: LoginViewModel)
     fun inject(browserViewModel: NotificationViewModel)
+    fun inject(socketEvent: SocketEvent)
 }

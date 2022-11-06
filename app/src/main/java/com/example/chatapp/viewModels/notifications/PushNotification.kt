@@ -52,7 +52,7 @@ class PushNotification(private val context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val bundle: Bundle = Bundle().apply {
                 putString(Session.ROOMID, message.roomId)
-                putString(Session.ID, message.id)
+                putString(Session.ID, message.messageId)
                 putString(Session.NAME, message.userName)
             }
 
