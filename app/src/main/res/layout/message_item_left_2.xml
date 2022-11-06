@@ -20,22 +20,19 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:elevation="@dimen/dimen_0"
             android:background="@drawable/bubble_item_left"
-            android:paddingHorizontal="@dimen/dimen_10"
-            android:paddingVertical="@dimen/dimen_5"
+            android:elevation="@dimen/dimen_0"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
 
             <TextView
                 android:id="@+id/messageText"
+                style="@style/chat_sms_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/message"
                 android:textColor="@color/black"
-                android:textIsSelectable="false"
-                android:textSize="@dimen/dimenSt_16"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/time"
                 app:layout_constraintStart_toStartOf="parent"

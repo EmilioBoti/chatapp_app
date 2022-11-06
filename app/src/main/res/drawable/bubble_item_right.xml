@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    >
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
 
     <corners
-        android:topRightRadius="@dimen/dimen_25"
-        android:topLeftRadius="@dimen/dimen_25"
         android:bottomLeftRadius="@dimen/dimen_25"
-        />
-    <solid
-        android:color="@color/indigo"
-        />
-    <stroke android:width="@dimen/dimen_1"
-        android:color="@color/material_on_surface_stroke"
-        />
+        android:topLeftRadius="@dimen/dimen_25"
+        android:topRightRadius="@dimen/dimen_25" />
+    <solid android:color="@color/indigo" />
+    <stroke
+        android:width="@dimen/dimen_1"
+        android:color="@color/material_on_surface_stroke" />
+
+    <padding
+        android:bottom="@dimen/dimen_6"
+        android:left="@dimen/dimen_10"
+        android:right="@dimen/dimen_15"
+        android:top="@dimen/dimen_6" />
 </shape>
