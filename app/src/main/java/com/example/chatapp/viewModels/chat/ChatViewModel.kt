@@ -21,7 +21,12 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.UUID
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
+import kotlin.collections.HashMap
 
 class ChatViewModel(application: Application): SocketEvent(application), IChat.Presenter {
     @Inject
@@ -66,18 +71,42 @@ class ChatViewModel(application: Application): SocketEvent(application), IChat.P
     }
 
     override fun sendMessage(text: String) {
+        val messagedId: String = UUID.randomUUID().toString()
         this.bundle?.let {
-            currentUser?.let {currentUser ->
+            currentUser?.let { currentUser ->
                 val map: HashMap<String, String?> = HashMap<String, String?>()
                 map[Const.ROOM_ID] = it.getString(Const.ROOM_ID)
                 map[Const.FROM_USER] = currentUser["id"].toString()
                 map[Const.TO_USER] = it.getString(Const.ID_USER)
                 map[Const.NAME_USER] = it[Const.NAME_USER].toString()
                 map[Const.MESSAGE] = text
-
-                mSocket.emit(Const.PRIVATE_SMS, Gson().toJson(map))
+                map[Const.MESSAGE_ID] = messagedId
+                sendingMessage(map)
             }
         }
+    }
+
+    private fun sendingMessage(map: HashMap<String, String?>) {
+        val date = Date()
+        map[Const.DATE] = date.toString()
+        val sms = MessageModel(
+            map[Const.MESSAGE_ID].toString(),
+            map[Const.ROOM_ID].toString(),
+            map[Const.FROM_USER].toString(),
+            map[Const.TO_USER].toString(),
+            map[Const.NAME_USER].toString(),
+            map[Const.MESSAGE].toString(),
+            map[Const.DATE].toString())
+
+        mSocket.emit(Const.PRIVATE_SMS, Gson().toJson(map))
+        sms.times = formatDate(date)
+        listMessages.value?.add(sms)
+        listMessages.postValue(listMessages.value)
+    }
+
+    private fun formatDate(date: Date): String {
+        val format = SimpleDateFormat("HH:mm.a", Locale.getDefault())
+        return format.format(date).lowercase()
     }
 
     private fun checkConnectivity() {

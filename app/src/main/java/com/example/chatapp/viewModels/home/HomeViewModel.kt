@@ -89,6 +89,7 @@ class HomeViewModel(application: Application): SocketEvent(application), IHomeVi
 
                 override fun onFailure(call: Call<MutableList<UserModel>>, t: Throwable) {
                     Log.e("error", t.message, t.cause)
+                    getLocalContacts()
                 }
 
             })

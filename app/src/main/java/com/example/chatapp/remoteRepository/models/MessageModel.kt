@@ -9,7 +9,7 @@ data class MessageModel(
     val toU: String,
     val userName: String,
     val message: String,
-    val times: String,
+    var times: String,
     )
 
 fun MessageModel.convertToMessageEntity(): MessageEntity = MessageEntity(messageId, userName, roomId, fromU, toU, message, times)
