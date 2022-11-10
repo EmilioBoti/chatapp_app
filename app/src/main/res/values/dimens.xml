@@ -28,4 +28,9 @@
     <dimen name="dimenSt_20">20sp</dimen>
     <dimen name="dimenSt_22">22sp</dimen>
     <dimen name="dimen_14">14dp</dimen>
+    <dimen name="dimenSt_30">30sp</dimen>
+    <dimen name="dimenSt_40">40sp</dimen>
+    <dimen name="dimenSt_50">50sp</dimen>
+    <dimen name="dimen_35">35dp</dimen>
+    <dimen name="dimen_60">60dp</dimen>
 </resources>

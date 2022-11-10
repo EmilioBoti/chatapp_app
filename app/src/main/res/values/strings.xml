@@ -30,4 +30,9 @@
     <string name="smsNotification">#User wants to be friend</string>
     <string name="removeNotification">Remove Notification</string>
     <string name="removeNotificationMessage">Are you sure you want to delete it?</string>
+    <string name="signup">New here? Sign up</string>
+    <string name="pwForget">Have forgotten the password?</string>
+    <string name="email_error">Email Incorrect</string>
+    <string name="password_error">Password Incorrect</string>
+    <string name="login_error">Email or Password might be incorrect</string>
 </resources>
