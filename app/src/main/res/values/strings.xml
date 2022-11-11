@@ -36,4 +36,5 @@
     <string name="password_error">Password Incorrect</string>
     <string name="login_error">Email or Password might be incorrect</string>
     <string name="net_error">Something went wrong.</string>
+    <string name="user_not_exist_error">User Invalid</string>
 </resources>
