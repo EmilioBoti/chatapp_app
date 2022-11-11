@@ -113,6 +113,5 @@ class HomeActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         homeViewModel.disconnectSocket()
-        this.finish()
     }
 }
