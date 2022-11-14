@@ -14,6 +14,7 @@ class Const {
         const val MESSAGE = "message"
         const val MESSAGE_ID = "messageId"
         const val PRIVATE_SMS = "private"
+        const val USER_EMAIL: String = "email"
         const val DATE = "times"
         const val SOCKET_ID: String = "toSocketId"
         const val NOTIFICATION: String = "notification"

@@ -37,4 +37,10 @@
     <string name="login_error">Email or Password might be incorrect</string>
     <string name="net_error">Something went wrong.</string>
     <string name="user_not_exist_error">User Invalid</string>
+    <string name="register">Register</string>
+    <string name="pickImg">Pick Image</string>
+    <string name="largeLoremIpsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris feugiat porta purus, eget tincidunt turpis tempor et. Morbi eu commodo quam.</string>
+    <string name="status">Status</string>
+    <string name="myProfile">My Profile</string>
+    <string name="empty">Empty</string>
 </resources>
