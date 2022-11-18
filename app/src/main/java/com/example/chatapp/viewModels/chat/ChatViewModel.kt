@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.UUID
 import java.util.Date
@@ -56,9 +57,9 @@ class ChatViewModel(application: Application): SocketEvent(application), IChat.P
             chatProvider.getMessages(roomId).enqueue(object : Callback<MutableList<MessageModel>> {
                 override fun onResponse(call: Call<MutableList<MessageModel>>, response: Response<MutableList<MessageModel>>) {
                     if(response.isSuccessful) {
-                        listMessages.postValue(response.body())
-                        viewModelScope.launch {
-                            db.getChatDao().insertAllMessage(response.body()?.map { it.convertToMessageEntity()} as MutableList)
+                        response.body()?.let { list ->
+                            viewModelScope.launch { saveAllSmsLocal(list) }
+                            listMessages.postValue(list)
                         }
                     }
                 }
@@ -68,6 +69,10 @@ class ChatViewModel(application: Application): SocketEvent(application), IChat.P
                 }
             })
         }
+    }
+
+    private suspend fun saveAllSmsLocal(list: MutableList<MessageModel>) {
+        db.getChatDao().insertAllMessage(list.map { it.convertToMessageEntity()} as MutableList)
     }
 
     override fun sendMessage(text: String) {
@@ -87,7 +92,7 @@ class ChatViewModel(application: Application): SocketEvent(application), IChat.P
     }
 
     private fun sendingMessage(map: HashMap<String, String?>) {
-        val date = Date()
+        val date = Timestamp(System.currentTimeMillis())
         map[Const.DATE] = date.toString()
         val sms = MessageModel(
             map[Const.MESSAGE_ID].toString(),
@@ -99,7 +104,6 @@ class ChatViewModel(application: Application): SocketEvent(application), IChat.P
             map[Const.DATE].toString())
 
         mSocket.emit(Const.PRIVATE_SMS, Gson().toJson(map))
-        sms.times = formatDate(date)
         listMessages.value?.add(sms)
         listMessages.postValue(listMessages.value)
     }
@@ -123,8 +127,8 @@ class ChatViewModel(application: Application): SocketEvent(application), IChat.P
     override fun getContactMessage() {
         bundle?.getString(Const.ROOM_ID)?.let { roomId ->
             viewModelScope.launch {
-                val list = db.getChatDao().getRoomMessages(roomId).map { it.convertToMessageModel() }
-                listMessages.postValue(list as MutableList)
+                val list = db.getChatDao().getRoomMessages(roomId).map { it.convertToMessageModel() } as MutableList
+                listMessages.postValue(list)
             }
         }
     }
