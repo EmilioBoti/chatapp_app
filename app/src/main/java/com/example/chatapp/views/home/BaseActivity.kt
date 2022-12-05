@@ -34,9 +34,8 @@ class BaseActivity : AppCompatActivity() {
     }
 
     private fun checkLogin() {
-        if (Session.getUserLogin(this) == true) {
+        if (Session.isLogin(this) == true) {
             Intent(this, HomeActivity::class.java).apply {
-                //this.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
                 startActivity(this)
             }
             this.finish()

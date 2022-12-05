@@ -1,9 +1,11 @@
 package com.example.chatapp.viewModels.login
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.chatapp.App
+import com.example.chatapp.helpers.Session
 import com.example.chatapp.remoteRepository.RemoteDataProvider
 import com.example.chatapp.remoteRepository.models.LoginResponse
 import com.example.chatapp.remoteRepository.models.UserLogin
@@ -17,10 +19,11 @@ class LoginViewModel(application: Application): AndroidViewModel(application), I
 
     @Inject
     lateinit var modelProvider: RemoteDataProvider
-    val user: MutableLiveData<UserModel> = MutableLiveData<UserModel>()
+    val user: MutableLiveData<String> = MutableLiveData<String>()
     val error: MutableLiveData<ErrorLogin> = MutableLiveData<ErrorLogin>()
     private val regexEmail: String = "^[A-Za-z0-9]+@([a-zA-Z]+)(.)[a-zA-Z]{2,3}$"
     private val lengthPw: Int = 5
+    private val context: Context = application.applicationContext
 
     init {
         (application as App).getComponent().inject(this)
@@ -32,7 +35,7 @@ class LoginViewModel(application: Application): AndroidViewModel(application), I
 
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful && response.body()?.OK == true) {
-                    user.postValue(response.body()?.body)
+                    saveSession(response.body())
                 } else {
                     error.postValue(ErrorLogin(Error.USER_NOT_EXIST_ERROR))
                 }
@@ -49,7 +52,7 @@ class LoginViewModel(application: Application): AndroidViewModel(application), I
         modelProvider.signIn(newUser).enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful && response.body()?.OK == true) {
-                    user.postValue(response.body()?.body)
+                    saveSession(response.body())
                 }
             }
 
@@ -58,6 +61,18 @@ class LoginViewModel(application: Application): AndroidViewModel(application), I
             }
 
         })
+    }
+
+    private fun saveSession(response: LoginResponse?) {
+        response?.let {
+            it.user?.let { user ->
+                Session.saveUser(context, user)
+            }
+            it.token?.let { token ->
+                Session.saveToken(context, token)
+                user.postValue(token)
+            }
+        }
     }
 
     fun validateInputs(userLogin: UserLogin) {

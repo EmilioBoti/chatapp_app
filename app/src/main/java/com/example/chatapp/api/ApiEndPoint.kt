@@ -2,6 +2,7 @@ package com.example.chatapp.api
 
 import com.example.chatapp.remoteRepository.models.UserModel
 import com.example.chatapp.remoteRepository.models.MessageModel
+import com.example.chatapp.remoteRepository.models.FriendEntity
 import com.example.chatapp.remoteRepository.models.LoginResponse
 import com.example.chatapp.remoteRepository.models.UserLogin
 import com.example.chatapp.remoteRepository.models.NotificationModel
@@ -15,11 +16,11 @@ interface ApiEndPoint {
     @GET("notifications/{id}")
     fun getNotifications(@Path("id") id: String): Call<MutableList<NotificationModel>?>
 
-    @GET("contacts/{id}")
-    fun getContacts(@Path("id") id: String): Call<MutableList<UserModel>>
+    @GET("contacts")
+    fun getContacts(@Header("Authorization") auth: String): Call<FriendEntity>
 
     @GET("messages/{roomId}")
-    fun getMessage(@Path("roomId") roomId: String): Call<MutableList<MessageModel>>
+    fun getMessage(@Header("Authorization") auth: String, @Path("roomId") roomId: String): Call<MutableList<MessageModel>>
 
     @GET("chat/{user}")
     fun finNewUsers(@Path("user") user: String): Call<MutableList<UserModel>>

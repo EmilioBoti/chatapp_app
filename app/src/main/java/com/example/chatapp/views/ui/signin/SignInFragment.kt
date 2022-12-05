@@ -32,7 +32,6 @@ class SignInFragment : Fragment() {
 
         loginViewModel.user.observe(this.viewLifecycleOwner, Observer { newUser ->
             activity?.let {
-                Session.saveUser(it, newUser)
                 navigateTo(HomeActivity())
             }
         })

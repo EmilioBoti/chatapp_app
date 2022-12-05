@@ -33,9 +33,8 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        loginViewModel.user.observe(this.viewLifecycleOwner , Observer { userModel ->
+        loginViewModel.user.observe(this.viewLifecycleOwner , Observer { token ->
             activity?.let {
-                Session.saveUser(it, userModel)
                 Intent(it, HomeActivity::class.java).apply {
                     startActivity(this)
                 }

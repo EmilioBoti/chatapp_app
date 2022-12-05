@@ -6,6 +6,7 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="userData">User_data</string>
+    <string name="userDataToken">user_token</string>
     <string name="name">Name</string>
     <string name="fab_content_desc">fab content desc</string>
     <string name="profile">Profile</string>

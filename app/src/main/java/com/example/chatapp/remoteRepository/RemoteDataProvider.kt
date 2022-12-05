@@ -7,6 +7,7 @@ import com.example.chatapp.remoteRepository.models.UserLogin
 import com.example.chatapp.remoteRepository.models.NotificationModel
 import com.example.chatapp.remoteRepository.models.NotificationResponse
 import com.example.chatapp.remoteRepository.models.UserModel
+import com.example.chatapp.remoteRepository.models.FriendEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Call
@@ -15,12 +16,12 @@ import javax.inject.Inject
 
 class RemoteDataProvider @Inject constructor(private val retrofit: Retrofit): Repository {
 
-    override fun getMessages(roomId: String): Call<MutableList<MessageModel>> {
-        return retrofit.create(ApiEndPoint::class.java).getMessage(roomId)
+    override fun getMessages(token: String, roomId: String): Call<MutableList<MessageModel>> {
+        return retrofit.create(ApiEndPoint::class.java).getMessage(roomId, token)
     }
 
-    override fun getUserContacts(currentUser: String): Call<MutableList<UserModel>> {
-        return retrofit.create(ApiEndPoint::class.java).getContacts(currentUser)
+    override fun getUserContacts(token: String): Call<FriendEntity> {
+        return retrofit.create(ApiEndPoint::class.java).getContacts(token)
     }
 
     override fun login(userLogin: UserLogin): Call<LoginResponse> {

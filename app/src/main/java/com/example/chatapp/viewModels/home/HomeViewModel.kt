@@ -11,6 +11,7 @@ import com.example.chatapp.App
 import com.example.chatapp.helpers.Session
 import com.example.chatapp.helpers.utils.Const
 import com.example.chatapp.remoteRepository.RemoteDataProvider
+import com.example.chatapp.remoteRepository.models.FriendEntity
 import com.example.chatapp.remoteRepository.models.UserModel
 import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.remoteRepository.models.convertToUserEntity
@@ -45,12 +46,13 @@ class HomeViewModel(application: Application): SocketEvent(application), IHomeVi
         (application as App).getComponent().inject(this)
         pushNotification.notificationChannel()
         pushNotification.smsNotificationChannel()
-        currentUser = Session.getUserId(application.applicationContext)
+        currentUser = Session.getToken(application.applicationContext)
         setUp()
     }
 
     private fun setUp() {
-        currentUser?.let { updateSocket(it) }
+        if(!mSocket.connected()) mSocket.connect()
+
         connectivityState.setUpListener(object: NetConnectivity {
             override fun network(state: State) {
                 if (state == State.AVAILABLE) {
@@ -77,17 +79,17 @@ class HomeViewModel(application: Application): SocketEvent(application), IHomeVi
     override fun getContacts() {
 
         currentUser?.let {
-            provider.getUserContacts(it).enqueue(object : retrofit2.Callback<MutableList<UserModel>> {
-                override fun onResponse(call: Call<MutableList<UserModel>>, response: Response<MutableList<UserModel>>) {
+            provider.getUserContacts(it).enqueue(object : retrofit2.Callback<FriendEntity> {
+                override fun onResponse(call: Call<FriendEntity>, response: Response<FriendEntity>) {
                     if (response.isSuccessful) {
-                        response.body()?.let { users ->
+                        response.body()?.body?.let { users ->
                             contacts.postValue(users)
                             updateAllUsers(users)
                         }
                     }
                 }
 
-                override fun onFailure(call: Call<MutableList<UserModel>>, t: Throwable) {
+                override fun onFailure(call: Call<FriendEntity>, t: Throwable) {
                     Log.e("error", t.message, t.cause)
                     getLocalContacts()
                 }

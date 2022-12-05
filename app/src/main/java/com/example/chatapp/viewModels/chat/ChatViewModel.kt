@@ -38,23 +38,25 @@ class ChatViewModel(application: Application): SocketEvent(application), IChat.P
     private var bundle: Bundle? = null
     private var currentUser: Map<String, *>? = null
     private val pushNotification: PushNotification = PushNotification(application.applicationContext)
+    private lateinit var token: String
     lateinit var currentUserId: String
 
     init {
         (application as App).getComponent().inject(this)
         currentUser = Session.getSession(application.applicationContext)
+        Session.getToken(application.applicationContext)?.let { token = it }
         mSocket.on("disconnect") {}
     }
 
     override fun setUp(bundle: Bundle?) {
         this.bundle = bundle
-        currentUser?.let { currentUserId = it[Const.ID_USER].toString() }
+        this.bundle?.let { currentUserId =  it[Const.ID_USER].toString() }
         checkConnectivity()
     }
 
     override fun getMessages() {
         bundle?.getString(Const.ROOM_ID)?.let {roomId ->
-            chatProvider.getMessages(roomId).enqueue(object : Callback<MutableList<MessageModel>> {
+            chatProvider.getMessages(roomId, token).enqueue(object : Callback<MutableList<MessageModel>> {
                 override fun onResponse(call: Call<MutableList<MessageModel>>, response: Response<MutableList<MessageModel>>) {
                     if(response.isSuccessful) {
                         response.body()?.let { list ->
