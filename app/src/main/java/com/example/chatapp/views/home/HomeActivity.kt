@@ -76,7 +76,7 @@ class HomeActivity : AppCompatActivity() {
     private fun setAdapter(contacts: MutableList<UserModel>) {
 
         val adapter = ModelAdapter<UserModel>(contacts, FactoryBuilder.CONTACT)
-        adapter.setLayout(R.layout.user_item)
+        adapter.setLayout(R.layout.user_item_2)
         adapter.setListener(object : OnClickItem {
             override fun onClick(pos: Int) {
                 homeViewModel.navigateChatRoom(this@HomeActivity, pos)
