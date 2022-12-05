@@ -38,13 +38,11 @@ class ChatViewModel(application: Application): SocketEvent(application), IChat.P
     private var bundle: Bundle? = null
     private var currentUser: Map<String, *>? = null
     private val pushNotification: PushNotification = PushNotification(application.applicationContext)
-    private lateinit var token: String
     lateinit var currentUserId: String
 
     init {
         (application as App).getComponent().inject(this)
         currentUser = Session.getSession(application.applicationContext)
-        Session.getToken(application.applicationContext)?.let { token = it }
         mSocket.on("disconnect") {}
     }
 

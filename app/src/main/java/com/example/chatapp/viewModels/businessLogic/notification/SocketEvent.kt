@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.example.chatapp.App
 import com.example.chatapp.api.SocketCon
+import com.example.chatapp.helpers.Session
 import com.example.chatapp.helpers.utils.Const
 import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.viewModels.network.ConnectivityState
@@ -15,6 +16,7 @@ import javax.inject.Inject
 abstract class SocketEvent(application: Application): AndroidViewModel(application) {
     protected var mSocket: Socket = SocketCon.getSocket()
     private var context: Application = application
+    protected lateinit var token: String
 
     private val pushNotification: PushNotification = PushNotification(context.applicationContext)
 
@@ -24,6 +26,10 @@ abstract class SocketEvent(application: Application): AndroidViewModel(applicati
     init {
         eventListener()
         (application as App).getComponent().inject(this)
+
+        Session.getToken(context.applicationContext)?.let {
+            token = it
+        }
     }
 
     private fun eventListener() {
