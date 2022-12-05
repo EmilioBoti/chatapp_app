@@ -32,8 +32,8 @@ class RemoteDataProvider @Inject constructor(private val retrofit: Retrofit): Re
        return retrofit.create(ApiEndPoint::class.java).registerUser(newUser)
     }
 
-    override fun searchNewUser(value: String): Call<MutableList<UserModel>> {
-       return retrofit.create(ApiEndPoint::class.java).finNewUsers(value)
+    override fun searchNewUser(token: String, value: String): Call<MutableList<UserModel>> {
+       return retrofit.create(ApiEndPoint::class.java).findNewUsers(token, value)
     }
 
     override suspend fun getNotification(id: String): MutableList<NotificationModel>? {

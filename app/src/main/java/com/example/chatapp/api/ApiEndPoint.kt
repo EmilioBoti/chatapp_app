@@ -23,7 +23,7 @@ interface ApiEndPoint {
     fun getMessage(@Header("Authorization") auth: String, @Path("roomId") roomId: String): Call<MutableList<MessageModel>>
 
     @GET("chat/{user}")
-    fun finNewUsers(@Path("user") user: String): Call<MutableList<UserModel>>
+    fun findNewUsers(@Header("Authorization") auth: String, @Path("user") user: String): Call<MutableList<UserModel>>
 
     //POST
     @Headers("Content-type: application/json")

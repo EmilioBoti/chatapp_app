@@ -43,7 +43,7 @@ class BrowserViewModel(application: Application) : SocketEvent(application), IBr
 
     override fun search(value: String) {
 
-        provider.searchNewUser(value).enqueue(object : Callback<MutableList<UserModel>> {
+        provider.searchNewUser(token, value).enqueue(object : Callback<MutableList<UserModel>> {
 
             override fun onResponse(call: Call<MutableList<UserModel>>, response: Response<MutableList<UserModel>>) {
                 if (response.isSuccessful) {

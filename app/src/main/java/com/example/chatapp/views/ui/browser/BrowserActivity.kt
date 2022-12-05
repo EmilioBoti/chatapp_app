@@ -65,26 +65,13 @@ class BrowserActivity : AppCompatActivity() {
             }
         })
 
-        binding.recentContainer.setOnClick(object : OnClickItem {
-            override fun onClick(pos: Int) {
-                Toast.makeText(this@BrowserActivity, "oook", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onAccept(notification: NotificationModel, view: View, position: Int) {
-            }
-
-            override fun onReject(notification: NotificationModel, view: View, position: Int) {
-            }
-        })
-
     }
 
 
     private fun setUpToolbar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            binding.toolbarBrowser.menu.findItem(R.id.searcher)
-                .iconTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.white))
-        }
+
+        binding.toolbarBrowser.menu.findItem(R.id.searcher)
+            .iconTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.white))
 
         binding.toolbarBrowser.setNavigationOnClickListener {
             this.onBackPressed()
