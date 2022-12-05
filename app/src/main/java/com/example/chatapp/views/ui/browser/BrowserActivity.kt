@@ -70,6 +70,10 @@ class BrowserActivity : AppCompatActivity() {
 
     private fun setUpToolbar() {
 
+        window.apply {
+            this.statusBarColor = ContextCompat.getColor(this@BrowserActivity, R.color.blue)
+        }
+
         binding.toolbarBrowser.menu.findItem(R.id.searcher)
             .iconTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.white))
 

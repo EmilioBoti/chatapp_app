@@ -29,7 +29,6 @@ class NotificationActivity : AppCompatActivity() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
         super.onStart()
 
@@ -81,8 +80,11 @@ class NotificationActivity : AppCompatActivity() {
         alert.show()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun setToolbar() {
+
+        window.apply {
+            this.statusBarColor = ContextCompat.getColor(this@NotificationActivity, R.color.blue)
+        }
 
         binding.toolbarNotification.title = "Notifications"
         binding.toolbarNotification.navigationIcon = ContextCompat.getDrawable(this, R.drawable.keyboard_backspace_24)

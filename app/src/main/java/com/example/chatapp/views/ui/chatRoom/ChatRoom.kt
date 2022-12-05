@@ -48,7 +48,7 @@ class ChatRoom : AppCompatActivity() {
     private fun setToolbar() {
 
         window.apply {
-            this.statusBarColor = ContextCompat.getColor(this@ChatRoom, R.color.indigo)
+            this.statusBarColor = ContextCompat.getColor(this@ChatRoom, R.color.blue)
         }
 
         bundle?.let {

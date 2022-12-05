@@ -19,7 +19,7 @@
             android:id="@+id/toolbarBrowser"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/indigo"
+            android:background="@color/blue"
             app:menu="@menu/browser_menu"
             app:navigationIcon="@drawable/keyboard_backspace_24"
             app:navigationIconTint="@color/white"
