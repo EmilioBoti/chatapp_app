@@ -6,6 +6,7 @@ import com.example.chatapp.helpers.utils.Utils
 import com.example.chatapp.remoteRepository.RemoteDataProvider
 import com.example.chatapp.repositoryLocal.database.AppDataBase
 import com.example.chatapp.repositoryLocal.database.dao.ChatDao
+import com.example.chatapp.viewModels.home.BasePresenter
 import com.example.chatapp.viewModels.network.ConnectivityState
 import dagger.Module
 import dagger.Provides
@@ -50,5 +51,8 @@ class RepositoryModule (private var context: Context) {
     @Provides
     @Singleton
     fun provideConnectivityState(): ConnectivityState = ConnectivityState(context)
+
+    @Provides
+    fun provideBasePresenter(): BasePresenter = BasePresenter()
 
 }

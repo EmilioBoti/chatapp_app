@@ -24,9 +24,6 @@ class App: Application() {
     override fun onCreate() {
         super.onCreate()
 
-        Session.getUserId(this)?.let {
-            SocketCon.setSocket(it)
-        }
         installEmoji()
         repositoryComponent = DaggerRepositoryComponent.builder()
             .repositoryModule(RepositoryModule(this))

@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.chatapp.App
+import com.example.chatapp.api.SocketCon
 import com.example.chatapp.helpers.Session
 import com.example.chatapp.remoteRepository.RemoteDataProvider
 import com.example.chatapp.remoteRepository.models.LoginResponse
@@ -23,7 +24,7 @@ class LoginViewModel(application: Application): AndroidViewModel(application), I
     val error: MutableLiveData<ErrorLogin> = MutableLiveData<ErrorLogin>()
     private val regexEmail: String = "^[A-Za-z0-9]+@([a-zA-Z]+)(.)[a-zA-Z]{2,3}$"
     private val lengthPw: Int = 5
-    private val context: Context = application.applicationContext
+    private val context: Application by lazy { application }
 
     init {
         (application as App).getComponent().inject(this)
@@ -70,6 +71,7 @@ class LoginViewModel(application: Application): AndroidViewModel(application), I
             }
             it.token?.let { token ->
                 Session.saveToken(context, token)
+                SocketCon.setSocket(token)
                 user.postValue(token)
             }
         }
