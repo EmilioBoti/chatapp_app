@@ -6,11 +6,16 @@ import com.example.chatapp.remoteRepository.models.LoginResponse
 import com.example.chatapp.remoteRepository.models.UserLogin
 import com.example.chatapp.remoteRepository.models.NotificationModel
 import com.example.chatapp.remoteRepository.models.NotificationResponse
-import com.example.chatapp.remoteRepository.models.UserModel
 import com.example.chatapp.remoteRepository.models.FriendEntity
+import com.example.chatapp.remoteRepository.models.NewFriendEntity
+import com.example.chatapp.viewModels.login.ErrorLogin
+import com.example.chatapp.viewModels.login.Error
+import com.example.chatapp.viewModels.login.IResponseProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 import javax.inject.Inject
 
@@ -24,8 +29,22 @@ class RemoteDataProvider @Inject constructor(private val retrofit: Retrofit): Re
         return retrofit.create(ApiEndPoint::class.java).getContacts(token)
     }
 
-    override fun login(userLogin: UserLogin): Call<LoginResponse> {
-        return retrofit.create(ApiEndPoint::class.java).login(userLogin)
+    override fun login(userLogin: UserLogin, res: IResponseProvider) {
+        retrofit.create(ApiEndPoint::class.java).login(userLogin).enqueue(object: Callback<LoginResponse> {
+
+            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                if (response.isSuccessful && response.body()?.OK == true) {
+                    res.response(response.body())
+                } else {
+                    res.responseError(ErrorLogin(Error.USER_NOT_EXIST_ERROR))
+                }
+            }
+
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                res.responseError(ErrorLogin(Error.NET_ERROR))
+            }
+
+        })
     }
 
     override fun signIn(newUser: HashMap<String, String>): Call<LoginResponse> {

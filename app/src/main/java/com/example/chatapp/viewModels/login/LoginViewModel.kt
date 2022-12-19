@@ -1,7 +1,6 @@
 package com.example.chatapp.viewModels.login
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.chatapp.App
@@ -10,7 +9,6 @@ import com.example.chatapp.helpers.Session
 import com.example.chatapp.remoteRepository.RemoteDataProvider
 import com.example.chatapp.remoteRepository.models.LoginResponse
 import com.example.chatapp.remoteRepository.models.UserLogin
-import com.example.chatapp.remoteRepository.models.UserModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,18 +30,14 @@ class LoginViewModel(application: Application): AndroidViewModel(application), I
 
     override fun login (userLogin: UserLogin) {
 
-        modelProvider.login(userLogin).enqueue(object: Callback<LoginResponse> {
-
-            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-                if (response.isSuccessful && response.body()?.OK == true) {
-                    saveSession(response.body())
-                } else {
-                    error.postValue(ErrorLogin(Error.USER_NOT_EXIST_ERROR))
-                }
+        modelProvider.login(userLogin, object : IResponseProvider {
+            override fun <T> response(data: T) {
+                val r = data as LoginResponse
+                saveSession(r)
             }
 
-            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                error.postValue(ErrorLogin(Error.NET_ERROR))
+            override fun responseError(err: ErrorLogin) {
+                error.postValue(err)
             }
 
         })
