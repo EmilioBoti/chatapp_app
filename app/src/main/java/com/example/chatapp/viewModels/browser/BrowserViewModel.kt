@@ -8,7 +8,10 @@ import com.example.chatapp.helpers.Session
 import com.example.chatapp.remoteRepository.RemoteDataProvider
 import com.example.chatapp.remoteRepository.models.UserModel
 import com.example.chatapp.remoteRepository.models.MessageModel
+import com.example.chatapp.remoteRepository.models.NewFriendEntity
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
+import com.example.chatapp.viewModels.login.ErrorLogin
+import com.example.chatapp.viewModels.login.IResponseProvider
 import com.example.chatapp.viewModels.notifications.PushNotification
 import com.google.gson.Gson
 import retrofit2.Call
@@ -19,7 +22,7 @@ import javax.inject.Inject
 class BrowserViewModel(application: Application) : SocketEvent(application), IBrowserPresenter {
     @Inject
     lateinit var provider: RemoteDataProvider
-    val listUserFound: MutableLiveData<MutableList<UserModel>> = MutableLiveData<MutableList<UserModel>>()
+    val listUserFound: MutableLiveData<MutableList<NewFriendEntity>> = MutableLiveData<MutableList<NewFriendEntity>>()
     private lateinit var userId: String
     private lateinit var userName: String
     private val TO: String = "toU"
@@ -43,16 +46,13 @@ class BrowserViewModel(application: Application) : SocketEvent(application), IBr
 
     override fun search(value: String) {
 
-        provider.searchNewUser(token, value).enqueue(object : Callback<MutableList<UserModel>> {
-
-            override fun onResponse(call: Call<MutableList<UserModel>>, response: Response<MutableList<UserModel>>) {
-                if (response.isSuccessful) {
-                    listUserFound.postValue(response.body())
-                }
+        provider.searchNewUser(token, value, object : IResponseProvider {
+            override fun <T> response(data: T) {
+                val users: MutableList<NewFriendEntity> = data as MutableList<NewFriendEntity>
+                listUserFound.postValue(users)
             }
 
-            override fun onFailure(call: Call<MutableList<UserModel>>, t: Throwable) {
-                Log.e("error", t.message, t.cause)
+            override fun responseError(err: ErrorLogin) {
             }
 
         })

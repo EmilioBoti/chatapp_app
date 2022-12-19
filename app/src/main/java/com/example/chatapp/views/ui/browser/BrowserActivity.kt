@@ -19,6 +19,7 @@ import com.example.chatapp.databinding.ActivityBrowserBinding
 import com.example.chatapp.factory.adapter.FactoryBuilder
 import com.example.chatapp.factory.adapter.ModelAdapter
 import com.example.chatapp.helpers.common.OnClickItem
+import com.example.chatapp.remoteRepository.models.NewFriendEntity
 import com.example.chatapp.remoteRepository.models.NotificationModel
 import com.example.chatapp.remoteRepository.models.UserModel
 import com.example.chatapp.viewModels.browser.BrowserViewModel
@@ -43,7 +44,7 @@ class BrowserActivity : AppCompatActivity() {
         keyboard = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
         browserViewModel.listUserFound.observe(this, Observer {
-            val adapter = ModelAdapter<UserModel>(it, FactoryBuilder.SEARCH)
+            val adapter = ModelAdapter<NewFriendEntity>(it, FactoryBuilder.SEARCH)
             adapter.setLayout(R.layout.user_search_item)
 
             adapter.setListener(object : OnClickItem {

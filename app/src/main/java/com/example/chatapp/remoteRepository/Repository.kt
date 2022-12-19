@@ -15,7 +15,7 @@ interface Repository {
     fun getUserContacts(currentUser: String): Call<FriendEntity>
     fun login(userLogin: UserLogin, res: IResponseProvider)
     fun signIn(newUser: HashMap<String, String>): Call<LoginResponse>
-    fun searchNewUser(token: String, value: String) : Call<MutableList<UserModel>>
+    fun searchNewUser(token: String, value: String, res: IResponseProvider)
 
     suspend fun getNotification(id: String): MutableList<NotificationModel>?
     suspend fun acceptNotification(notification: NotificationModel) : NotificationResponse?

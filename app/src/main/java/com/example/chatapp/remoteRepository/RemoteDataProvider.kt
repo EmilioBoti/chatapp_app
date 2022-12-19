@@ -51,8 +51,21 @@ class RemoteDataProvider @Inject constructor(private val retrofit: Retrofit): Re
        return retrofit.create(ApiEndPoint::class.java).registerUser(newUser)
     }
 
-    override fun searchNewUser(token: String, value: String): Call<MutableList<UserModel>> {
-       return retrofit.create(ApiEndPoint::class.java).findNewUsers(token, value)
+    override fun searchNewUser(token: String, value: String, res: IResponseProvider) {
+        retrofit.create(ApiEndPoint::class.java).findNewUsers(token, value).enqueue(object : Callback<MutableList<NewFriendEntity>> {
+            override fun onResponse(call: Call<MutableList<NewFriendEntity>>, response: Response<MutableList<NewFriendEntity>>) {
+                if (response.isSuccessful) {
+                    res.response(response.body())
+                } else {
+                    res.responseError(ErrorLogin(Error.NET_ERROR))
+                }
+            }
+
+            override fun onFailure(call: Call<MutableList<NewFriendEntity>>, t: Throwable) {
+
+            }
+
+        })
     }
 
     override suspend fun getNotification(id: String): MutableList<NotificationModel>? {

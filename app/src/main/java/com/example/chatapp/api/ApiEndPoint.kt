@@ -1,14 +1,19 @@
 package com.example.chatapp.api
 
-import com.example.chatapp.remoteRepository.models.UserModel
-import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.remoteRepository.models.FriendEntity
-import com.example.chatapp.remoteRepository.models.LoginResponse
-import com.example.chatapp.remoteRepository.models.UserLogin
+import com.example.chatapp.remoteRepository.models.MessageModel
+import com.example.chatapp.remoteRepository.models.NewFriendEntity
 import com.example.chatapp.remoteRepository.models.NotificationModel
+import com.example.chatapp.remoteRepository.models.UserLogin
+import com.example.chatapp.remoteRepository.models.LoginResponse
 import com.example.chatapp.remoteRepository.models.NotificationResponse
 import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.Header
+import retrofit2.http.Headers
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Body
+import retrofit2.http.Path
 
 interface ApiEndPoint {
 
@@ -23,7 +28,7 @@ interface ApiEndPoint {
     fun getMessage(@Header("Authorization") auth: String, @Path("roomId") roomId: String): Call<MutableList<MessageModel>>
 
     @GET("chat/{user}")
-    fun findNewUsers(@Header("Authorization") auth: String, @Path("user") user: String): Call<MutableList<UserModel>>
+    fun findNewUsers(@Header("Authorization") auth: String, @Path("user") user: String): Call<MutableList<NewFriendEntity>>
 
     //POST
     @Headers("Content-type: application/json")
