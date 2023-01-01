@@ -1,32 +1,23 @@
 package com.example.chatapp.viewModels.login
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.example.chatapp.App
-import com.example.chatapp.api.SocketCon
-import com.example.chatapp.helpers.Session
-import com.example.chatapp.remoteRepository.RemoteDataProvider
+import androidx.lifecycle.ViewModel
 import com.example.chatapp.remoteRepository.models.LoginResponse
 import com.example.chatapp.remoteRepository.models.UserLogin
+import com.example.chatapp.useCases.IAuthUseCase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.inject.Inject
 
-class LoginViewModel(application: Application): AndroidViewModel(application), ILogin {
+class LoginViewModel(private val modelProvider: IAuthUseCase,
+                     private val presenter: IAuthPresenter): ViewModel(), ILogin {
 
-    @Inject
-    lateinit var modelProvider: RemoteDataProvider
+
     val user: MutableLiveData<String> = MutableLiveData<String>()
     val error: MutableLiveData<ErrorLogin> = MutableLiveData<ErrorLogin>()
     private val regexEmail: String = "^[A-Za-z0-9]+@([a-zA-Z]+)(.)[a-zA-Z]{2,3}$"
     private val lengthPw: Int = 5
-    private val context: Application by lazy { application }
 
-    init {
-        (application as App).getComponent().inject(this)
-    }
 
     override fun login (userLogin: UserLogin) {
 
@@ -61,11 +52,11 @@ class LoginViewModel(application: Application): AndroidViewModel(application), I
     private fun saveSession(response: LoginResponse?) {
         response?.let {
             it.user?.let { user ->
-                Session.saveUser(context, user)
+                presenter.saveSession(user)
             }
             it.token?.let { token ->
-                Session.saveToken(context, token)
-                SocketCon.setSocket(token)
+                presenter.saveToken(token)
+                presenter.setUpSocket(token)
                 user.postValue(token)
             }
         }
@@ -89,11 +80,11 @@ class LoginViewModel(application: Application): AndroidViewModel(application), I
         }
     }
 
-    private fun validateEmail(mail: String): Boolean {
+    fun validateEmail(mail: String): Boolean {
         return regexEmail.toRegex().matches(mail)
     }
 
-    private fun validatePassword(pw: String): Boolean {
+    fun validatePassword(pw: String): Boolean {
         return pw.length >= lengthPw
     }
 

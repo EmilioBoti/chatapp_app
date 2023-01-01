@@ -5,7 +5,8 @@ import androidx.room.Room
 import com.example.chatapp.helpers.utils.Utils
 import com.example.chatapp.remoteRepository.RemoteDataProvider
 import com.example.chatapp.repositoryLocal.database.AppDataBase
-import com.example.chatapp.repositoryLocal.database.dao.ChatDao
+import com.example.chatapp.useCases.AuthUseCase
+import com.example.chatapp.useCases.IAuthUseCase
 import com.example.chatapp.viewModels.home.BasePresenter
 import com.example.chatapp.viewModels.network.ConnectivityState
 import dagger.Module
@@ -41,6 +42,12 @@ class RepositoryModule (private var context: Context) {
     @Singleton
     fun providerApiRepository(retrofit: Retrofit): RemoteDataProvider = RemoteDataProvider(retrofit)
 
+    /**
+     * @param remote data provider
+     * @return AuthUseCase class that provide all authentication(Login/ SignIn) use cases
+     */
+    @Provides
+    fun providerAuthUseCase(repo: RemoteDataProvider): IAuthUseCase = AuthUseCase(repo)
 
     @Provides
     @Singleton
