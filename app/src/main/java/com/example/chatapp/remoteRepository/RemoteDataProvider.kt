@@ -71,30 +71,45 @@ class RemoteDataProvider @Inject constructor(private val retrofit: Retrofit): Re
     override suspend fun getNotification(id: String): MutableList<NotificationModel>? {
         return try {
             withContext(Dispatchers.IO) {
-                retrofit.create(ApiEndPoint::class.java).getNotifications(id).execute().body()
+                val res : Response<MutableList<NotificationModel>?> = retrofit.create(ApiEndPoint::class.java).getNotifications(id).execute()
+                if (res.isSuccessful) {
+                    res.body()
+                } else {
+                    mutableListOf<NotificationModel>()
+                }
             }
         } catch (e: Exception) {
-            null
+            throw e.fillInStackTrace()
         }
     }
 
     override suspend fun acceptNotification(token: String, notification: NotificationModel): NotificationResponse? {
         return try {
             withContext(Dispatchers.IO) {
-                retrofit.create(ApiEndPoint::class.java).acceptNotification(token, notification).execute().body()
+                val res = retrofit.create(ApiEndPoint::class.java).acceptNotification(token, notification).execute()
+                if (res.isSuccessful) {
+                    res.body()
+                } else {
+                    null
+                }
             }
         } catch (e: Exception) {
-            null
+            throw e.fillInStackTrace()
         }
     }
 
     override suspend fun rejectNotification(notification: NotificationModel): NotificationResponse? {
         return try {
             withContext(Dispatchers.IO) {
-                retrofit.create(ApiEndPoint::class.java).rejectNotification(notification).execute().body()
+                val res = retrofit.create(ApiEndPoint::class.java).rejectNotification(notification).execute()
+                if (res.isSuccessful) {
+                    res.body()
+                } else {
+                    null
+                }
             }
         } catch (e: Exception) {
-            null
+            throw e.fillInStackTrace()
         }
     }
 }

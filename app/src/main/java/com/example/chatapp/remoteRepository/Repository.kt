@@ -19,5 +19,5 @@ interface Repository {
 
     suspend fun getNotification(token: String): MutableList<NotificationModel>?
     suspend fun acceptNotification(token: String, notification: NotificationModel) : NotificationResponse?
-    suspend fun rejectNotification(notification: NotificationModel) : NotificationResponse?
+    suspend fun rejectNotification(token: String, notification: NotificationModel) : NotificationResponse?
 }
