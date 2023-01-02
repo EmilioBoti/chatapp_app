@@ -82,16 +82,11 @@ class NotificationActivity : AppCompatActivity() {
 
     private fun setToolbar() {
 
-        window.apply {
-            this.statusBarColor = ContextCompat.getColor(this@NotificationActivity, R.color.blue)
-        }
-
         binding.toolbarNotification.title = "Notifications"
         binding.toolbarNotification.navigationIcon = ContextCompat.getDrawable(this, R.drawable.keyboard_backspace_24)
         binding.toolbarNotification.setNavigationOnClickListener {
             onBackPressed()
         }
-
 
     }
 }
