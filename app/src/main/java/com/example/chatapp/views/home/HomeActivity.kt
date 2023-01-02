@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatapp.R
+import com.example.chatapp.databinding.ActivityMain2Binding
 import com.example.chatapp.databinding.ActivityMainBinding
 import com.example.chatapp.factory.adapter.FactoryBuilder
 import com.example.chatapp.factory.adapter.ModelAdapter
@@ -25,14 +26,14 @@ import com.example.chatapp.views.ui.notification.NotificationActivity
 
 
 class HomeActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMain2Binding
     private val homeViewModel: HomeViewModel by viewModels()
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
         title = "Chats"
