@@ -78,10 +78,10 @@ class RemoteDataProvider @Inject constructor(private val retrofit: Retrofit): Re
         }
     }
 
-    override suspend fun acceptNotification(notification: NotificationModel): NotificationResponse? {
+    override suspend fun acceptNotification(token: String, notification: NotificationModel): NotificationResponse? {
         return try {
             withContext(Dispatchers.IO) {
-                retrofit.create(ApiEndPoint::class.java).acceptNotification(notification).execute().body()
+                retrofit.create(ApiEndPoint::class.java).acceptNotification(token, notification).execute().body()
             }
         } catch (e: Exception) {
             null

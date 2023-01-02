@@ -12,12 +12,12 @@ import retrofit2.Call
 
 interface Repository {
     fun getMessages(token: String, roomId: String): Call<MutableList<MessageModel>>
-    fun getUserContacts(currentUser: String): Call<FriendEntity>
+    fun getUserContacts(token: String): Call<FriendEntity>
     fun login(userLogin: UserLogin, res: IResponseProvider)
     fun signIn(newUser: HashMap<String, String>): Call<LoginResponse>
     fun searchNewUser(token: String, value: String, res: IResponseProvider)
 
-    suspend fun getNotification(id: String): MutableList<NotificationModel>?
-    suspend fun acceptNotification(notification: NotificationModel) : NotificationResponse?
+    suspend fun getNotification(token: String): MutableList<NotificationModel>?
+    suspend fun acceptNotification(token: String, notification: NotificationModel) : NotificationResponse?
     suspend fun rejectNotification(notification: NotificationModel) : NotificationResponse?
 }

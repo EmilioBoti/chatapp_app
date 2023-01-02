@@ -18,8 +18,8 @@ import retrofit2.http.Path
 interface ApiEndPoint {
 
     //GET
-    @GET("notifications/{id}")
-    fun getNotifications(@Path("id") id: String): Call<MutableList<NotificationModel>?>
+    @GET("notifications")
+    fun getNotifications(@Header("Authorization") auth: String): Call<MutableList<NotificationModel>?>
 
     @GET("contacts")
     fun getContacts(@Header("Authorization") auth: String): Call<FriendEntity>
@@ -41,7 +41,7 @@ interface ApiEndPoint {
 
     @Headers("Content-type: application/json")
     @POST("acceptNotification")
-    fun acceptNotification(@Body notificationModel: NotificationModel): Call<NotificationResponse?>
+    fun acceptNotification(@Header("Authorization") auth: String, @Body notificationModel: NotificationModel): Call<NotificationResponse?>
 
     @Headers("Content-type: application/json")
     @POST("rejectNotification")

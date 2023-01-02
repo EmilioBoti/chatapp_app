@@ -38,11 +38,9 @@ class NotificationViewModel(application: Application): SocketEvent(application),
     }
 
     private suspend fun showNotifications() {
-        currentUser?.let {
-            val list: MutableList<NotificationModel>? = provider.getNotification(it)
-            list?.let { users ->
-                listNotification.postValue(users)
-            }
+        val list: MutableList<NotificationModel>? = provider.getNotification(token)
+        list?.let { users ->
+            listNotification.postValue(users)
         }
     }
 
@@ -50,7 +48,7 @@ class NotificationViewModel(application: Application): SocketEvent(application),
         if (notification.state != true) {
             listNotification.value?.get(position)?.state = true
             viewModelScope.launch {
-                val  resp: NotificationResponse? = provider.acceptNotification(notification)
+                val  resp: NotificationResponse? = provider.acceptNotification(token, notification)
                 resp?.roomId?.let { id ->
                     val user = UserEntity(notification.fromU, notification.name, notification.email, id,  notification.toU)
                     db.getChatDao().insertUser(user)
