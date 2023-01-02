@@ -21,6 +21,7 @@ class BaseActivity : AppCompatActivity(), IBaseViewPresenter {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.fullScreen)
         super.onCreate(savedInstanceState)
         binding = ActivityBaseBinding.inflate(layoutInflater)
         setContentView(binding.root)
