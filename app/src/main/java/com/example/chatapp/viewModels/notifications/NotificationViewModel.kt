@@ -3,23 +3,20 @@ package com.example.chatapp.viewModels.notifications
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.chatapp.App
 import com.example.chatapp.helpers.Session
-import com.example.chatapp.remoteRepository.RemoteDataProvider
 import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.remoteRepository.models.NotificationModel
 import com.example.chatapp.remoteRepository.models.NotificationResponse
 import com.example.chatapp.repositoryLocal.database.AppDataBase
-import com.example.chatapp.repositoryLocal.database.dao.ChatDao
 import com.example.chatapp.repositoryLocal.database.entity.UserEntity
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
+import com.example.chatapp.viewModels.notifications.provider.INotificationUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class NotificationViewModel(application: Application): SocketEvent(application), INotificationViewModel {
+class NotificationViewModel(private val provider: INotificationUseCase,
+                            application: Application): SocketEvent(application), INotificationViewModel {
 
-    @Inject
-    lateinit var provider: RemoteDataProvider
     @Inject
     lateinit var db: AppDataBase
     var listNotification: MutableLiveData<MutableList<NotificationModel>> = MutableLiveData<MutableList<NotificationModel>>()
@@ -27,7 +24,6 @@ class NotificationViewModel(application: Application): SocketEvent(application),
     private val pushNotification: PushNotification = PushNotification(application.applicationContext)
 
     init {
-        (application as App).getComponent().inject(this)
         currentUser = Session.getUserId(application.applicationContext)
     }
 
@@ -60,7 +56,7 @@ class NotificationViewModel(application: Application): SocketEvent(application),
 
     override fun rejectNotification(notification: NotificationModel, position: Int) {
         viewModelScope.launch {
-            provider.rejectNotification(notification)
+            provider.rejectNotification(token, notification)
             listNotification.value?.remove(notification)
             listNotification.postValue(listNotification.value)
         }

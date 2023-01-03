@@ -9,6 +9,8 @@ import com.example.chatapp.useCases.AuthUseCase
 import com.example.chatapp.useCases.IAuthUseCase
 import com.example.chatapp.viewModels.home.BasePresenter
 import com.example.chatapp.viewModels.network.ConnectivityState
+import com.example.chatapp.viewModels.notifications.provider.INotificationUseCase
+import com.example.chatapp.viewModels.notifications.provider.NotificationUseCase
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -48,6 +50,14 @@ class RepositoryModule (private var context: Context) {
      */
     @Provides
     fun providerAuthUseCase(repo: RemoteDataProvider): IAuthUseCase = AuthUseCase(repo)
+
+    /**
+     * @param remote data provider
+     * @return NotificationUseCase class that provide all use cases
+     */
+    @Provides
+    fun providerNotificationUserCase(repo: RemoteDataProvider) : INotificationUseCase = NotificationUseCase(repo)
+
 
     @Provides
     @Singleton

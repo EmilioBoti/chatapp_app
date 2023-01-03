@@ -9,6 +9,7 @@ import com.example.chatapp.viewModels.login.LoginViewModel
 import com.example.chatapp.viewModels.notifications.NotificationViewModel
 import com.example.chatapp.views.home.BaseActivity
 import com.example.chatapp.views.ui.login.LoginFragment
+import com.example.chatapp.views.ui.notification.NotificationActivity
 import com.example.chatapp.views.ui.signin.SignInFragment
 import dagger.Component
 import javax.inject.Singleton
@@ -25,4 +26,5 @@ interface RepositoryComponent {
     fun inject(baseActivity: BaseActivity)
     fun inject(loginFragment: LoginFragment)
     fun inject(signFragment: SignInFragment)
+    fun inject(notificationActivity: NotificationActivity)
 }
