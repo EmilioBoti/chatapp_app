@@ -18,6 +18,9 @@ import com.example.chatapp.remoteRepository.models.convertToUserEntity
 import com.example.chatapp.repositoryLocal.database.AppDataBase
 import com.example.chatapp.repositoryLocal.database.entity.convertToUserModel
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
+import com.example.chatapp.viewModels.home.useCase.IHomeUseCase
+import com.example.chatapp.viewModels.login.ErrorLogin
+import com.example.chatapp.viewModels.login.IResponseProvider
 import com.example.chatapp.viewModels.network.NetConnectivity
 import com.example.chatapp.viewModels.network.State
 import com.example.chatapp.viewModels.notifications.PushNotification
@@ -29,11 +32,9 @@ import retrofit2.Call
 import retrofit2.Response
 import javax.inject.Inject
 
-class HomeViewModel(application: Application): SocketEvent(application), IHomeViewModel {
-    @Inject
-    lateinit var provider: RemoteDataProvider
-    @Inject
-    lateinit var db: AppDataBase
+class HomeViewModel(private val provider: IHomeUseCase,
+                    application: Application): SocketEvent(application), IHomeViewModel {
+
     val contacts: MutableLiveData<MutableList<UserModel>> = MutableLiveData<MutableList<UserModel>>()
     private var currentUser: String? = null
     private val pushNotification: PushNotification = PushNotification(application.applicationContext)
@@ -43,7 +44,6 @@ class HomeViewModel(application: Application): SocketEvent(application), IHomeVi
     }
 
     init {
-        (application as App).getComponent().inject(this)
         pushNotification.notificationChannel()
         pushNotification.smsNotificationChannel()
         currentUser = Session.getToken(application.applicationContext)
@@ -79,19 +79,15 @@ class HomeViewModel(application: Application): SocketEvent(application), IHomeVi
     override fun getContacts() {
 
         currentUser?.let {
-            provider.getUserContacts(it).enqueue(object : retrofit2.Callback<FriendEntity> {
-                override fun onResponse(call: Call<FriendEntity>, response: Response<FriendEntity>) {
-                    if (response.isSuccessful) {
-                        response.body()?.body?.let { users ->
-                            contacts.postValue(users)
-                            updateAllUsers(users)
-                        }
-                    }
+            provider.getUserContact(it, object : IResponseProvider {
+                override fun <T> response(data: T) {
+                    val users = data as MutableList<UserModel>
+                    contacts.postValue(users)
+                    updateAllUsers(users)
                 }
 
-                override fun onFailure(call: Call<FriendEntity>, t: Throwable) {
-                    Log.e("error", t.message, t.cause)
-                    getLocalContacts()
+                override fun responseError(err: ErrorLogin) {
+
                 }
 
             })
@@ -101,14 +97,14 @@ class HomeViewModel(application: Application): SocketEvent(application), IHomeVi
     private fun updateAllUsers(users: MutableList<UserModel>) {
         val list = users.map { it.convertToUserEntity() }
         viewModelScope.launch {
-            db.getChatDao().insertAllUser(list as MutableList)
+            provider.updateAllUsers(list as MutableList)
         }
     }
 
     override fun getLocalContacts() {
         viewModelScope.launch {
             currentUser?.let {
-                val list = db.getChatDao().getAllContacts(it).map { it.convertToUserModel() } as MutableList
+                val list = provider.getUserContactLocal(it)
                 contacts.postValue(list)
             }
         }

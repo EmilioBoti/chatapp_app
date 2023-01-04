@@ -8,6 +8,7 @@ import com.example.chatapp.viewModels.home.HomeViewModel
 import com.example.chatapp.viewModels.login.LoginViewModel
 import com.example.chatapp.viewModels.notifications.NotificationViewModel
 import com.example.chatapp.views.home.BaseActivity
+import com.example.chatapp.views.home.HomeActivity
 import com.example.chatapp.views.ui.login.LoginFragment
 import com.example.chatapp.views.ui.notification.NotificationActivity
 import com.example.chatapp.views.ui.signin.SignInFragment
@@ -27,4 +28,5 @@ interface RepositoryComponent {
     fun inject(loginFragment: LoginFragment)
     fun inject(signFragment: SignInFragment)
     fun inject(notificationActivity: NotificationActivity)
+    fun inject(homeActivity: HomeActivity)
 }

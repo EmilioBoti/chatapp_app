@@ -8,6 +8,8 @@ import com.example.chatapp.repositoryLocal.database.AppDataBase
 import com.example.chatapp.useCases.AuthUseCase
 import com.example.chatapp.useCases.IAuthUseCase
 import com.example.chatapp.viewModels.home.BasePresenter
+import com.example.chatapp.viewModels.home.useCase.HomeUseCase
+import com.example.chatapp.viewModels.home.useCase.IHomeUseCase
 import com.example.chatapp.viewModels.network.ConnectivityState
 import com.example.chatapp.viewModels.notifications.provider.INotificationUseCase
 import com.example.chatapp.viewModels.notifications.provider.NotificationUseCase
@@ -56,8 +58,15 @@ class RepositoryModule (private var context: Context) {
      * @return NotificationUseCase class that provide all use cases
      */
     @Provides
-    fun providerNotificationUserCase(repo: RemoteDataProvider) : INotificationUseCase = NotificationUseCase(repo)
+    fun providerNotificationUseCase(repo: RemoteDataProvider) : INotificationUseCase = NotificationUseCase(repo)
 
+
+    /**
+     * @param remote data provider
+     * @return HomeUseCase class that provide all use cases
+     */
+    @Provides
+    fun providerHomeUseCase() : IHomeUseCase = HomeUseCase()
 
     @Provides
     @Singleton

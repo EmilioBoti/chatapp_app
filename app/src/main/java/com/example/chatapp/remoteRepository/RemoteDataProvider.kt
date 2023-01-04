@@ -1,5 +1,6 @@
 package com.example.chatapp.remoteRepository
 
+import android.util.Log
 import com.example.chatapp.api.ApiEndPoint
 import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.remoteRepository.models.LoginResponse
@@ -25,8 +26,24 @@ class RemoteDataProvider @Inject constructor(private val retrofit: Retrofit): Re
         return retrofit.create(ApiEndPoint::class.java).getMessage(roomId, token)
     }
 
-    override fun getUserContacts(token: String): Call<FriendEntity> {
-        return retrofit.create(ApiEndPoint::class.java).getContacts(token)
+    override fun getUserContacts(token: String, res: IResponseProvider) {
+        retrofit.create(ApiEndPoint::class.java).getContacts(token).enqueue(object : Callback<FriendEntity> {
+
+            override fun onResponse(call: Call<FriendEntity>, response: Response<FriendEntity>) {
+                if (response.isSuccessful) {
+                    response.body()?.body?.let { users ->
+                        res.response(users)
+                    }
+                } else {
+                    res.response(mutableListOf<FriendEntity>())
+                }
+            }
+
+            override fun onFailure(call: Call<FriendEntity>, t: Throwable) {
+                Log.e("error", t.message, t.cause)
+            }
+
+        })
     }
 
     override fun login(userLogin: UserLogin, res: IResponseProvider) {
