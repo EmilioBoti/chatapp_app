@@ -4,36 +4,29 @@ import android.app.Application
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.chatapp.App
 import com.example.chatapp.helpers.Session
 import com.example.chatapp.helpers.utils.Const
-import com.example.chatapp.remoteRepository.RemoteDataProvider
 import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.remoteRepository.models.convertToMessageEntity
-import com.example.chatapp.repositoryLocal.database.AppDataBase
-import com.example.chatapp.repositoryLocal.database.entity.convertToMessageModel
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
+import com.example.chatapp.viewModels.chat.useCase.IChatUseCase
+import com.example.chatapp.viewModels.login.ErrorLogin
+import com.example.chatapp.viewModels.login.IResponseProvider
 import com.example.chatapp.viewModels.network.NetConnectivity
 import com.example.chatapp.viewModels.network.State
 import com.example.chatapp.viewModels.notifications.PushNotification
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.UUID
 import java.util.Date
 import java.util.Locale
-import javax.inject.Inject
 import kotlin.collections.HashMap
 
-class ChatViewModel(application: Application): SocketEvent(application), IChat.Presenter {
-    @Inject
-    lateinit var chatProvider: RemoteDataProvider
-    @Inject
-    lateinit var db: AppDataBase
+class ChatViewModel(private val chatProvider: IChatUseCase,
+                    application: Application): SocketEvent(application), IChat.Presenter {
+
     val listMessages: MutableLiveData<MutableList<MessageModel>> = MutableLiveData<MutableList<MessageModel>>()
     private var bundle: Bundle? = null
     private var currentUser: Map<String, *>? = null
@@ -41,7 +34,6 @@ class ChatViewModel(application: Application): SocketEvent(application), IChat.P
     lateinit var currentUserId: String
 
     init {
-        (application as App).getComponent().inject(this)
         currentUser = Session.getSession(application.applicationContext)
         mSocket.on("disconnect") {}
     }
@@ -54,25 +46,22 @@ class ChatViewModel(application: Application): SocketEvent(application), IChat.P
 
     override fun getMessages() {
         bundle?.getString(Const.ROOM_ID)?.let {roomId ->
-            chatProvider.getMessages(roomId, token).enqueue(object : Callback<MutableList<MessageModel>> {
-                override fun onResponse(call: Call<MutableList<MessageModel>>, response: Response<MutableList<MessageModel>>) {
-                    if(response.isSuccessful) {
-                        response.body()?.let { list ->
-                            viewModelScope.launch { saveAllSmsLocal(list) }
-                            listMessages.postValue(list)
-                        }
-                    }
+            chatProvider.getMessages(roomId, token, object : IResponseProvider {
+                override fun <T> response(data: T) {
+                    val list = data as MutableList<MessageModel>
+                    viewModelScope.launch { saveAllSmsLocal(list) }
+                    listMessages.postValue(list)
                 }
 
-                override fun onFailure(call: Call<MutableList<MessageModel>>, t: Throwable) {
-                    getContactMessage()
+                override fun responseError(err: ErrorLogin) {
+
                 }
             })
         }
     }
 
     private suspend fun saveAllSmsLocal(list: MutableList<MessageModel>) {
-        db.getChatDao().insertAllMessage(list.map { it.convertToMessageEntity()} as MutableList)
+        chatProvider.saveAllSmsLocal(list.map { it.convertToMessageEntity()} as MutableList)
     }
 
     override fun sendMessage(text: String) {
@@ -127,7 +116,7 @@ class ChatViewModel(application: Application): SocketEvent(application), IChat.P
     override fun getContactMessage() {
         bundle?.getString(Const.ROOM_ID)?.let { roomId ->
             viewModelScope.launch {
-                val list = db.getChatDao().getRoomMessages(roomId).map { it.convertToMessageModel() } as MutableList
+                val list = chatProvider.getLocalMessage(roomId)
                 listMessages.postValue(list)
             }
         }
@@ -139,7 +128,7 @@ class ChatViewModel(application: Application): SocketEvent(application), IChat.P
             listMessages.postValue(listMessages.value)
         }
         viewModelScope.launch {
-            db.getChatDao().insertMessage(message.convertToMessageEntity())
+            chatProvider.saveMessageLocal(message.convertToMessageEntity())
         }
     }
 

@@ -9,7 +9,7 @@ import com.example.chatapp.viewModels.login.IResponseProvider
 import retrofit2.Call
 
 interface Repository {
-    fun getMessages(token: String, roomId: String): Call<MutableList<MessageModel>>
+    fun getMessages(token: String, roomId: String, res: IResponseProvider)
     fun getUserContacts(token: String, res: IResponseProvider)
     fun login(userLogin: UserLogin, res: IResponseProvider)
     fun signIn(newUser: HashMap<String, String>): Call<LoginResponse>

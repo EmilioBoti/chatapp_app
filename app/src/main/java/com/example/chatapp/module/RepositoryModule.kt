@@ -7,6 +7,8 @@ import com.example.chatapp.remoteRepository.RemoteDataProvider
 import com.example.chatapp.repositoryLocal.database.AppDataBase
 import com.example.chatapp.useCases.AuthUseCase
 import com.example.chatapp.useCases.IAuthUseCase
+import com.example.chatapp.viewModels.chat.useCase.ChatUseCase
+import com.example.chatapp.viewModels.chat.useCase.IChatUseCase
 import com.example.chatapp.viewModels.home.BasePresenter
 import com.example.chatapp.viewModels.home.useCase.HomeUseCase
 import com.example.chatapp.viewModels.home.useCase.IHomeUseCase
@@ -67,6 +69,12 @@ class RepositoryModule (private var context: Context) {
      */
     @Provides
     fun providerHomeUseCase() : IHomeUseCase = HomeUseCase()
+
+    /**
+     * @return chatRoom UseCase class that provide all use cases
+     */
+    @Provides
+    fun providerChatUseCase() : IChatUseCase = ChatUseCase()
 
     @Provides
     @Singleton

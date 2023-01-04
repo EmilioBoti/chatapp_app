@@ -22,8 +22,22 @@ import javax.inject.Inject
 
 class RemoteDataProvider @Inject constructor(private val retrofit: Retrofit): Repository {
 
-    override fun getMessages(token: String, roomId: String): Call<MutableList<MessageModel>> {
-        return retrofit.create(ApiEndPoint::class.java).getMessage(roomId, token)
+    override fun getMessages(token: String, roomId: String, res: IResponseProvider){
+        retrofit.create(ApiEndPoint::class.java).getMessage(roomId, token).enqueue(object : Callback<MutableList<MessageModel>> {
+            override fun onResponse(call: Call<MutableList<MessageModel>>, response: Response<MutableList<MessageModel>>) {
+                if(response.isSuccessful) {
+                    response.body()?.let { list ->
+                        res.response(list)
+                    }
+                } else {
+                    res.response(mutableListOf<MutableList<MessageModel>>())
+                }
+            }
+
+            override fun onFailure(call: Call<MutableList<MessageModel>>, t: Throwable) {
+                Log.e("error", t.message, t.cause)
+            }
+        })
     }
 
     override fun getUserContacts(token: String, res: IResponseProvider) {

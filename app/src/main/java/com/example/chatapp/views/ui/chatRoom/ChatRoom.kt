@@ -4,25 +4,29 @@ import android.content.res.ColorStateList
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.chatapp.App
 import com.example.chatapp.R
 import com.example.chatapp.databinding.ActivityChatRoomBinding
 import com.example.chatapp.helpers.common.OnLongClickItem
 import com.example.chatapp.helpers.utils.Const
 import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.viewModels.chat.ChatViewModel
+import com.example.chatapp.viewModels.chat.useCase.ChatUseCase
 import com.vanniktech.emoji.EmojiPopup
+import javax.inject.Inject
 
 class ChatRoom : AppCompatActivity() {
     private lateinit var binding: ActivityChatRoomBinding
     private var bundle: Bundle? = null
-    private val chatViewModel: ChatViewModel by viewModels()
+    private lateinit var chatViewModel: ChatViewModel
     private val DATA: String = "data"
 
+    @Inject
+    lateinit var chatUseCase: ChatUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +38,9 @@ class ChatRoom : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
+        (this.application as App).getComponent().inject(this)
         bundle = intent.getBundleExtra(DATA)
+        chatViewModel = ChatViewModel(chatUseCase, this.application)
         chatViewModel.setUp(bundle)
         setToolbar()
         setEmoji()
