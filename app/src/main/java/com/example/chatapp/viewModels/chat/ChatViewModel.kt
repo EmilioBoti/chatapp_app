@@ -93,8 +93,6 @@ class ChatViewModel(private val chatProvider: IChatUseCase,
             map[Const.DATE].toString())
 
         mSocket.emit(Const.PRIVATE_SMS, Gson().toJson(map))
-        listMessages.value?.add(sms)
-        listMessages.postValue(listMessages.value)
     }
 
     private fun formatDate(date: Date): String {
