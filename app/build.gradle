@@ -101,5 +101,6 @@ dependencies {
     def mockkVersion = "1.12.2"
     testImplementation "io.mockk:mockk:$mockkVersion"
 
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
 }

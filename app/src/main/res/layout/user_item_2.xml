@@ -17,12 +17,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/userImage"
                 android:layout_width="@dimen/dimen_50"
                 android:layout_height="@dimen/dimen_50"
-                android:contentDescription="@string/imageDesc"
-                android:padding="@dimen/dimen_5"
                 android:src="@drawable/ic_person_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

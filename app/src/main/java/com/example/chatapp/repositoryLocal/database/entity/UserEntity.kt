@@ -14,4 +14,4 @@ data class UserEntity(
      @ColumnInfo(name = "to_user") val toUser: String
 )
 
-fun UserEntity.convertToUserModel() : UserModel = UserModel(roomId, id, name, email, null, null, toUser, null, null )
+fun UserEntity.convertToUserModel() : UserModel = UserModel(roomId, id, name, email, null, null, toUser, null, null, null, null)

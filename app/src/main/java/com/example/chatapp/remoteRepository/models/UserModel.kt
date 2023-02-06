@@ -11,7 +11,8 @@ data class UserModel(
     var lastMessage: String?,
     val toUser: String,
     val state: Boolean?,
-    val times: String?
+    val times: String?,
+    val image_url: String?
     )
 
 
