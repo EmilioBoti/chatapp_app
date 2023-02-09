@@ -22,17 +22,6 @@ class RecentSearchComponent(context: Context, attrs: AttributeSet?): LinearLayou
         inflater.inflate(R.layout.recent_search_component, this, true)
         recentUserContainer = findViewById(R.id.recentUsersContainer)
 
-        recentUserList.add(UserModel("","","Emilioooooo", "", null,null,"",null,null,))
-        recentUserList.add(UserModel("","","Test User #3", "", null,null,"",null,null,))
-        recentUserList.add(UserModel("","","Luis", "", null,null,"",null,null,))
-        recentUserList.add(UserModel("","","Luis", "", null,null,"",null,null,))
-        recentUserList.add(UserModel("","","Luis", "", null,null,"",null,null,))
-        recentUserList.add(UserModel("","","Luis", "", null,null,"",null,null,))
-        recentUserList.add(UserModel("","","Luis", "", null,null,"",null,null,))
-        recentUserList.add(UserModel("","","Luis", "", null,null,"",null,null,))
-        recentUserList.add(UserModel("","","Luis", "", null,null,"",null,null,))
-        recentUserList.add(UserModel("","","Luis", "", null,null,"",null,null,))
-        recentUserList.add(UserModel("","","Luis", "", null,null,"",null,null,))
 
         userAdapter = ModelAdapter<UserModel>(recentUserList, FactoryBuilder.RECENT_SEARCH)
         userAdapter.setLayout(R.layout.recent_search_user)
