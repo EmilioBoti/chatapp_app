@@ -19,7 +19,7 @@
             android:id="@+id/toolbarBrowser"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/indigo"
+            android:background="@color/blue"
             app:menu="@menu/browser_menu"
             app:navigationIcon="@drawable/keyboard_backspace_24"
             app:navigationIconTint="@color/white"
@@ -46,15 +46,6 @@
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.example.chatapp.componentsUi.RecentSearchComponent
-        android:id="@+id/recentContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/toolbarContainer"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/userContainer"
         android:layout_width="match_parent"
@@ -62,7 +53,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recentContainer"
+        app:layout_constraintTop_toBottomOf="@id/toolbarContainer"
         tools:listitem="@layout/user_search_item"
         />
 

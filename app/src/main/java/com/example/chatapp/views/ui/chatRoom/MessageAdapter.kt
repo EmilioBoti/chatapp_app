@@ -35,7 +35,7 @@ class MessageAdapter(private val listMessage: MutableList<MessageModel>, private
 
     override fun getItemViewType(position: Int): Int {
         super.getItemViewType(position)
-        return if (listMessage[position].fromU == from) {
+        return if (listMessage[position].fromU != from) {
             typeOne
         } else {
             typeTwo

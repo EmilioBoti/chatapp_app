@@ -7,24 +7,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.example.chatapp.App
 import com.example.chatapp.R
-import com.example.chatapp.databinding.FragmentLoginBinding
-import com.example.chatapp.helpers.Session
+import com.example.chatapp.databinding.FragmentLogin2Binding
 import com.example.chatapp.remoteRepository.models.UserLogin
+import com.example.chatapp.useCases.IAuthUseCase
+import com.example.chatapp.viewModels.login.IAuthPresenter
+import com.example.chatapp.viewModels.login.AuthPresenter
 import com.example.chatapp.viewModels.login.LoginViewModel
 import com.example.chatapp.views.home.HomeActivity
 import com.example.chatapp.views.ui.signin.SignInFragment
+import javax.inject.Inject
 
 class LoginFragment : Fragment() {
-    private lateinit var binding: FragmentLoginBinding
-    private val loginViewModel: LoginViewModel by viewModels()
+    private lateinit var binding: FragmentLogin2Binding
 
+    @Inject
+    lateinit var modelProvider: IAuthUseCase
+
+    private lateinit var loginViewModel: LoginViewModel
+    private lateinit var presenter: IAuthPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
-        binding = FragmentLoginBinding.inflate(inflater, container, false)
+        binding = FragmentLogin2Binding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -32,10 +39,13 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        (activity?.application as App).getComponent().inject(this)
+        activity?.applicationContext?.let { presenter = AuthPresenter(it) }
 
-        loginViewModel.user.observe(this.viewLifecycleOwner , Observer { userModel ->
+        loginViewModel = LoginViewModel(modelProvider, presenter)
+
+        loginViewModel.user.observe(this.viewLifecycleOwner , Observer { token ->
             activity?.let {
-                Session.saveUser(it, userModel)
                 Intent(it, HomeActivity::class.java).apply {
                     startActivity(this)
                 }
@@ -43,15 +53,14 @@ class LoginFragment : Fragment() {
             }
         })
 
-        loginViewModel.error.observe(this.viewLifecycleOwner, Observer {
-            Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show()
+        loginViewModel.error.observe(this.viewLifecycleOwner, Observer { error ->
+            Toast.makeText(activity, getString(error.getError()), Toast.LENGTH_LONG).show()
         })
 
-
         binding.btnLogin.setOnClickListener {
-            loginViewModel.login(
-                UserLogin(binding.emailInput.text.toString().trim(),
-                binding.pwInput.text.toString().trim())
+            loginViewModel.validateInputs(
+                UserLogin(binding.emailContainer.getEditInput().text.toString().trim(),
+                binding.pwContainer.getEditInput().text.toString().trim())
             )
         }
 

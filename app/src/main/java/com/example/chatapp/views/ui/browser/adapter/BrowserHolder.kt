@@ -5,6 +5,7 @@ import android.widget.TextView
 import com.example.chatapp.R
 import com.example.chatapp.factory.adapter.ModelViewHolder
 import com.example.chatapp.helpers.common.OnClickItem
+import com.example.chatapp.remoteRepository.models.NewFriendEntity
 import com.example.chatapp.remoteRepository.models.UserModel
 
 class BrowserHolder(itemView: View, private val listener: OnClickItem?): ModelViewHolder(itemView) {
@@ -12,23 +13,28 @@ class BrowserHolder(itemView: View, private val listener: OnClickItem?): ModelVi
     private val request: TextView = itemView.findViewById(R.id.request)
 
     override fun <T> bindData(value: T) {
-        val user = value as UserModel
+        val user = value as NewFriendEntity
         name.text = user.name
 
         changeNotification(user)
 
         request.setOnClickListener {
-            listener?.onClick(absoluteAdapterPosition)
+            if (user.isFriend == null ) {
+                listener?.onClick(absoluteAdapterPosition)
+            }
         }
 
     }
 
-    private fun changeNotification(user: UserModel) {
-        user.state?.let {
-            if (it) {
-                request.text = "Friend"
-            } else {
-                request.text = "Pending"
+    private fun changeNotification(user: NewFriendEntity) {
+        user.isFriend?.let {
+            when(it) {
+                true -> {
+                    request.visibility = View.GONE
+                }
+                false -> {
+                    request.text = "Requested"
+                }
             }
         }
     }

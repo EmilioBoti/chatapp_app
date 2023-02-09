@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.ui.login.LoginFragment">
+
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:navigationIcon="@drawable/keyboard_backspace_24"
+        app:navigationIconTint="@color/black"
+        />
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/inputContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="@dimen/dimen_40"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen_10"
+            android:text="@string/signIn"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/dimenSt_50"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_3"
+            android:layout_marginEnd="@dimen/dimen_50"
+            android:layout_marginBottom="@dimen/dimen_35"
+            android:background="@color/blue" />
+
+        <com.example.chatapp.componentsUi.Input
+            android:id="@+id/nameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:typeInput="text"
+            app:icon="@drawable/person_24"
+            app:hintInput="@string/name"
+            android:layout_marginBottom="@dimen/dimen_15"
+            />
+        <com.example.chatapp.componentsUi.Input
+            android:id="@+id/emailInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:typeInput="text"
+            app:icon="@drawable/ic_lock_24"
+            app:hintInput="@string/password"
+            android:layout_marginBottom="@dimen/dimen_15"
+
+            />
+
+        <com.example.chatapp.componentsUi.Input
+            android:id="@+id/pwInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:typeInput="text"
+            app:icon="@drawable/ic_lock_24"
+            app:hintInput="@string/confirmPw"
+            android:layout_marginBottom="@dimen/dimen_25"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSignIn"
+            android:layout_width="@dimen/dimen_150"
+            android:layout_height="wrap_content"
+            android:background="@drawable/radius_corner_btn"
+            android:backgroundTint="@color/blue"
+            android:text="@string/register"
+            android:textColor="@color/white"
+            android:layout_gravity="center_horizontal"
+
+            />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

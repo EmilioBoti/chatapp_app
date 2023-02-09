@@ -1,28 +1,34 @@
 package com.example.chatapp.api
 
-import com.example.chatapp.remoteRepository.models.UserModel
+import com.example.chatapp.remoteRepository.models.FriendEntity
 import com.example.chatapp.remoteRepository.models.MessageModel
-import com.example.chatapp.remoteRepository.models.LoginResponse
-import com.example.chatapp.remoteRepository.models.UserLogin
+import com.example.chatapp.remoteRepository.models.NewFriendEntity
 import com.example.chatapp.remoteRepository.models.NotificationModel
+import com.example.chatapp.remoteRepository.models.UserLogin
+import com.example.chatapp.remoteRepository.models.LoginResponse
 import com.example.chatapp.remoteRepository.models.NotificationResponse
 import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.Header
+import retrofit2.http.Headers
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Body
+import retrofit2.http.Path
 
 interface ApiEndPoint {
 
     //GET
-    @GET("notifications/{id}")
-    fun getNotifications(@Path("id") id: String): Call<MutableList<NotificationModel>?>
+    @GET("notifications")
+    fun getNotifications(@Header("Authorization") auth: String): Call<MutableList<NotificationModel>?>
 
-    @GET("contacts/{id}")
-    fun getContacts(@Path("id") id: String): Call<MutableList<UserModel>>
+    @GET("contacts")
+    fun getContacts(@Header("Authorization") auth: String): Call<FriendEntity>
 
     @GET("messages/{roomId}")
-    fun getMessage(@Path("roomId") roomId: String): Call<MutableList<MessageModel>>
+    fun getMessage(@Header("Authorization") auth: String, @Path("roomId") roomId: String): Call<MutableList<MessageModel>>
 
     @GET("chat/{user}")
-    fun finNewUsers(@Path("user") user: String): Call<MutableList<UserModel>>
+    fun findNewUsers(@Header("Authorization") auth: String, @Path("user") user: String): Call<MutableList<NewFriendEntity>>
 
     //POST
     @Headers("Content-type: application/json")
@@ -35,7 +41,7 @@ interface ApiEndPoint {
 
     @Headers("Content-type: application/json")
     @POST("acceptNotification")
-    fun acceptNotification(@Body notificationModel: NotificationModel): Call<NotificationResponse?>
+    fun acceptNotification(@Header("Authorization") auth: String, @Body notificationModel: NotificationModel): Call<NotificationResponse?>
 
     @Headers("Content-type: application/json")
     @POST("rejectNotification")

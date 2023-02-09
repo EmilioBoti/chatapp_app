@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@null">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -15,19 +15,21 @@
         android:layout_marginStart="@dimen/dimen_10"
         android:layout_marginTop="@dimen/dimen_15"
         android:contentDescription="@string/fab_content_desc"
-        app:tint="@color/black_200" />
+        app:tint="@color/black_200"
+        tools:srcCompat="@drawable/ic_emoji" />
 
 
     <com.vanniktech.emoji.EmojiEditText
         android:id="@+id/boxMessage"
+        style="@style/chatRoom_inputText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toStartOf="@id/btnSender"
         android:layout_toEndOf="@id/btEmoji"
-        style="@style/chatRoom_inputText"
         android:focusable="auto"
-        />
+        android:paddingVertical="@dimen/dimen_12"
+        android:textSize="@dimen/dimenSt_18" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/btnSender"
@@ -39,7 +41,8 @@
         android:layout_marginEnd="@dimen/dimen_15"
         android:background="@drawable/radius_corner"
         android:contentDescription="@string/fab_content_desc"
-        android:padding="@dimen/dimen_4"
-        app:tint="@color/white" />
+        android:padding="@dimen/dimen_10"
+        app:tint="@color/white"
+        tools:srcCompat="@drawable/send_24" />
 
 </RelativeLayout>

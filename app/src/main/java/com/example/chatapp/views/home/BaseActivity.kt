@@ -1,19 +1,27 @@
 package com.example.chatapp.views.home
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import com.example.chatapp.App
 import com.example.chatapp.R
-import com.example.chatapp.api.SocketCon
 import com.example.chatapp.databinding.ActivityBaseBinding
-import com.example.chatapp.helpers.Session
+import com.example.chatapp.viewModels.home.BasePresenter
+import com.example.chatapp.viewModels.home.IBaseViewPresenter
 import com.example.chatapp.views.ui.login.LoginFragment
+import javax.inject.Inject
 
-class BaseActivity : AppCompatActivity() {
+class BaseActivity : AppCompatActivity(), IBaseViewPresenter {
     private lateinit var binding: ActivityBaseBinding
+
+    @Inject
+    lateinit var basePresenter: BasePresenter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.fullScreen)
         super.onCreate(savedInstanceState)
         binding = ActivityBaseBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -23,25 +31,26 @@ class BaseActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        checkLogin()
+        (application as App).getComponent().inject(this)
+        basePresenter.setUp(this)
 
     }
 
-    private fun loginFragment() {
+    override fun getBaseActivity(): Activity {
+        return this
+    }
+
+    override fun navigateToLogin(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-            .add(R.id.fragmentContainerView, LoginFragment())
+            .replace(R.id.fragmentContainerView, LoginFragment())
             .commit()
     }
 
-    private fun checkLogin() {
-        if (Session.getUserLogin(this) == true) {
-            Intent(this, HomeActivity::class.java).apply {
-                //this.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                startActivity(this)
-            }
-            this.finish()
-        } else {
-            loginFragment()
+    override fun <T> navigateToHome(screen: T) {
+        val home = screen as HomeActivity
+        Intent(this, home::class.java).apply {
+            startActivity(this)
         }
+        finish()
     }
 }

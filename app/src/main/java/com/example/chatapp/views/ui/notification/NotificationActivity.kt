@@ -1,15 +1,13 @@
 package com.example.chatapp.views.ui.notification
 
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.chatapp.App
 import com.example.chatapp.R
 import com.example.chatapp.databinding.ActivityNotificationBinding
 import com.example.chatapp.factory.adapter.FactoryBuilder
@@ -17,10 +15,15 @@ import com.example.chatapp.factory.adapter.ModelAdapter
 import com.example.chatapp.helpers.common.OnClickItem
 import com.example.chatapp.remoteRepository.models.NotificationModel
 import com.example.chatapp.viewModels.notifications.NotificationViewModel
+import com.example.chatapp.viewModels.notifications.provider.INotificationUseCase
+import javax.inject.Inject
 
 class NotificationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNotificationBinding
-    private val notificationViewModel: NotificationViewModel by viewModels()
+    private lateinit var notificationViewModel: NotificationViewModel
+
+    @Inject
+    lateinit var notificationUseCase: INotificationUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,11 +32,14 @@ class NotificationActivity : AppCompatActivity() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
         super.onStart()
 
         setToolbar()
+
+        (this.application as App).getComponent().inject(this)
+
+        notificationViewModel = NotificationViewModel(notificationUseCase, this.application)
 
         notificationViewModel.getNotification()
         notificationViewModel.listNotification.observe(this, Observer {
@@ -81,7 +87,6 @@ class NotificationActivity : AppCompatActivity() {
         alert.show()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun setToolbar() {
 
         binding.toolbarNotification.title = "Notifications"
@@ -89,7 +94,6 @@ class NotificationActivity : AppCompatActivity() {
         binding.toolbarNotification.setNavigationOnClickListener {
             onBackPressed()
         }
-
 
     }
 }

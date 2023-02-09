@@ -2,32 +2,36 @@ package com.example.chatapp.views.ui.browser
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.chatapp.App
 import com.example.chatapp.R
 import com.example.chatapp.databinding.ActivityBrowserBinding
 import com.example.chatapp.factory.adapter.FactoryBuilder
 import com.example.chatapp.factory.adapter.ModelAdapter
 import com.example.chatapp.helpers.common.OnClickItem
+import com.example.chatapp.remoteRepository.models.NewFriendEntity
 import com.example.chatapp.remoteRepository.models.NotificationModel
-import com.example.chatapp.remoteRepository.models.UserModel
 import com.example.chatapp.viewModels.browser.BrowserViewModel
+import com.example.chatapp.viewModels.browser.useCase.BrowserUseCase
+import javax.inject.Inject
 
 class BrowserActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityBrowserBinding
-    private val browserViewModel: BrowserViewModel by viewModels()
+    private lateinit var browserViewModel: BrowserViewModel
     private lateinit var keyboard: InputMethodManager
+
+    @Inject
+    lateinit var useCase: BrowserUseCase
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,11 +43,14 @@ class BrowserActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
+        (application as App).getComponent().inject(this)
         setUpToolbar()
         keyboard = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
+        browserViewModel = BrowserViewModel(useCase, this.application)
+
         browserViewModel.listUserFound.observe(this, Observer {
-            val adapter = ModelAdapter<UserModel>(it, FactoryBuilder.SEARCH)
+            val adapter = ModelAdapter<NewFriendEntity>(it, FactoryBuilder.SEARCH)
             adapter.setLayout(R.layout.user_search_item)
 
             adapter.setListener(object : OnClickItem {
@@ -65,26 +72,13 @@ class BrowserActivity : AppCompatActivity() {
             }
         })
 
-        binding.recentContainer.setOnClick(object : OnClickItem {
-            override fun onClick(pos: Int) {
-                Toast.makeText(this@BrowserActivity, "oook", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onAccept(notification: NotificationModel, view: View, position: Int) {
-            }
-
-            override fun onReject(notification: NotificationModel, view: View, position: Int) {
-            }
-        })
-
     }
 
 
     private fun setUpToolbar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            binding.toolbarBrowser.menu.findItem(R.id.searcher)
-                .iconTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.white))
-        }
+
+        binding.toolbarBrowser.menu.findItem(R.id.searcher)
+            .iconTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.white))
 
         binding.toolbarBrowser.setNavigationOnClickListener {
             this.onBackPressed()

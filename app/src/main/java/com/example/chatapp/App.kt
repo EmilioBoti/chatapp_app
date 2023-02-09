@@ -7,6 +7,7 @@ import androidx.emoji.text.FontRequestEmojiCompatConfig
 import com.example.chatapp.api.SocketCon
 import com.example.chatapp.component.DaggerRepositoryComponent
 import com.example.chatapp.component.RepositoryComponent
+import com.example.chatapp.helpers.Session
 import com.example.chatapp.module.RepositoryModule
 import com.vanniktech.emoji.EmojiManager
 import com.vanniktech.emoji.googlecompat.GoogleCompatEmojiProvider
@@ -23,7 +24,6 @@ class App: Application() {
     override fun onCreate() {
         super.onCreate()
 
-        SocketCon.setSocket()
         installEmoji()
         repositoryComponent = DaggerRepositoryComponent.builder()
             .repositoryModule(RepositoryModule(this))

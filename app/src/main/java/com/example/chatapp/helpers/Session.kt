@@ -11,6 +11,20 @@ class Session {
          const val NAME: String = "name"
          const val EMAIL: String = "email"
          const val SOCKETID: String = "socketId"
+         const val TOKEN: String = "token"
+
+        fun saveToken(context: Context, token: String) {
+            context.getSharedPreferences(context.getString(R.string.userDataToken), Context.MODE_PRIVATE)
+                .edit().apply {
+                    putString(TOKEN, token)
+                    apply()
+                }
+        }
+
+        fun getToken(context: Context): String? {
+            val prefe = context.getSharedPreferences(context.getString(R.string.userDataToken), Context.MODE_PRIVATE)
+            return prefe?.getString(TOKEN, "")
+        }
 
         fun saveUser(context: Context, userModel: UserModel) {
            context.getSharedPreferences(context.getString(R.string.userData), Context.MODE_PRIVATE)
@@ -33,8 +47,13 @@ class Session {
             return prefe?.contains(ID)
         }
 
+        fun isLogin(context: Context): Boolean? {
+           val prefe = context.getSharedPreferences(context.getString(R.string.userDataToken), Context.MODE_PRIVATE)
+            return prefe?.contains(TOKEN)
+        }
+
         fun logout(context: Context): Boolean? {
-           val prefe = context.getSharedPreferences(context.getString(R.string.userData), Context.MODE_PRIVATE).edit().clear()
+           val prefe = context.getSharedPreferences(context.getString(R.string.userDataToken), Context.MODE_PRIVATE).edit().clear()
             return prefe?.commit()
         }
 

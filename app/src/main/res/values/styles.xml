@@ -15,4 +15,8 @@
         <item name="android:layout_marginEnd">@dimen/dimen_15</item>
     </style>
 
+    <style name="chat_sms_text">
+        <item name="android:textSize">@dimen/dimenSt_18</item>
+        <item name="android:textIsSelectable">false</item>
+    </style>
 </resources>

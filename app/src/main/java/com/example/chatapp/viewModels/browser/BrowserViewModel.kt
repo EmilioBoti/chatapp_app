@@ -1,25 +1,21 @@
 package com.example.chatapp.viewModels.browser
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.chatapp.App
 import com.example.chatapp.helpers.Session
-import com.example.chatapp.remoteRepository.RemoteDataProvider
-import com.example.chatapp.remoteRepository.models.UserModel
 import com.example.chatapp.remoteRepository.models.MessageModel
+import com.example.chatapp.remoteRepository.models.NewFriendEntity
+import com.example.chatapp.viewModels.browser.useCase.IBrowserUseCase
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
+import com.example.chatapp.viewModels.login.ErrorLogin
+import com.example.chatapp.viewModels.login.IResponseProvider
 import com.example.chatapp.viewModels.notifications.PushNotification
 import com.google.gson.Gson
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import javax.inject.Inject
 
-class BrowserViewModel(application: Application) : SocketEvent(application), IBrowserPresenter {
-    @Inject
-    lateinit var provider: RemoteDataProvider
-    val listUserFound: MutableLiveData<MutableList<UserModel>> = MutableLiveData<MutableList<UserModel>>()
+class BrowserViewModel(private val provider: IBrowserUseCase,
+                       application: Application) : SocketEvent(application), IBrowserPresenter {
+
+    val listUserFound: MutableLiveData<MutableList<NewFriendEntity>> = MutableLiveData<MutableList<NewFriendEntity>>()
     private lateinit var userId: String
     private lateinit var userName: String
     private val TO: String = "toU"
@@ -32,7 +28,6 @@ class BrowserViewModel(application: Application) : SocketEvent(application), IBr
 
 
     init {
-        (application as App).getComponent().inject(this)
 
         val map: Map<String, *>? = Session.getSession(context.applicationContext)
         map?.let {
@@ -43,16 +38,13 @@ class BrowserViewModel(application: Application) : SocketEvent(application), IBr
 
     override fun search(value: String) {
 
-        provider.searchNewUser(value).enqueue(object : Callback<MutableList<UserModel>> {
-
-            override fun onResponse(call: Call<MutableList<UserModel>>, response: Response<MutableList<UserModel>>) {
-                if (response.isSuccessful) {
-                    listUserFound.postValue(response.body())
-                }
+        provider.searchNewUser(token, value, object : IResponseProvider {
+            override fun <T> response(data: T) {
+                val users: MutableList<NewFriendEntity> = data as MutableList<NewFriendEntity>
+                listUserFound.postValue(users)
             }
 
-            override fun onFailure(call: Call<MutableList<UserModel>>, t: Throwable) {
-                Log.e("error", t.message, t.cause)
+            override fun responseError(err: ErrorLogin) {
             }
 
         })
@@ -69,7 +61,7 @@ class BrowserViewModel(application: Application) : SocketEvent(application), IBr
         listUserFound.value?.get(pos)?.let {
             val data = HashMap<String, String>()
             data[TO] = it.id
-            it.socketId?.let { socket -> data[SOCKETID] = socket }
+//            it.socketId?.let { socket -> data[SOCKETID] = socket }
             data[FROM] = userId
             data[NAME] = userName
 

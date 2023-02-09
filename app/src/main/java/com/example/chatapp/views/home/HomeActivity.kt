@@ -7,32 +7,35 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.chatapp.App
 import com.example.chatapp.R
-import com.example.chatapp.databinding.ActivityMainBinding
+import com.example.chatapp.databinding.ActivityMain2Binding
 import com.example.chatapp.factory.adapter.FactoryBuilder
 import com.example.chatapp.factory.adapter.ModelAdapter
 import com.example.chatapp.helpers.common.OnClickItem
 import com.example.chatapp.remoteRepository.models.NotificationModel
 import com.example.chatapp.remoteRepository.models.UserModel
 import com.example.chatapp.viewModels.home.HomeViewModel
+import com.example.chatapp.viewModels.home.useCase.HomeUseCase
 import com.example.chatapp.views.ui.browser.BrowserActivity
 import com.example.chatapp.views.ui.notification.NotificationActivity
+import javax.inject.Inject
 
 
 class HomeActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
-    private val homeViewModel: HomeViewModel by viewModels()
+    private lateinit var binding: ActivityMain2Binding
+    private lateinit var homeViewModel: HomeViewModel
 
-
+    @Inject
+    lateinit var homeUseCase: HomeUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
         title = "Chats"
@@ -41,6 +44,10 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+
+        (this.application as App).getComponent().inject( this)
+
+        homeViewModel = HomeViewModel(homeUseCase, this.application)
 
         homeViewModel.contacts.observe(this, Observer {
             setAdapter(it)
@@ -76,7 +83,7 @@ class HomeActivity : AppCompatActivity() {
     private fun setAdapter(contacts: MutableList<UserModel>) {
 
         val adapter = ModelAdapter<UserModel>(contacts, FactoryBuilder.CONTACT)
-        adapter.setLayout(R.layout.user_item)
+        adapter.setLayout(R.layout.user_item_2)
         adapter.setListener(object : OnClickItem {
             override fun onClick(pos: Int) {
                 homeViewModel.navigateChatRoom(this@HomeActivity, pos)
@@ -113,6 +120,5 @@ class HomeActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         homeViewModel.disconnectSocket()
-        this.finish()
     }
 }

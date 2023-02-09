@@ -25,12 +25,14 @@ interface ChatDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllMessage(listMessages: MutableList<MessageEntity>)
 
-    @Query("select message_table.id as id,message_table.room_id, message_table.from_user," +
-            " message_table.to_user, message_table.message, message_table.user_name," +
-            " message_table.time as time " +
-            "from message_table " +
-            "inner join user_table on message_table.room_id = user_table.room_id" +
-            " where user_table.room_id = :roomId"
+    @Query("select message_table.id as id, message_table.room_id, message_table.from_user,\n" +
+            " message_table.to_user, message_table.message, message_table.user_name,\n" +
+            " message_table.time\n" +
+            " from message_table \n" +
+            " inner join user_table on message_table.room_id = user_table.room_id\n" +
+            " group by message_table.id\n" +
+            " having user_table.room_id = :roomId\n" +
+            " order by message_table.time"
     )
     suspend fun getRoomMessages(roomId: String): MutableList<MessageEntity>
 
@@ -44,6 +46,6 @@ interface ChatDao {
             "from user_table\n" +
             "left join message_table on user_table.id = message_table.to_user\n" +
             "where user_table.to_user = :userId" +
-            " group by user_table.email ")
+            " group by user_table.email")
     suspend fun getAllContacts(userId: String): MutableList<UserEntity>
 }
