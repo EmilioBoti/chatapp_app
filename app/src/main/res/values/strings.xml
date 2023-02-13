@@ -4,7 +4,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="login">Login</string>
+    <string name="login">Log in</string>
     <string name="userData">User_data</string>
     <string name="userDataToken">user_token</string>
     <string name="name">Name</string>
@@ -32,7 +32,7 @@
     <string name="removeNotification">Remove Notification</string>
     <string name="removeNotificationMessage">Are you sure you want to delete it?</string>
     <string name="signup">New here? Sign up</string>
-    <string name="pwForget">Have forgotten the password?</string>
+    <string name="pwForget">Have forgotten your password?</string>
     <string name="email_error">Email Incorrect</string>
     <string name="password_error">Password Incorrect</string>
     <string name="login_error">Email or Password might be incorrect</string>
@@ -45,4 +45,8 @@
     <string name="myProfile">My Profile</string>
     <string name="empty">Empty</string>
     <string name="footer_text">Has fun Chatting!</string>
+    <string name="welcomeTitle">Welcome</string>
+    <string name="welcomeContentText">Let\'s have fun chatting with friends or you can even find new people to talk!</string>
+    <string name="or">OR</string>
+    <string name="welcomeToTitle">Welcome To</string>
 </resources>

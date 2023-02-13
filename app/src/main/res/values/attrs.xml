@@ -6,6 +6,11 @@
     </declare-styleable>
     <declare-styleable name="Input">
         <attr name="icon" format="reference"/>
+        <attr name="tintIcon" format="reference"/>
+        <attr name="bgColor" format="reference"/>
+        <attr name="colorHint" format="reference"/>
+        <attr name="colorStroke" format="reference"/>
+        <attr name="cursorColor" format="reference"/>
         <attr name="hintInput" format="string"/>
         <attr name="typeInput" format="enum">
             <enum name="text" value="0"/>

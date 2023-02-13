@@ -15,6 +15,7 @@
         app:boxCornerRadiusTopStart="@dimen/dimen_3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:textColorHint="@color/main_green"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -23,15 +24,6 @@
             android:layout_height="wrap_content"
             />
 
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/errorMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/signIn"
-            android:textColor="@color/black_200"
-            android:visibility="gone"
-            />
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

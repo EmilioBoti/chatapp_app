@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import com.example.chatapp.App
 import com.example.chatapp.R
 import com.example.chatapp.databinding.FragmentLogin2Binding
+import com.example.chatapp.databinding.FragmentLogin3Binding
 import com.example.chatapp.remoteRepository.models.UserLogin
 import com.example.chatapp.useCases.IAuthUseCase
 import com.example.chatapp.viewModels.login.IAuthPresenter
@@ -21,7 +22,7 @@ import com.example.chatapp.views.ui.signin.SignInFragment
 import javax.inject.Inject
 
 class LoginFragment : Fragment() {
-    private lateinit var binding: FragmentLogin2Binding
+    private lateinit var binding: FragmentLogin3Binding
 
     @Inject
     lateinit var modelProvider: IAuthUseCase
@@ -31,7 +32,7 @@ class LoginFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
-        binding = FragmentLogin2Binding.inflate(inflater, container, false)
+        binding = FragmentLogin3Binding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -56,6 +57,14 @@ class LoginFragment : Fragment() {
         loginViewModel.error.observe(this.viewLifecycleOwner, Observer { error ->
             Toast.makeText(activity, getString(error.getError()), Toast.LENGTH_LONG).show()
         })
+        eventsHandle()
+    }
+
+    private fun eventsHandle() {
+
+        binding.toolbarLogin.setNavigationOnClickListener {
+            activity?.onBackPressed()
+        }
 
         binding.btnLogin.setOnClickListener {
             loginViewModel.validateInputs(
@@ -63,15 +72,6 @@ class LoginFragment : Fragment() {
                 binding.pwContainer.getEditInput().text.toString().trim())
             )
         }
-
-        binding.btnSignIn.setOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()
-                ?.addToBackStack("signIn")
-                ?.setCustomAnimations(R.anim.slide_in,R.anim.fade_out, R.anim.slide_out, R.anim.fade_in)
-                ?.replace(R.id.fragmentContainerView, SignInFragment())
-                ?.commit()
-        }
-
     }
 
 }

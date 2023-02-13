@@ -6,6 +6,7 @@ import android.content.Intent
 import com.example.chatapp.api.SocketCon
 import com.example.chatapp.helpers.Session
 import com.example.chatapp.views.home.HomeActivity
+import com.example.chatapp.views.home.WelcomeFragment
 import com.example.chatapp.views.ui.login.LoginFragment
 import javax.inject.Inject
 
@@ -43,7 +44,7 @@ class BasePresenter @Inject constructor() : IBasePresenter {
     }
 
     override fun navigateToLogin() {
-        viewPresenter.navigateToLogin(LoginFragment())
+        viewPresenter.navigateToLogin(WelcomeFragment())
     }
 
 

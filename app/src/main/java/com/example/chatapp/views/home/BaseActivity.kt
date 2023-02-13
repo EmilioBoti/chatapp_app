@@ -42,7 +42,8 @@ class BaseActivity : AppCompatActivity(), IBaseViewPresenter {
 
     override fun navigateToLogin(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainerView, LoginFragment())
+            .setCustomAnimations(R.anim.slide_in, R.anim.fade_in, R.anim.slide_out, R.anim.fade_out)
+            .replace(R.id.fragmentContainerView, fragment)
             .commit()
     }
 
