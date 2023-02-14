@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.example.chatapp.App
-import com.example.chatapp.databinding.FragmentSignIn2Binding
+import com.example.chatapp.databinding.FragmentSignIn3Binding
 import com.example.chatapp.useCases.IAuthUseCase
 import com.example.chatapp.viewModels.login.IAuthPresenter
 import com.example.chatapp.viewModels.login.AuthPresenter
@@ -18,7 +18,7 @@ import com.example.chatapp.views.home.HomeActivity
 import javax.inject.Inject
 
 class SignInFragment : Fragment() {
-    private lateinit var binding: FragmentSignIn2Binding
+    private lateinit var binding: FragmentSignIn3Binding
 
     @Inject
     lateinit var modelProvider: IAuthUseCase
@@ -31,7 +31,7 @@ class SignInFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        binding = FragmentSignIn2Binding.inflate(inflater, container, false)
+        binding = FragmentSignIn3Binding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -62,6 +62,18 @@ class SignInFragment : Fragment() {
             newUser["pw"] = pw
 
             loginViewModel.registerUser(newUser)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        eventHandle()
+    }
+
+    private fun eventHandle() {
+        binding.toolbarSignIn.setNavigationOnClickListener {
+            activity?.onBackPressed()
         }
 
         binding.toolbarSignIn.setNavigationOnClickListener {
