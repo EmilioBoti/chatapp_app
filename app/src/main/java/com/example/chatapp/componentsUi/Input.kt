@@ -67,7 +67,7 @@ class Input(context: Context, attrs: AttributeSet?): LinearLayoutCompat(context,
     }
 
     override fun setHintColor(hintColor: Int) {
-        binding.inputContainer.hintTextColor = getColor(hintColor)
+        binding.inputContainer.defaultHintTextColor = getColor(hintColor)
     }
 
     override fun setStrokeColor(strokeColor: Int) {

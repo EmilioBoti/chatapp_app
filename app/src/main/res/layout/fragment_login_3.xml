@@ -44,9 +44,9 @@
             android:layout_height="wrap_content"
             android:text="@string/login"
             android:textColor="@color/white"
-            android:textSize="@dimen/dimenSt_60"
+            android:textSize="@dimen/dimenSt_40"
             android:textStyle="bold"
-            android:translationX="@dimen/dimenSt_20" />
+            />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -54,13 +54,14 @@
         android:id="@+id/circle1"
         android:layout_width="@dimen/dimen_100"
         android:layout_height="@dimen/dimen_100"
-        android:layout_marginTop="@dimen/dimen_40"
         android:background="@drawable/circle_shape"
         android:translationX="@dimen/dimen_40"
         app:layout_constraintBottom_toTopOf="@id/welcomeContent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbarLogin" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="@dimen/dimen_6"
+        />
 
     <View
         android:id="@+id/circle2"
@@ -82,6 +83,7 @@
         android:elevation="@dimen/dimen_6"
         android:orientation="vertical"
         android:padding="@dimen/dimen_5"
+        app:layout_constraintTop_toTopOf="@id/circle3"
         app:layout_constraintBottom_toTopOf="@id/btnLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -92,7 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dimen_35"
             android:orientation="vertical"
-            app:colorHint="@color/white"
+            app:colorHint="@color/gray_200"
             app:colorStroke="@color/main_green"
             app:cursorColor="@color/main_green"
             app:hintInput="@string/email"
@@ -105,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dimen_15"
             android:orientation="vertical"
-            app:colorHint="@color/white"
+            app:colorHint="@color/gray_200"
             app:colorStroke="@color/main_green"
             app:cursorColor="@color/main_green"
             app:hintInput="@string/password"
@@ -119,7 +121,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:text="@string/pwForget"
-            android:textColor="@color/second_green_darker" />
+            android:textColor="@color/gray_200" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -141,11 +143,12 @@
     <View
         android:id="@+id/circle3"
         android:layout_width="500dp"
-        android:layout_height="500dp"
+        android:layout_height="600dp"
         android:layout_marginTop="@dimen/dimen_40"
         android:background="@drawable/oval_shape"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

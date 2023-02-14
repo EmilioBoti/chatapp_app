@@ -15,7 +15,6 @@
         app:boxCornerRadiusTopStart="@dimen/dimen_3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textColorHint="@color/main_green"
         >
 
         <com.google.android.material.textfield.TextInputEditText
