@@ -72,9 +72,6 @@ class SignInFragment : Fragment() {
     }
 
     private fun eventHandle() {
-        binding.toolbarSignIn.setNavigationOnClickListener {
-            activity?.onBackPressed()
-        }
 
         binding.toolbarSignIn.setNavigationOnClickListener {
             activity?.onBackPressed()
