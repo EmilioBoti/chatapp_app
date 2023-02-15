@@ -82,7 +82,7 @@ class HomeViewModel(private val provider: IHomeUseCase,
             provider.getUserContact(it, object : IResponseProvider {
                 override fun <T> response(data: T) {
                     val users = data as MutableList<UserModel>
-                    contacts.postValue(users)
+                    updateListChats(users)
                     updateAllUsers(users)
                 }
 
@@ -113,13 +113,21 @@ class HomeViewModel(private val provider: IHomeUseCase,
     override fun receiveMessage(message: MessageModel) {
         if (currentUser != message.fromU) { pushNotification.showSmsNotification(message) }
         contacts.value?.forEach {
-            if (it.id == message.fromU) it.lastMessage = message.message
+            if (it.id == message.fromU) {
+                it.lastMessage = message.message
+                it.times = message.times
+            }
         }
-        contacts.postValue(contacts.value)
+        contacts.value?.let { updateListChats(it) }
     }
 
     override fun receiveNotifications(notification: HashMap<String, String>) {
         pushNotification.showNotification(notification)
+    }
+
+    private fun updateListChats(chats: MutableList<UserModel>) {
+        chats.sort()
+        contacts.postValue(chats)
     }
 
     fun disconnectSocket() {

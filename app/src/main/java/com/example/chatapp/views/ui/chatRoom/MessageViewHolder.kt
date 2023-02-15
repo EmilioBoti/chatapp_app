@@ -5,6 +5,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatapp.R
 import com.example.chatapp.helpers.common.OnLongClickItem
+import com.example.chatapp.helpers.utils.Const
 import com.example.chatapp.helpers.utils.Utils
 import com.example.chatapp.remoteRepository.models.MessageModel
 
@@ -14,7 +15,7 @@ class MessageViewHolder(itemView: View,private val longListener: OnLongClickItem
 
     fun bindData(message: MessageModel) {
         this.message?.text = message.message
-        this.time?.text = Utils.formatDate(message.times)
+        this.time?.text = Utils.formatDate(message.times, Const.TIME_FORMAT)
 
         itemView.setOnLongClickListener{
             longListener?.onLongClick(message.messageId)

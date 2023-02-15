@@ -22,8 +22,8 @@ class Utils @Inject constructor() {
                 .build()
         }
 
-        fun formatDate(date: String): String {
-            val format = SimpleDateFormat("HH:mm.a", Locale.getDefault())
+        fun formatDate(date: String, typeFormat: String): String {
+            val format = SimpleDateFormat(typeFormat, Locale.getDefault())
             val timestamp = Timestamp.valueOf(date.replace("T", " ").slice(IntRange(startRange, endRange)))
             return format.format(Date(timestamp.time)).lowercase()
         }

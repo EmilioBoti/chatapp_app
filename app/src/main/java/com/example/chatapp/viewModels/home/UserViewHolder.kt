@@ -5,6 +5,8 @@ import android.widget.TextView
 import com.example.chatapp.R
 import com.example.chatapp.factory.adapter.ModelViewHolder
 import com.example.chatapp.helpers.common.OnClickItem
+import com.example.chatapp.helpers.utils.Const
+import com.example.chatapp.helpers.utils.Utils
 import com.example.chatapp.remoteRepository.models.UserModel
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
@@ -19,7 +21,10 @@ class UserViewHolder(itemView: View, private val listener: OnClickItem?) : Model
         val userModel = value as UserModel
         name.text = userModel.name
         lastMessage.text = userModel.lastMessage
-        time.text = userModel.times
+        
+        userModel.times?.let {
+            time.text = Utils.formatDate(it, Const.TIME_FORMAT)
+        }
 
         userModel.image_url?.let { imgUrl ->
             Picasso.get().load(imgUrl)
