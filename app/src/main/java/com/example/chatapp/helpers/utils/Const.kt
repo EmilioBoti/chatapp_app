@@ -19,5 +19,6 @@ class Const {
         const val SOCKET_ID: String = "toSocketId"
         const val NOTIFICATION: String = "notification"
         const val NOTIFY: String = "notify"
+        const val TIME_FORMAT: String = "HH:mm.a"
     }
 }
