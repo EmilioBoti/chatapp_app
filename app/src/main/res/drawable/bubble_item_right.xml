@@ -5,7 +5,7 @@
         android:bottomLeftRadius="@dimen/dimen_25"
         android:topLeftRadius="@dimen/dimen_25"
         android:topRightRadius="@dimen/dimen_25" />
-    <solid android:color="@color/blue" />
+    <solid android:color="@color/main_green" />
     <stroke
         android:width="@dimen/dimen_1"
         android:color="@color/material_on_surface_stroke" />

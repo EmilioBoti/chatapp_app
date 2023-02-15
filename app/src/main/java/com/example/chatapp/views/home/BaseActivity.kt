@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Window
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.chatapp.App
 import com.example.chatapp.R
@@ -33,6 +35,7 @@ class BaseActivity : AppCompatActivity(), IBaseViewPresenter {
 
         (application as App).getComponent().inject(this)
         basePresenter.setUp(this)
+        window.statusBarColor = getColor(R.color.main_green)
 
     }
 
