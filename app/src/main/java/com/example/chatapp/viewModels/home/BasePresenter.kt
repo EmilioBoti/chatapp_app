@@ -54,7 +54,7 @@ class BasePresenter @Inject constructor() : IBasePresenter {
 
     private fun getUserToken(): String {
         var token: String = ""
-        Session.getToken(context)?.let { token = it }
+        Session.getToken()?.let { token = it }
         return token
     }
 

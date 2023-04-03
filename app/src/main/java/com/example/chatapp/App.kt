@@ -1,6 +1,7 @@
 package com.example.chatapp
 
 import android.app.Application
+import android.content.SharedPreferences
 import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
@@ -21,9 +22,15 @@ import dagger.internal.DaggerCollections
 class App: Application() {
     private lateinit var repositoryComponent: RepositoryComponent
 
+
+    companion object {
+        var prefers: SharedPreferences? = null
+    }
+
     override fun onCreate() {
         super.onCreate()
 
+        prefers = Session.getInstance(applicationContext)
         installEmoji()
         repositoryComponent = DaggerRepositoryComponent.builder()
             .repositoryModule(RepositoryModule(this))

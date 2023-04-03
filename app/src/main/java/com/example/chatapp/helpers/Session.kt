@@ -1,6 +1,7 @@
 package com.example.chatapp.helpers
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.example.chatapp.R
 import com.example.chatapp.remoteRepository.models.UserModel
 
@@ -12,23 +13,26 @@ class Session {
          const val EMAIL: String = "email"
          const val SOCKETID: String = "socketId"
          const val TOKEN: String = "token"
+        private var prefes: SharedPreferences? = null
+
+        fun getInstance(context: Context): SharedPreferences?  {
+            prefes = context.getSharedPreferences(context.getString(R.string.userDataToken), Context.MODE_PRIVATE)
+            return prefes
+        }
 
         fun saveToken(context: Context, token: String) {
-            context.getSharedPreferences(context.getString(R.string.userDataToken), Context.MODE_PRIVATE)
-                .edit().apply {
+            prefes?.edit()?.apply {
                     putString(TOKEN, token)
                     apply()
                 }
         }
 
-        fun getToken(context: Context): String? {
-            val prefe = context.getSharedPreferences(context.getString(R.string.userDataToken), Context.MODE_PRIVATE)
-            return prefe?.getString(TOKEN, "")
+        fun getToken(): String? {
+            return prefes?.getString(TOKEN, "")
         }
 
         fun saveUser(context: Context, userModel: UserModel) {
-           context.getSharedPreferences(context.getString(R.string.userData), Context.MODE_PRIVATE)
-               .edit().apply {
+           prefes?.edit()?.apply {
                    putString(ID, userModel.id)
                    putString(NAME, userModel.name)
                    putString(EMAIL, userModel.email)
@@ -37,9 +41,8 @@ class Session {
             
         }
 
-        fun getSession(context: Context): Map<String, *>? {
-            return context.getSharedPreferences(context.getString(R.string.userData), Context.MODE_PRIVATE)
-                .all
+        fun getSession(): Map<String, *>? {
+            return prefes?.all
         }
 
         fun getUserLogin(context: Context): Boolean? {
@@ -57,9 +60,8 @@ class Session {
             return prefe?.commit()
         }
 
-        fun getUserId(context: Context): String? {
-           val prefe = context.getSharedPreferences(context.getString(R.string.userData), Context.MODE_PRIVATE)
-            return prefe?.getString(ID, "")
+        fun getUserId(): String? {
+            return prefes?.getString(ID, "")
         }
     }
 }

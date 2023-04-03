@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.chatapp.App
@@ -35,7 +36,9 @@ import javax.inject.Inject
 class HomeViewModel(private val provider: IHomeUseCase,
                     application: Application): SocketEvent(application), IHomeViewModel {
 
-    val contacts: MutableLiveData<MutableList<UserModel>> = MutableLiveData<MutableList<UserModel>>()
+    private val _contacts: MutableLiveData<MutableList<UserModel>> = MutableLiveData<MutableList<UserModel>>()
+    private lateinit var friendContacts: MutableList<UserModel>
+    val contacts: LiveData<MutableList<UserModel>> = _contacts
     private var currentUser: String? = null
     private val pushNotification: PushNotification = PushNotification(application.applicationContext)
 
@@ -46,24 +49,16 @@ class HomeViewModel(private val provider: IHomeUseCase,
     init {
         pushNotification.notificationChannel()
         pushNotification.smsNotificationChannel()
-        currentUser = Session.getToken(application.applicationContext)
         setUp()
     }
 
     private fun setUp() {
         if(!mSocket.connected()) mSocket.connect()
-
-        connectivityState.setUpListener(object: NetConnectivity {
-            override fun network(state: State) {
-                if (state == State.AVAILABLE) {
-                    getContacts()
-                } else if (state == State.UNAVAILABLE) {
-                    getLocalContacts()
-                }
-            }
-        })
     }
 
+    /**
+     * Deprecated method, not in use
+     */
     override fun updateSocket(id: String) {
         if(!mSocket.connected()) mSocket.connect()
 
@@ -76,22 +71,32 @@ class HomeViewModel(private val provider: IHomeUseCase,
         }
     }
 
-    override fun getContacts() {
-
-        currentUser?.let {
-            provider.getUserContact(it, object : IResponseProvider {
-                override fun <T> response(data: T) {
-                    val users = data as MutableList<UserModel>
-                    updateListChats(users)
-                    updateAllUsers(users)
-                }
-
-                override fun responseError(err: ErrorLogin) {
-
-                }
-
-            })
+    fun findYourFriends(name: String) {
+        if (name.isEmpty()) {
+            _contacts.value?.let { updateListChats(friendContacts) }
+        } else {
+            updateListChats(getFriendFound(name))
         }
+    }
+
+    private fun getFriendFound(name: String) : MutableList<UserModel> {
+        return _contacts.value?.filter { it.name.lowercase().contains(name.lowercase()) } as MutableList<UserModel>
+    }
+
+    override fun getContacts() {
+        provider.getUserContact(token, object : IResponseProvider {
+            override fun <T> response(data: T) {
+                val users = data as MutableList<UserModel>
+                friendContacts = users
+                updateListChats(users)
+                updateAllUsers(users)
+            }
+
+            override fun responseError(err: ErrorLogin) {
+
+            }
+
+        })
     }
 
     private fun updateAllUsers(users: MutableList<UserModel>) {
@@ -103,9 +108,11 @@ class HomeViewModel(private val provider: IHomeUseCase,
 
     override fun getLocalContacts() {
         viewModelScope.launch {
-            currentUser?.let {
-                val list = provider.getUserContactLocal(it)
-                contacts.postValue(list)
+            val id = Session.getSession()?.get(Session.ID)
+
+            id?.let {
+                val list = provider.getUserContactLocal(it as String)
+                _contacts.postValue(list)
             }
         }
     }
@@ -125,9 +132,17 @@ class HomeViewModel(private val provider: IHomeUseCase,
         pushNotification.showNotification(notification)
     }
 
+    override fun isConnectivityAvailable(state: State) {
+        if (state == State.AVAILABLE) {
+            getContacts()
+        } else if (state == State.UNAVAILABLE) {
+            getLocalContacts()
+        }
+    }
+
     private fun updateListChats(chats: MutableList<UserModel>) {
         chats.sort()
-        contacts.postValue(chats)
+        _contacts.postValue(chats)
     }
 
     fun disconnectSocket() {

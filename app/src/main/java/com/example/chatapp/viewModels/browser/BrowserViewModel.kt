@@ -9,6 +9,7 @@ import com.example.chatapp.viewModels.browser.useCase.IBrowserUseCase
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
 import com.example.chatapp.viewModels.login.ErrorLogin
 import com.example.chatapp.viewModels.login.IResponseProvider
+import com.example.chatapp.viewModels.network.State
 import com.example.chatapp.viewModels.notifications.PushNotification
 import com.google.gson.Gson
 
@@ -29,7 +30,7 @@ class BrowserViewModel(private val provider: IBrowserUseCase,
 
     init {
 
-        val map: Map<String, *>? = Session.getSession(context.applicationContext)
+        val map: Map<String, *>? = Session.getSession()
         map?.let {
             userId = map[Session.ID] as String
             userName = map[Session.NAME] as String
@@ -55,6 +56,10 @@ class BrowserViewModel(private val provider: IBrowserUseCase,
 
     override fun receiveNotifications(notification: HashMap<String, String>) {
         pushNotification.showNotification(notification)
+    }
+
+    override fun isConnectivityAvailable(state: State) {
+
     }
 
     override fun sendRequest(pos: Int) {

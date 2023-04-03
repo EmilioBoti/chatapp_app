@@ -5,9 +5,10 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
+import javax.inject.Inject
 
 
-class ConnectivityState(private val context: Context) {
+class ConnectivityState @Inject constructor(private val context: Context) {
     private val connectivityManager: ConnectivityManager =  context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     private val timeOut: Int = 1000
 

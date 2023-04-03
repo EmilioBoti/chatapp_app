@@ -8,6 +8,8 @@ import com.example.chatapp.helpers.Session
 import com.example.chatapp.helpers.utils.Const
 import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.viewModels.network.ConnectivityState
+import com.example.chatapp.viewModels.network.NetConnectivity
+import com.example.chatapp.viewModels.network.State
 import com.example.chatapp.viewModels.notifications.PushNotification
 import com.google.gson.Gson
 import io.socket.client.Socket
@@ -15,10 +17,8 @@ import javax.inject.Inject
 
 abstract class SocketEvent(application: Application): ViewModel() {
     protected var mSocket: Socket = SocketCon.getSocket()
-    private var context: Application = application
     protected lateinit var token: String
 
-    private val pushNotification: PushNotification = PushNotification(context.applicationContext)
 
     @Inject
     protected lateinit var connectivityState: ConnectivityState
@@ -27,8 +27,18 @@ abstract class SocketEvent(application: Application): ViewModel() {
 
         (application as App).getComponent().inject(this)
 
-        Session.getToken(context.applicationContext)?.let { token = it }
+        Session.getToken()?.let { token = it }
         eventListener()
+        getConnectivity()
+    }
+
+    private fun getConnectivity() {
+        connectivityState.setUpListener(object : NetConnectivity {
+            override fun network(state: State) {
+                isConnectivityAvailable(state)
+            }
+
+        })
     }
 
     private fun eventListener() {
@@ -46,4 +56,5 @@ abstract class SocketEvent(application: Application): ViewModel() {
 
     abstract fun receiveMessage(message: MessageModel)
     abstract fun receiveNotifications(notification: HashMap<String, String>)
+    abstract fun isConnectivityAvailable(state: State)
 }

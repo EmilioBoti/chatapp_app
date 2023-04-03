@@ -34,7 +34,7 @@ class ChatViewModel(private val chatProvider: IChatUseCase,
     lateinit var currentUserId: String
 
     init {
-        currentUser = Session.getSession(application.applicationContext)
+        currentUser = Session.getSession()
         mSocket.on("disconnect") {}
     }
 
@@ -132,6 +132,10 @@ class ChatViewModel(private val chatProvider: IChatUseCase,
 
     override fun receiveNotifications(notification: HashMap<String, String>) {
         pushNotification.showNotification(notification)
+    }
+
+    override fun isConnectivityAvailable(state: State) {
+
     }
 
     private fun isRoomUser(roomId: String): Boolean {

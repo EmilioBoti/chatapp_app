@@ -10,6 +10,7 @@ import com.example.chatapp.remoteRepository.models.NotificationResponse
 import com.example.chatapp.repositoryLocal.database.AppDataBase
 import com.example.chatapp.repositoryLocal.database.entity.UserEntity
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
+import com.example.chatapp.viewModels.network.State
 import com.example.chatapp.viewModels.notifications.provider.INotificationUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,7 +25,7 @@ class NotificationViewModel(private val provider: INotificationUseCase,
     private val pushNotification: PushNotification = PushNotification(application.applicationContext)
 
     init {
-        currentUser = Session.getUserId(application.applicationContext)
+        currentUser = Session.getUserId()
     }
 
     override fun getNotification() {
@@ -68,6 +69,10 @@ class NotificationViewModel(private val provider: INotificationUseCase,
 
     override fun receiveNotifications(notification: HashMap<String, String>) {
         pushNotification.showNotification(notification)
+    }
+
+    override fun isConnectivityAvailable(state: State) {
+
     }
 
 }
