@@ -49,4 +49,9 @@
     <string name="welcomeContentText">Let\'s have fun chatting with friends or you can even find new people to talk!</string>
     <string name="or">OR</string>
     <string name="welcomeToTitle">Welcome To</string>
+    <string name="chats">Chats</string>
+    <string name="findAfFriend">Find a friend</string>
+    <string name="add_friend">Connect</string>
+    <string name="btnRequest">btnRequest</string>
+    <string name="statusPending">Pending</string>
 </resources>

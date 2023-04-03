@@ -39,4 +39,5 @@
     <dimen name="dimenSt_35">35sp</dimen>
     <dimen name="dimenSt_80">80sp</dimen>
     <dimen name="dimenSt_60">60sp</dimen>
+    <dimen name="dimen_16">16dp</dimen>
 </resources>
