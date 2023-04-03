@@ -6,6 +6,7 @@ import com.example.chatapp.viewModels.home.UserViewHolder
 import com.example.chatapp.viewModels.notifications.INotificationOnClick
 import com.example.chatapp.views.ui.browser.adapter.BrowserHolder
 import com.example.chatapp.views.ui.browser.adapter.RecentSearchVh
+import com.example.chatapp.views.ui.friend.FriendViewHolder
 import com.example.chatapp.views.ui.notification.NotificationViewHolder
 
 class ViewHolderFactory {
@@ -23,6 +24,9 @@ class ViewHolderFactory {
                 }
                 FactoryBuilder.RECENT_SEARCH -> {
                     RecentSearchVh(itemView, onClickItem)
+                }
+                FactoryBuilder.FRIEND -> {
+                    FriendViewHolder(itemView, onClickItem)
                 }
             }
         }

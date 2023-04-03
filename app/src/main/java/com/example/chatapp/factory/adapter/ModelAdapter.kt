@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatapp.helpers.common.OnClickItem
 
-class ModelAdapter<in T>(private val list: MutableList<T>, private val factoryBuilder: FactoryBuilder): RecyclerView.Adapter<ModelViewHolder>() {
+class ModelAdapter<in T>(private var list: MutableList<T>, private val factoryBuilder: FactoryBuilder): RecyclerView.Adapter<ModelViewHolder>() {
     private var layout: Int = 0
     private var onClickItem: OnClickItem? = null
 

@@ -24,6 +24,9 @@ interface ApiEndPoint {
     @GET("contacts")
     fun getContacts(@Header("Authorization") auth: String): Call<FriendEntity>
 
+    @GET("friends")
+    fun getUserFriends(@Header("Authorization") auth: String): Call<FriendEntity>
+
     @GET("messages/{roomId}")
     fun getMessage(@Header("Authorization") auth: String, @Path("roomId") roomId: String): Call<MutableList<MessageModel>>
 

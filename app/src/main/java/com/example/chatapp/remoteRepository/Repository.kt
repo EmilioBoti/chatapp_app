@@ -8,7 +8,7 @@ import com.example.chatapp.remoteRepository.models.NotificationResponse
 import com.example.chatapp.viewModels.login.IResponseProvider
 import retrofit2.Call
 
-interface Repository {
+interface Repository: IChatRepository {
     fun getMessages(token: String, roomId: String, res: IResponseProvider)
     fun getUserContacts(token: String, res: IResponseProvider)
     fun login(userLogin: UserLogin, res: IResponseProvider)

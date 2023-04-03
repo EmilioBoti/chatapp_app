@@ -143,4 +143,19 @@ class RemoteDataProvider @Inject constructor(private val retrofit: Retrofit): Re
             throw e.fillInStackTrace()
         }
     }
+
+    override suspend fun retrieveUserFriends(token: String): FriendEntity? {
+        return try {
+            withContext(Dispatchers.IO) {
+                val res = retrofit.create(ApiEndPoint::class.java).getUserFriends(token).execute()
+                if (res.isSuccessful) {
+                    res.body()
+                } else {
+                    null
+                }
+            }
+        } catch (e: Exception) {
+            throw e.fillInStackTrace()
+        }
+    }
 }
