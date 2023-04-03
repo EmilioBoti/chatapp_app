@@ -1,13 +1,15 @@
 package com.example.chatapp.views.home
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +24,7 @@ import com.example.chatapp.remoteRepository.models.UserModel
 import com.example.chatapp.viewModels.home.HomeViewModel
 import com.example.chatapp.viewModels.home.useCase.HomeUseCase
 import com.example.chatapp.views.ui.browser.BrowserActivity
+import com.example.chatapp.views.ui.friend.FriendActivity
 import com.example.chatapp.views.ui.notification.NotificationActivity
 import javax.inject.Inject
 
@@ -29,6 +32,8 @@ import javax.inject.Inject
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMain2Binding
     private lateinit var homeViewModel: HomeViewModel
+    private lateinit var keyboard: InputMethodManager
+    private var chatsAdapter: ModelAdapter<UserModel>? = null
 
     @Inject
     lateinit var homeUseCase: HomeUseCase
@@ -37,9 +42,6 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        title = "Chats"
-
     }
 
     override fun onStart() {
@@ -47,44 +49,90 @@ class HomeActivity : AppCompatActivity() {
 
         (this.application as App).getComponent().inject( this)
 
+        keyboard = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         homeViewModel = HomeViewModel(homeUseCase, this.application)
 
         homeViewModel.contacts.observe(this, Observer {
             setAdapter(it)
         })
 
+        eventHandler()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        hideSearcherInput()
+    }
+
+    private fun eventHandler() {
+
         binding.btnBrowser.setOnClickListener {
-            Intent(this, BrowserActivity::class.java).apply {
+            navigate<BrowserActivity>(BrowserActivity())
+        }
+
+        binding.btnFriends.setOnClickListener {
+            navigate<FriendActivity>(FriendActivity())
+        }
+
+        binding.btnOptions.setOnClickListener {
+            if (binding.btnBrowser.isVisible) {
+                binding.btnFriends.hide()
+                binding.btnBrowser.hide()
+            } else {
+                binding.btnFriends.show()
+                binding.btnBrowser.show()
+            }
+        }
+
+        binding.searcherInput.setOnFocusChangeListener { view, b ->
+            if (!b) {
+                binding.searcherInput.visibility = View.GONE
+            }
+        }
+
+        binding.searcherInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                homeViewModel.findYourFriends(p0.toString())
+            }
+
+            override fun afterTextChanged(p0: Editable?) {}
+
+        })
+        binding.toolbar.setOnMenuItemClickListener { menu ->
+            when(menu.itemId) {
+                R.id.logout -> alertToLogout()
+                R.id.notifications -> navigate(NotificationActivity())
+                R.id.search -> {
+                    if (!binding.searcherInput.isVisible) {
+                        showSearcherInput()
+                    }
+                }
+            }
+            true
+        }
+
+        binding.toolbar.setNavigationOnClickListener {
+            this.onBackPressed()
+        }
+
+    }
+
+    private fun <T> navigate(screen: T) {
+        screen?.let {
+            Intent(this, it::class.java).apply {
                 startActivity(this)
             }
         }
-
-    }
-
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.main_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.logout -> alertToLogout()
-            R.id.notifications -> {
-                Intent(this, NotificationActivity::class.java).apply {
-                    startActivity(this)
-                }
-            }
-        }
-        return true
     }
 
     private fun setAdapter(contacts: MutableList<UserModel>) {
 
-        val adapter = ModelAdapter<UserModel>(contacts, FactoryBuilder.CONTACT)
-        adapter.setLayout(R.layout.user_item_2)
-        adapter.setListener(object : OnClickItem {
+        chatsAdapter = ModelAdapter<UserModel>(contacts, FactoryBuilder.CONTACT)
+        chatsAdapter?.setLayout(R.layout.user_item_2)
+        chatsAdapter?.setListener(object : OnClickItem {
             override fun onClick(pos: Int) {
                 homeViewModel.navigateChatRoom(this@HomeActivity, pos)
             }
@@ -99,8 +147,27 @@ class HomeActivity : AppCompatActivity() {
 
         binding.userContainer.apply {
             this.layoutManager = LinearLayoutManager(this@HomeActivity, RecyclerView.VERTICAL, false)
-            this.adapter = adapter
+            this.adapter = chatsAdapter
         }
+    }
+
+    private fun showSearcherInput() {
+        binding.searcherInput.run {
+            visibility = View.VISIBLE
+            requestFocus()
+        }
+        binding.toolbar.setNavigationIcon(R.drawable.arrow_back_24)
+        keyboard.showSoftInput(binding.searcherInput, InputMethodManager.RESULT_SHOWN)
+    }
+
+    private fun hideSearcherInput() {
+        binding.searcherInput.setText("")
+        homeViewModel.findYourFriends("")
+        binding.searcherInput.visibility = View.GONE
+        keyboard.hideSoftInputFromWindow(binding.searcherInput.windowToken, 0)
+        binding.toolbar.navigationIcon = null
+        binding.btnFriends.hide()
+        binding.btnBrowser.hide()
     }
 
     private fun alertToLogout() {
@@ -118,7 +185,11 @@ class HomeActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-        homeViewModel.disconnectSocket()
+        if (binding.searcherInput.isVisible) {
+            hideSearcherInput()
+        } else {
+            homeViewModel.disconnectSocket()
+            super.onBackPressed()
+        }
     }
 }

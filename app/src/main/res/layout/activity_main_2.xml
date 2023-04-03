@@ -6,16 +6,56 @@
     android:layout_height="match_parent"
     tools:context=".views.home.HomeActivity">
 
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/searcherBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        >
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/Theme.MaterialComponents.Light"
+                app:menu="@menu/main_menu"
+                app:title="@string/chats"
+                app:navigationIconTint="@color/white"
+                app:titleTextColor="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/searcherInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_15"
+                android:layout_marginVertical="@dimen/dimen_12"
+                android:background="@null"
+                android:hint="@string/findAfFriend"
+                android:paddingHorizontal="@dimen/dimen_15"
+                android:paddingVertical="@dimen/dimen_8"
+                android:textColor="@color/white"
+                android:textColorHint="@color/gray_cultured"
+                android:visibility="gone" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searcherBar">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/userContainer"
@@ -29,8 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toTopOf="@id/footer"
-                app:layout_constraintEnd_toEndOf="parent"
-                />
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/footer"
@@ -57,18 +96,52 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/dimen_16"
+        android:layout_marginBottom="@dimen/dimen_16"
         >
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnBrowser"
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="30dp"
-            android:contentDescription="@string/fab_content_desc"
-            app:srcCompat="@drawable/person_add_24"
-            app:tint="@color/white"
-            />
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            >
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnBrowser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/fab_content_desc"
+                app:srcCompat="@drawable/search_24"
+                app:tint="@color/white"
+                app:fabSize="mini"
+                android:backgroundTint="@color/yellow_dark"
+                android:layout_marginBottom="@dimen/dimen_8"
+                android:visibility="gone"
+                />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnFriends"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/fab_content_desc"
+                app:srcCompat="@drawable/person_add_24"
+                app:tint="@color/white"
+                app:fabSize="mini"
+                android:backgroundTint="@color/tiffany_blue"
+                android:layout_marginBottom="@dimen/dimen_8"
+                android:visibility="gone"
+                />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnOptions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/fab_content_desc"
+                app:srcCompat="@drawable/ic_edit_24"
+                app:tint="@color/white"
+                />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </RelativeLayout>
