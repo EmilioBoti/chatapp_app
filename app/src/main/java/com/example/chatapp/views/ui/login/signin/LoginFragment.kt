@@ -1,4 +1,4 @@
-package com.example.chatapp.views.ui.login
+package com.example.chatapp.views.ui.login.signin
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import com.example.chatapp.App
 import com.example.chatapp.databinding.FragmentLogin3Binding
 import com.example.chatapp.remoteRepository.models.UserLogin
 import com.example.chatapp.useCases.IAuthUseCase
-import com.example.chatapp.viewModels.login.LoginViewModel
+import com.example.chatapp.views.ui.login.BaseAuthFragment
 import javax.inject.Inject
 
 

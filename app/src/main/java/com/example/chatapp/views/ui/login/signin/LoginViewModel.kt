@@ -1,4 +1,4 @@
-package com.example.chatapp.viewModels.login
+package com.example.chatapp.views.ui.login.signin
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +12,7 @@ import com.example.chatapp.remoteRepository.models.ApiError
 import com.example.chatapp.remoteRepository.models.auth.AuthApiResponse
 import com.example.chatapp.remoteRepository.models.UserLogin
 import com.example.chatapp.useCases.IAuthUseCase
+import com.example.chatapp.views.ui.login.BaseAuthViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback

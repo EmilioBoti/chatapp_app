@@ -12,8 +12,7 @@ import com.example.chatapp.App
 import com.example.chatapp.databinding.FragmentSignIn3Binding
 import com.example.chatapp.useCases.IAuthUseCase
 import com.example.chatapp.viewModels.login.IAuthPresenter
-import com.example.chatapp.viewModels.login.AuthPresenter
-import com.example.chatapp.viewModels.login.LoginViewModel
+import com.example.chatapp.views.ui.login.signin.LoginViewModel
 import com.example.chatapp.views.home.HomeActivity
 import javax.inject.Inject
 

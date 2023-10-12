@@ -1,4 +1,4 @@
-package com.example.chatapp.viewModels.login
+package com.example.chatapp.views.ui.login
 
 import com.example.chatapp.helpers.enums.Navigation
 import com.example.chatapp.remoteRepository.models.ApiError

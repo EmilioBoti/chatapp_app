@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.chatapp.R
 import com.example.chatapp.databinding.FragmentWelcomeBinding
-import com.example.chatapp.views.ui.login.LoginFragment
+import com.example.chatapp.views.ui.login.signin.LoginFragment
 import com.example.chatapp.views.ui.signin.SignInFragment
 
 

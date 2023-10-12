@@ -1,4 +1,4 @@
-package com.example.chatapp.viewModels.login
+package com.example.chatapp.views.ui.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

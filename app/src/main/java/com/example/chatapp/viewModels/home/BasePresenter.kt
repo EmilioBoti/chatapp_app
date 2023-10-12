@@ -1,13 +1,10 @@
 package com.example.chatapp.viewModels.home
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import com.example.chatapp.api.SocketCon
 import com.example.chatapp.helpers.Session
 import com.example.chatapp.views.home.HomeActivity
 import com.example.chatapp.views.home.WelcomeFragment
-import com.example.chatapp.views.ui.login.LoginFragment
 import javax.inject.Inject
 
 class BasePresenter @Inject constructor() : IBasePresenter {
