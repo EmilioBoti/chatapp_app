@@ -101,6 +101,11 @@ class LoginViewModel(private val modelProvider: IAuthUseCase): BaseAuthViewModel
         newUser["email"]?.let {
             if (validateEmail(it.trim())) {
                 singin(newUser)
+            } else {
+                showAuthError(ApiError(
+                    "email",
+                    "the email is incorrect.",
+                    400))
             }
         }
     }
