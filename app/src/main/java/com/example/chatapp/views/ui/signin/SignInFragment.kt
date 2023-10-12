@@ -29,6 +29,11 @@ class SignInFragment : Fragment() {
     private val regexEmail: String = "^[A-Za-z0-9]+@([a-zA-Z]+)(.)[a-zA-Z]{1,3}$"
     private val regexEmail2: String = "^[A-Za-z]([@]{1})(.{1})(\\.)(/{1,})"
 
+    companion object {
+        const val TAG = ""
+
+        fun newInstance() : SignInFragment = SignInFragment()
+    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = FragmentSignIn3Binding.inflate(inflater, container, false)
@@ -39,9 +44,9 @@ class SignInFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         (activity?.application as App).getComponent().inject(this)
-        activity?.applicationContext?.let { presenter = AuthPresenter(it) }
+//        activity?.applicationContext?.let { presenter = AuthPresenter(it) }
 
-        loginViewModel = LoginViewModel(modelProvider, presenter)
+        loginViewModel = LoginViewModel(modelProvider)
 
         loginViewModel.user.observe(this.viewLifecycleOwner, Observer { newUser ->
             activity?.let {

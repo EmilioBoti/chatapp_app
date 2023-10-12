@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.chatapp.R
 import com.example.chatapp.remoteRepository.models.UserModel
+import com.example.chatapp.remoteRepository.models.auth.AuthApiResponse
 
 class Session {
     companion object {
@@ -39,6 +40,16 @@ class Session {
                    apply()
                }
             
+        }
+
+        fun saveUserSession(user: AuthApiResponse) {
+            prefes?.edit()?.apply {
+                putString(ID, user.id)
+                putString(NAME, user.name)
+                putString(EMAIL, user.email)
+                putString(TOKEN, user.token)
+                apply()
+            }
         }
 
         fun getSession(): Map<String, *>? {

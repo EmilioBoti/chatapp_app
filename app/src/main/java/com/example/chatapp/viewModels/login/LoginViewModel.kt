@@ -1,7 +1,12 @@
 package com.example.chatapp.viewModels.login
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.CreationExtras
+import com.example.chatapp.App
+import com.example.chatapp.helpers.Session
 import com.example.chatapp.helpers.enums.Navigation
 import com.example.chatapp.remoteRepository.models.ApiError
 import com.example.chatapp.remoteRepository.models.auth.AuthApiResponse
@@ -14,14 +19,27 @@ import retrofit2.Response
 import kotlin.Exception
 
 
-class LoginViewModel(private val modelProvider: IAuthUseCase,
-                     private val presenter: IAuthPresenter): BaseAuthViewModel(), ILogin {
+class LoginViewModel(private val modelProvider: IAuthUseCase): BaseAuthViewModel(), ILogin {
 
 
     val user: MutableLiveData<String> = MutableLiveData<String>()
     private val regexEmail: String = "^[A-Za-z0-9]+@([a-zA-Z]+)(.)[a-zA-Z]{2,3}$"
     private val lengthPw: Int = 5
 
+
+    companion object {
+        fun provideFactory(modelProvider: IAuthUseCase) : ViewModelProvider.Factory {
+            return object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(
+                    modelClass: Class<T>,
+                    extras: CreationExtras
+                ): T {
+                    return LoginViewModel(modelProvider) as T
+                }
+            }
+        }
+
+    }
 
     override fun login(userLogin: UserLogin) {
         viewModelScope.launch{
@@ -55,11 +73,9 @@ class LoginViewModel(private val modelProvider: IAuthUseCase,
 
     private fun saveSession(response: AuthApiResponse?) {
         response?.let {
-            it.token.let { token ->
-                presenter.saveToken(token)
-                presenter.setUpSocket(token)
-                navigateTo(Navigation.MAIN)
-            }
+            Session.saveUserSession(it)
+            App.setUpSocketServer(it.token)
+            navigateTo(Navigation.MAIN)
         }
     }
 

@@ -25,11 +25,11 @@ class WelcomeFragment : Fragment() {
 
 
         binding.btnLogin.setOnClickListener {
-            navigate(LoginFragment())
+            navigate(LoginFragment.newInstance())
         }
 
         binding.btnSignin.setOnClickListener {
-            navigate(SignInFragment())
+            navigate(SignInFragment.newInstance())
         }
 
     }

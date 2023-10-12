@@ -25,6 +25,10 @@ class App: Application() {
 
     companion object {
         var prefers: SharedPreferences? = null
+        
+        fun setUpSocketServer(token: String) {
+            SocketCon.setSocket(token)
+        }
     }
 
     override fun onCreate() {

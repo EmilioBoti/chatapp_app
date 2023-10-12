@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.example.chatapp.App
 import com.example.chatapp.databinding.FragmentLogin3Binding
 import com.example.chatapp.remoteRepository.models.UserLogin
 import com.example.chatapp.useCases.IAuthUseCase
-import com.example.chatapp.viewModels.login.IAuthPresenter
-import com.example.chatapp.viewModels.login.AuthPresenter
 import com.example.chatapp.viewModels.login.LoginViewModel
 import javax.inject.Inject
 
@@ -20,9 +19,15 @@ class LoginFragment : BaseAuthFragment() {
     @Inject
     lateinit var modelProvider: IAuthUseCase
 
-    private lateinit var loginViewModel: LoginViewModel
-    private lateinit var presenter: IAuthPresenter
+    private val loginViewModel: LoginViewModel by viewModels {
+        LoginViewModel.provideFactory(modelProvider)
+    }
 
+    companion object {
+        const val TAG = "LoginFragment"
+
+        fun newInstance() = LoginFragment()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
@@ -34,9 +39,6 @@ class LoginFragment : BaseAuthFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         (activity?.application as App).getComponent().inject(this)
-        activity?.applicationContext?.let { presenter = AuthPresenter(it) }
-
-        loginViewModel = LoginViewModel(modelProvider, presenter)
 
         updateUi()
         eventsHandle()
