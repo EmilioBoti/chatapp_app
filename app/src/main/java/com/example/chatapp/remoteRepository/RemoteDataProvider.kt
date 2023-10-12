@@ -66,8 +66,10 @@ class RemoteDataProvider @Inject constructor(private val retrofit: Retrofit): Re
         }
     }
 
-    override fun signIn(newUser: HashMap<String, String>): Call<AuthApiResponse> {
-       return retrofit.create(ApiEndPoint::class.java).registerUser(newUser)
+    override suspend fun signIn(newUser: HashMap<String, String>): Response<AuthApiResponse> {
+       return withContext(Dispatchers.IO){
+           retrofit.create(ApiEndPoint::class.java).registerUser(newUser).execute()
+       }
     }
 
     override fun searchNewUser(token: String, value: String, res: IResponseProvider) {

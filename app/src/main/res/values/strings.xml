@@ -19,7 +19,7 @@
     <string name="goBack">goBack</string>
     <string name="logoutMessage">Are you sure you want to log out?</string>
     <string name="notifications">Notifications</string>
-    <string name="signIn">Sign In</string>
+    <string name="sign_up">Sign Up</string>
     <string name="search">search…</string>
     <string name="newUser">New Users</string>
     <string name="confirmPw">Confirm Password</string>

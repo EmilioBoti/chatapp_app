@@ -12,7 +12,7 @@ interface Repository: IChatRepository {
     fun getMessages(token: String, roomId: String, res: IResponseProvider)
     fun getUserContacts(token: String, res: IResponseProvider)
     suspend fun login(userLogin: UserLogin): Response<AuthApiResponse>
-    fun signIn(newUser: HashMap<String, String>): Call<AuthApiResponse>
+    suspend fun signIn(newUser: HashMap<String, String>): Response<AuthApiResponse>
     fun searchNewUser(token: String, value: String, res: IResponseProvider)
 
     suspend fun getNotification(token: String): MutableList<NotificationModel>?

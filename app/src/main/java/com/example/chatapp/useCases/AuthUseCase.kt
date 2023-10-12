@@ -14,7 +14,7 @@ class AuthUseCase @Inject constructor(private val provider: Repository): IAuthUs
         return provider.login(userLogin)
     }
 
-    override fun signIn(newUser: HashMap<String, String>): Call<AuthApiResponse> {
+    override suspend fun signUp(newUser: HashMap<String, String>): Response<AuthApiResponse> {
         return provider.signIn(newUser)
     }
 }

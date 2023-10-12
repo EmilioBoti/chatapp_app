@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.chatapp.App
 import com.example.chatapp.databinding.FragmentSignIn3Binding
@@ -14,19 +15,18 @@ import com.example.chatapp.useCases.IAuthUseCase
 import com.example.chatapp.viewModels.login.IAuthPresenter
 import com.example.chatapp.views.ui.login.signin.LoginViewModel
 import com.example.chatapp.views.home.HomeActivity
+import com.example.chatapp.views.ui.login.BaseAuthFragment
 import javax.inject.Inject
 
-class SignUpFragment : Fragment() {
+class SignUpFragment : BaseAuthFragment() {
     private lateinit var binding: FragmentSignIn3Binding
 
     @Inject
     lateinit var modelProvider: IAuthUseCase
 
-    private lateinit var loginViewModel: LoginViewModel
-    private lateinit var presenter: IAuthPresenter
-
-    private val regexEmail: String = "^[A-Za-z0-9]+@([a-zA-Z]+)(.)[a-zA-Z]{1,3}$"
-    private val regexEmail2: String = "^[A-Za-z]([@]{1})(.{1})(\\.)(/{1,})"
+    private val loginViewModel: LoginViewModel by viewModels {
+        LoginViewModel.provideFactory(modelProvider)
+    }
 
     companion object {
         const val TAG = ""
@@ -43,19 +43,16 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         (activity?.application as App).getComponent().inject(this)
-//        activity?.applicationContext?.let { presenter = AuthPresenter(it) }
 
-        loginViewModel = LoginViewModel(modelProvider)
+        loginViewModel.navigation.observe(this.viewLifecycleOwner) {
+            navigateToHome()
+        }
 
-        loginViewModel.user.observe(this.viewLifecycleOwner, Observer { newUser ->
-            activity?.let {
-                navigateTo(HomeActivity())
-            }
-        })
+        loginViewModel.errorAuth.observe(this.viewLifecycleOwner) { error ->
+            showError(error)
+        }
 
-
-
-        binding.btnSignIn.setOnClickListener {
+        binding.btnSignUp.setOnClickListener {
             val name = binding.nameInput.getEditInput().text.toString().trim()
             val email = binding.emailInput.getEditInput().text.toString().trim()
             val pw = binding.pwInput.getEditInput().text.toString().trim()

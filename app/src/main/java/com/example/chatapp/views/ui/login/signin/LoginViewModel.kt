@@ -58,18 +58,18 @@ class LoginViewModel(private val modelProvider: IAuthUseCase): BaseAuthViewModel
     }
 
     override fun singin(newUser: HashMap<String, String>) {
-        modelProvider.signIn(newUser).enqueue(object : Callback<AuthApiResponse> {
-            override fun onResponse(call: Call<AuthApiResponse>, response: Response<AuthApiResponse>) {
-                if (response.isSuccessful) {
-                    saveSession(response.body())
+        viewModelScope.launch {
+            try {
+                val result = modelProvider.signUp(newUser)
+                if(result.isSuccessful) {
+                    saveSession(result.body())
+                } else {
+                    showAuthError(parseApiError(result.errorBody()))
                 }
+            } catch (e: Exception) {
+                checkError(e)
             }
-
-            override fun onFailure(call: Call<AuthApiResponse>, t: Throwable) {
-
-            }
-
-        })
+        }
     }
 
     private fun saveSession(response: AuthApiResponse?) {

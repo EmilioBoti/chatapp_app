@@ -113,13 +113,13 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnSignIn"
+        android:id="@+id/btnSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/dimen_30"
         android:layout_marginBottom="@dimen/dimen_30"
         android:background="@drawable/login_btn_style"
-        android:text="@string/signIn"
+        android:text="@string/sign_up"
         android:textColor="@color/second_green_darker"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

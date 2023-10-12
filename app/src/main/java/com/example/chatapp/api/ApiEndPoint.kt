@@ -39,7 +39,7 @@ interface ApiEndPoint {
     fun login(@Body user: UserLogin): Call<AuthApiResponse>
 
     @Headers("Content-type: application/json")
-    @POST("signin")
+    @POST("signup")
     fun registerUser(@Body user: HashMap<String, String>): Call<AuthApiResponse>
 
     @Headers("Content-type: application/json")

@@ -7,5 +7,5 @@ import retrofit2.Response
 
 interface IAuthUseCase {
     suspend fun login(userLogin: UserLogin): Response<AuthApiResponse>
-    fun signIn(newUser: HashMap<String, String>): Call<AuthApiResponse>
+    suspend fun signUp(newUser: HashMap<String, String>): Response<AuthApiResponse>
 }
