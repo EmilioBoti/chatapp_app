@@ -13,7 +13,7 @@ import com.example.chatapp.views.ui.browser.BrowserActivity
 import com.example.chatapp.views.ui.chatRoom.ChatRoom
 import com.example.chatapp.views.ui.login.signin.LoginFragment
 import com.example.chatapp.views.ui.notification.NotificationActivity
-import com.example.chatapp.views.ui.signin.SignInFragment
+import com.example.chatapp.views.ui.login.signup.SignUpFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -28,7 +28,7 @@ interface RepositoryComponent {
     fun inject(socketEvent: SocketEvent)
     fun inject(baseActivity: BaseActivity)
     fun inject(loginFragment: LoginFragment)
-    fun inject(signFragment: SignInFragment)
+    fun inject(signFragment: SignUpFragment)
     fun inject(notificationActivity: NotificationActivity)
     fun inject(homeActivity: HomeActivity)
     fun inject(chatRoom: ChatRoom)

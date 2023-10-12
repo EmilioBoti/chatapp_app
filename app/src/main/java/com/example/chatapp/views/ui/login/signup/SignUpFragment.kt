@@ -1,4 +1,4 @@
-package com.example.chatapp.views.ui.signin
+package com.example.chatapp.views.ui.login.signup
 
 import android.app.Activity
 import android.content.Intent
@@ -16,7 +16,7 @@ import com.example.chatapp.views.ui.login.signin.LoginViewModel
 import com.example.chatapp.views.home.HomeActivity
 import javax.inject.Inject
 
-class SignInFragment : Fragment() {
+class SignUpFragment : Fragment() {
     private lateinit var binding: FragmentSignIn3Binding
 
     @Inject
@@ -31,7 +31,7 @@ class SignInFragment : Fragment() {
     companion object {
         const val TAG = ""
 
-        fun newInstance() : SignInFragment = SignInFragment()
+        fun newInstance() : SignUpFragment = SignUpFragment()
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

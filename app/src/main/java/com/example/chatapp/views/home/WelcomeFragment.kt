@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.example.chatapp.R
 import com.example.chatapp.databinding.FragmentWelcomeBinding
 import com.example.chatapp.views.ui.login.signin.LoginFragment
-import com.example.chatapp.views.ui.signin.SignInFragment
+import com.example.chatapp.views.ui.login.signup.SignUpFragment
 
 
 class WelcomeFragment : Fragment() {
@@ -29,7 +29,7 @@ class WelcomeFragment : Fragment() {
         }
 
         binding.btnSignin.setOnClickListener {
-            navigate(SignInFragment.newInstance())
+            navigate(SignUpFragment.newInstance())
         }
 
     }
