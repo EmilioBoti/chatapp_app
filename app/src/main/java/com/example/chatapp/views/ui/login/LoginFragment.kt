@@ -1,27 +1,20 @@
 package com.example.chatapp.views.ui.login
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.lifecycle.Observer
 import com.example.chatapp.App
-import com.example.chatapp.R
-import com.example.chatapp.databinding.FragmentLogin2Binding
 import com.example.chatapp.databinding.FragmentLogin3Binding
 import com.example.chatapp.remoteRepository.models.UserLogin
 import com.example.chatapp.useCases.IAuthUseCase
 import com.example.chatapp.viewModels.login.IAuthPresenter
 import com.example.chatapp.viewModels.login.AuthPresenter
 import com.example.chatapp.viewModels.login.LoginViewModel
-import com.example.chatapp.views.home.HomeActivity
-import com.example.chatapp.views.ui.signin.SignInFragment
 import javax.inject.Inject
 
-class LoginFragment : Fragment() {
+
+class LoginFragment : BaseAuthFragment() {
     private lateinit var binding: FragmentLogin3Binding
 
     @Inject
@@ -30,12 +23,12 @@ class LoginFragment : Fragment() {
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var presenter: IAuthPresenter
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         binding = FragmentLogin3Binding.inflate(inflater, container, false)
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,25 +38,25 @@ class LoginFragment : Fragment() {
 
         loginViewModel = LoginViewModel(modelProvider, presenter)
 
-        loginViewModel.user.observe(this.viewLifecycleOwner , Observer { token ->
-            activity?.let {
-                Intent(it, HomeActivity::class.java).apply {
-                    startActivity(this)
-                }
-                it.finish()
-            }
-        })
-
-        loginViewModel.error.observe(this.viewLifecycleOwner, Observer { error ->
-            Toast.makeText(activity, getString(error.getError()), Toast.LENGTH_LONG).show()
-        })
+        updateUi()
         eventsHandle()
+    }
+
+    private fun updateUi() {
+
+        loginViewModel.navigation.observe(this.viewLifecycleOwner) {
+            navigateToHome()
+        }
+
+        loginViewModel.errorAuth.observe(this.viewLifecycleOwner) { error ->
+            showError(error)
+        }
     }
 
     private fun eventsHandle() {
 
         binding.toolbarLogin.setNavigationOnClickListener {
-            activity?.onBackPressed()
+            goBack()
         }
 
         binding.btnLogin.setOnClickListener {

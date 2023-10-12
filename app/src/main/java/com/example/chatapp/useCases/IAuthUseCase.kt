@@ -1,11 +1,11 @@
 package com.example.chatapp.useCases
 
-import com.example.chatapp.remoteRepository.models.LoginResponse
+import com.example.chatapp.remoteRepository.models.auth.AuthApiResponse
 import com.example.chatapp.remoteRepository.models.UserLogin
-import com.example.chatapp.viewModels.login.IResponseProvider
 import retrofit2.Call
+import retrofit2.Response
 
 interface IAuthUseCase {
-    fun login(userLogin: UserLogin, res: IResponseProvider)
-    fun signIn(newUser: HashMap<String, String>): Call<LoginResponse>
+    suspend fun login(userLogin: UserLogin): Response<AuthApiResponse>
+    fun signIn(newUser: HashMap<String, String>): Call<AuthApiResponse>
 }

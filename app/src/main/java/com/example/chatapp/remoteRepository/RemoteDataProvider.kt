@@ -3,7 +3,7 @@ package com.example.chatapp.remoteRepository
 import android.util.Log
 import com.example.chatapp.api.ApiEndPoint
 import com.example.chatapp.remoteRepository.models.MessageModel
-import com.example.chatapp.remoteRepository.models.LoginResponse
+import com.example.chatapp.remoteRepository.models.auth.AuthApiResponse
 import com.example.chatapp.remoteRepository.models.UserLogin
 import com.example.chatapp.remoteRepository.models.NotificationModel
 import com.example.chatapp.remoteRepository.models.NotificationResponse
@@ -60,25 +60,13 @@ class RemoteDataProvider @Inject constructor(private val retrofit: Retrofit): Re
         })
     }
 
-    override fun login(userLogin: UserLogin, res: IResponseProvider) {
-        retrofit.create(ApiEndPoint::class.java).login(userLogin).enqueue(object: Callback<LoginResponse> {
-
-            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-                if (response.isSuccessful && response.body()?.OK == true) {
-                    res.response(response.body())
-                } else {
-                    res.responseError(ErrorLogin(Error.USER_NOT_EXIST_ERROR))
-                }
-            }
-
-            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                res.responseError(ErrorLogin(Error.NET_ERROR))
-            }
-
-        })
+    override suspend fun login(userLogin: UserLogin): Response<AuthApiResponse> {
+        return withContext(Dispatchers.IO) {
+            retrofit.create(ApiEndPoint::class.java).login(user = userLogin).execute()
+        }
     }
 
-    override fun signIn(newUser: HashMap<String, String>): Call<LoginResponse> {
+    override fun signIn(newUser: HashMap<String, String>): Call<AuthApiResponse> {
        return retrofit.create(ApiEndPoint::class.java).registerUser(newUser)
     }
 

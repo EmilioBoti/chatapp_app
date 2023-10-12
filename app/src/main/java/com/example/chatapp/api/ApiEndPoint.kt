@@ -5,7 +5,7 @@ import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.remoteRepository.models.NewFriendEntity
 import com.example.chatapp.remoteRepository.models.NotificationModel
 import com.example.chatapp.remoteRepository.models.UserLogin
-import com.example.chatapp.remoteRepository.models.LoginResponse
+import com.example.chatapp.remoteRepository.models.auth.AuthApiResponse
 import com.example.chatapp.remoteRepository.models.NotificationResponse
 import retrofit2.Call
 import retrofit2.http.Header
@@ -36,11 +36,11 @@ interface ApiEndPoint {
     //POST
     @Headers("Content-type: application/json")
     @POST("login")
-    fun login(@Body user: UserLogin): Call<LoginResponse>
+    fun login(@Body user: UserLogin): Call<AuthApiResponse>
 
     @Headers("Content-type: application/json")
     @POST("signin")
-    fun registerUser(@Body user: HashMap<String, String>): Call<LoginResponse>
+    fun registerUser(@Body user: HashMap<String, String>): Call<AuthApiResponse>
 
     @Headers("Content-type: application/json")
     @POST("acceptNotification")
