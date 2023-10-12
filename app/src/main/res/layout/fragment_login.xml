@@ -73,7 +73,7 @@
         app:layout_constraintBottom_toTopOf="@id/btnLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="@string/signIn"
+        android:text="@string/sign_up"
         android:textColor="@color/white"
         android:backgroundTint="@color/yellow_dark"
         android:background="@drawable/radius_corner_btn"

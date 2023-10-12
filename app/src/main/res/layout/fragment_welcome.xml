@@ -116,7 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/signin_btn_style"
-            android:text="@string/signIn"
+            android:text="@string/sign_up"
             android:textColor="@color/white" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
