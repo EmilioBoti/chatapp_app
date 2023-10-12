@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class NotificationViewModel(private val provider: INotificationUseCase,
-                            application: Application): SocketEvent(application), INotificationViewModel {
+                            application: Application): SocketEvent(), INotificationViewModel {
 
     @Inject
     lateinit var db: AppDataBase

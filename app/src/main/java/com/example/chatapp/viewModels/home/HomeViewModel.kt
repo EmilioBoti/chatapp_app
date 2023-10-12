@@ -34,7 +34,7 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class HomeViewModel(private val provider: IHomeUseCase,
-                    application: Application): SocketEvent(application), IHomeViewModel {
+                    application: Application): SocketEvent(), IHomeViewModel {
 
     private val _contacts: MutableLiveData<MutableList<UserModel>> = MutableLiveData<MutableList<UserModel>>()
     private lateinit var friendContacts: MutableList<UserModel>

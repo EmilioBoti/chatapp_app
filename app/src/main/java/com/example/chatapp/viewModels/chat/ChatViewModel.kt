@@ -25,7 +25,7 @@ import java.util.Locale
 import kotlin.collections.HashMap
 
 class ChatViewModel(private val chatProvider: IChatUseCase,
-                    application: Application): SocketEvent(application), IChat.Presenter {
+                    application: Application): SocketEvent(), IChat.Presenter {
 
     val listMessages: MutableLiveData<MutableList<MessageModel>> = MutableLiveData<MutableList<MessageModel>>()
     private var bundle: Bundle? = null
@@ -41,7 +41,8 @@ class ChatViewModel(private val chatProvider: IChatUseCase,
     override fun setUp(bundle: Bundle?) {
         this.bundle = bundle
         this.bundle?.let { currentUserId =  it[Const.ID_USER].toString() }
-        checkConnectivity()
+        getMessages()
+//        checkConnectivity()
     }
 
     override fun getMessages() {
@@ -101,14 +102,14 @@ class ChatViewModel(private val chatProvider: IChatUseCase,
     }
 
     private fun checkConnectivity() {
-        connectivityState.setUpListener(object : NetConnectivity {
-            override fun network(state: State) {
-                when(state) {
-                    State.AVAILABLE -> getMessages()
-                    State.UNAVAILABLE -> getContactMessage()
-                }
-            }
-        })
+//        connectivityState.setUpListener(object : NetConnectivity {
+//            override fun network(state: State) {
+//                when(state) {
+//                    State.AVAILABLE -> getMessages()
+//                    State.UNAVAILABLE -> getContactMessage()
+//                }
+//            }
+//        })
     }
 
     override fun getContactMessage() {

@@ -51,7 +51,7 @@ class HomeActivity : AppCompatActivity() {
 
         keyboard = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         homeViewModel = HomeViewModel(homeUseCase, this.application)
-
+        homeViewModel.getContacts()
         homeViewModel.contacts.observe(this, Observer {
             setAdapter(it)
         })

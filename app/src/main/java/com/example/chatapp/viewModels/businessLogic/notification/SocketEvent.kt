@@ -15,31 +15,19 @@ import com.google.gson.Gson
 import io.socket.client.Socket
 import javax.inject.Inject
 
-abstract class SocketEvent(application: Application): ViewModel() {
+abstract class SocketEvent(): ViewModel() {
     protected var mSocket: Socket = SocketCon.getSocket()
     protected lateinit var token: String
 
 
-    @Inject
-    protected lateinit var connectivityState: ConnectivityState
-
     init {
-
-        (application as App).getComponent().inject(this)
 
         Session.getToken()?.let { token = it }
         eventListener()
         getConnectivity()
     }
 
-    private fun getConnectivity() {
-        connectivityState.setUpListener(object : NetConnectivity {
-            override fun network(state: State) {
-                isConnectivityAvailable(state)
-            }
-
-        })
-    }
+    private fun getConnectivity() {}
 
     private fun eventListener() {
         mSocket.on(Const.NOTIFY) {

@@ -14,7 +14,7 @@ import com.example.chatapp.viewModels.notifications.PushNotification
 import com.google.gson.Gson
 
 class BrowserViewModel(private val provider: IBrowserUseCase,
-                       application: Application) : SocketEvent(application), IBrowserPresenter {
+                       application: Application) : SocketEvent(), IBrowserPresenter {
 
     val listUserFound: MutableLiveData<MutableList<NewFriendEntity>> = MutableLiveData<MutableList<NewFriendEntity>>()
     private lateinit var userId: String
