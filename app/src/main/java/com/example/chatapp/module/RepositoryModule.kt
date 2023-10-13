@@ -9,9 +9,9 @@ import com.example.chatapp.useCases.AuthUseCase
 import com.example.chatapp.useCases.IAuthUseCase
 import com.example.chatapp.viewModels.chat.useCase.ChatUseCase
 import com.example.chatapp.viewModels.chat.useCase.IChatUseCase
-import com.example.chatapp.viewModels.home.BasePresenter
-import com.example.chatapp.viewModels.home.useCase.HomeUseCase
-import com.example.chatapp.viewModels.home.useCase.IHomeUseCase
+import com.example.chatapp.views.ui.login.welcome.BasePresenter
+import com.example.chatapp.views.home.useCase.HomeUseCase
+import com.example.chatapp.views.home.useCase.IHomeUseCase
 import com.example.chatapp.viewModels.network.ConnectivityState
 import com.example.chatapp.viewModels.notifications.provider.INotificationUseCase
 import com.example.chatapp.viewModels.notifications.provider.NotificationUseCase

@@ -1,46 +1,35 @@
-package com.example.chatapp.viewModels.home
+package com.example.chatapp.views.home
 
 import android.app.Activity
 import android.app.Application
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.chatapp.App
 import com.example.chatapp.helpers.Session
 import com.example.chatapp.helpers.utils.Const
-import com.example.chatapp.remoteRepository.RemoteDataProvider
-import com.example.chatapp.remoteRepository.models.FriendEntity
 import com.example.chatapp.remoteRepository.models.UserModel
 import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.remoteRepository.models.convertToUserEntity
-import com.example.chatapp.repositoryLocal.database.AppDataBase
-import com.example.chatapp.repositoryLocal.database.entity.convertToUserModel
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
-import com.example.chatapp.viewModels.home.useCase.IHomeUseCase
+import com.example.chatapp.views.home.useCase.IHomeUseCase
 import com.example.chatapp.viewModels.login.ErrorLogin
 import com.example.chatapp.viewModels.login.IResponseProvider
-import com.example.chatapp.viewModels.network.NetConnectivity
 import com.example.chatapp.viewModels.network.State
-import com.example.chatapp.viewModels.notifications.PushNotification
-import com.example.chatapp.views.home.BaseActivity
 import com.example.chatapp.views.ui.chatRoom.ChatRoom
+import com.example.chatapp.views.ui.login.welcome.BaseActivity
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Response
-import javax.inject.Inject
 
 class HomeViewModel(private val provider: IHomeUseCase): SocketEvent(), IHomeViewModel {
     private lateinit var application: Application
 
     constructor(provider: IHomeUseCase,
-        application: Application): this(provider) {
+                application: Application): this(provider) {
 
             this.application = application
     }

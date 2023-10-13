@@ -1,6 +1,4 @@
-package com.example.chatapp.viewModels.home
-
-import android.content.Context
+package com.example.chatapp.views.ui.login.welcome
 
 interface IBasePresenter {
     fun setUp(viewPresenter: IBaseViewPresenter)

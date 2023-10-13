@@ -32,7 +32,7 @@
             android:name=".views.ui.chatRoom.ChatRoom"
             android:exported="false" />
         <activity
-            android:name=".views.home.BaseActivity"
+            android:name=".views.ui.login.welcome.BaseActivity"
             android:exported="true"
             android:theme="@style/splashScreen">
             <intent-filter>

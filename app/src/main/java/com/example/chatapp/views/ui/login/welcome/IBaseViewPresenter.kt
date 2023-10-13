@@ -1,4 +1,4 @@
-package com.example.chatapp.viewModels.home
+package com.example.chatapp.views.ui.login.welcome
 
 import android.app.Activity
 import androidx.fragment.app.Fragment

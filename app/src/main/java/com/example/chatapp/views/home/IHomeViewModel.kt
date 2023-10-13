@@ -1,4 +1,4 @@
-package com.example.chatapp.viewModels.home
+package com.example.chatapp.views.home
 
 import android.app.Activity
 import android.content.Context

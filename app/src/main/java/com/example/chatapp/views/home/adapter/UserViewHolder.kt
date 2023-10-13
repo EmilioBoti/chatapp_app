@@ -1,4 +1,4 @@
-package com.example.chatapp.viewModels.home
+package com.example.chatapp.views.home.adapter
 
 import android.view.View
 import android.widget.TextView

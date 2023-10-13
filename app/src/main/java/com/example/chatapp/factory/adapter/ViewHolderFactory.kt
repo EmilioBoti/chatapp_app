@@ -2,8 +2,7 @@ package com.example.chatapp.factory.adapter
 
 import android.view.View
 import com.example.chatapp.helpers.common.OnClickItem
-import com.example.chatapp.viewModels.home.UserViewHolder
-import com.example.chatapp.viewModels.notifications.INotificationOnClick
+import com.example.chatapp.views.home.adapter.UserViewHolder
 import com.example.chatapp.views.ui.browser.adapter.BrowserHolder
 import com.example.chatapp.views.ui.browser.adapter.RecentSearchVh
 import com.example.chatapp.views.ui.friend.FriendViewHolder

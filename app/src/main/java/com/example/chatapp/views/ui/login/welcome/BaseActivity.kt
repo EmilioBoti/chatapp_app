@@ -1,4 +1,4 @@
-package com.example.chatapp.views.home
+package com.example.chatapp.views.ui.login.welcome
 
 import android.app.Activity
 import android.content.Intent
@@ -8,8 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.chatapp.App
 import com.example.chatapp.R
 import com.example.chatapp.databinding.ActivityBaseBinding
-import com.example.chatapp.viewModels.home.BasePresenter
-import com.example.chatapp.viewModels.home.IBaseViewPresenter
+import com.example.chatapp.views.home.HomeActivity
 import javax.inject.Inject
 
 class BaseActivity : AppCompatActivity(), IBaseViewPresenter {

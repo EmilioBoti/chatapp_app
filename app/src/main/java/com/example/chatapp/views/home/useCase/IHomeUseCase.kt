@@ -1,4 +1,4 @@
-package com.example.chatapp.viewModels.home.useCase
+package com.example.chatapp.views.home.useCase
 
 import com.example.chatapp.remoteRepository.models.UserModel
 import com.example.chatapp.repositoryLocal.database.entity.UserEntity
