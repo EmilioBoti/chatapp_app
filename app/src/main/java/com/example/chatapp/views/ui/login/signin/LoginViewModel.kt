@@ -42,7 +42,7 @@ class LoginViewModel(private val modelProvider: IAuthUseCase): BaseAuthViewModel
 
     }
 
-    override fun login(userLogin: UserLogin) {
+    override fun signingIn(userLogin: UserLogin) {
         viewModelScope.launch{
             try {
                 val resp = modelProvider.login(userLogin)
@@ -57,7 +57,7 @@ class LoginViewModel(private val modelProvider: IAuthUseCase): BaseAuthViewModel
         }
     }
 
-    override fun singin(newUser: HashMap<String, String>) {
+    override fun singingUp(newUser: HashMap<String, String>) {
         viewModelScope.launch {
             try {
                 val result = modelProvider.signUp(newUser)
@@ -80,36 +80,44 @@ class LoginViewModel(private val modelProvider: IAuthUseCase): BaseAuthViewModel
         }
     }
 
-    fun validateInputs(userLogin: UserLogin) {
-        if (!validateEmail(userLogin.email)) {
+    override fun performSignIn(email: String, pw: String) {
+        if (!validateEmail(email)) {
             errorAuth.postValue(
                 ApiError(
                     "email",
                     "the email is incorrect.",
                     400))
-        } else if (!validatePassword(userLogin.pw)) {
+        } else if (!validatePassword(pw)) {
             errorAuth.postValue(ApiError(
                 "password",
                 "the password is incorrect.",
                 400))
         } else {
-            login(userLogin)
+            signingIn(UserLogin(email,pw))
         }
     }
 
-    fun registerUser(newUser: HashMap<String, String>) {
-        newUser["email"]?.let {
-            if (validateEmail(it.trim())) {
-                singin(newUser)
-            } else {
-                showAuthError(ApiError(
-                    "email",
-                    "the email is incorrect.",
-                    400))
+    override fun performSignUp(name: String, email: String, pw: String) {
+        if (validateEmail(email.trim())) {
+            singingUp(newUserToSend(name, email, pw))
+        } else {
+            showAuthError(ApiError(
+                "email",
+                "the email is incorrect.",
+                400)
+            )
+        }
+    }
+
+    private fun newUserToSend(name: String, email: String, pw: String): HashMap<String, String> {
+        return object : HashMap<String, String>() {
+            init {
+                put("name", name)
+                put("email",email)
+                put("pw", pw)
             }
         }
     }
-
     fun validateEmail(mail: String): Boolean {
         return regexEmail.toRegex().matches(mail)
     }

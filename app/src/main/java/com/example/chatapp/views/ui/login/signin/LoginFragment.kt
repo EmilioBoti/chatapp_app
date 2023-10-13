@@ -62,9 +62,9 @@ class LoginFragment : BaseAuthFragment() {
         }
 
         binding.btnLogin.setOnClickListener {
-            loginViewModel.validateInputs(
-                UserLogin(binding.emailContainer.getEditInput().text.toString().trim(),
-                binding.pwContainer.getEditInput().text.toString().trim())
+            loginViewModel.performSignIn(
+                binding.emailContainer.getEditInput().text.toString().trim(),
+                binding.pwContainer.getEditInput().text.toString().trim()
             )
         }
     }
