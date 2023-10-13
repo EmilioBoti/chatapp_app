@@ -1,7 +1,5 @@
 package com.example.chatapp.views.ui.login.signup
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,7 +23,7 @@ class SignUpFragment : BaseAuthFragment() {
     }
 
     companion object {
-        const val TAG = ""
+        const val TAG = "SignUpFragment"
 
         fun newInstance() : SignUpFragment = SignUpFragment()
     }
