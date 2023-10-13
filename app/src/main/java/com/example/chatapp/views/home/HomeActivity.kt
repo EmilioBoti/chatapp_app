@@ -8,6 +8,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
@@ -31,12 +32,16 @@ import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMain2Binding
-    private lateinit var homeViewModel: HomeViewModel
+
     private lateinit var keyboard: InputMethodManager
     private var chatsAdapter: ModelAdapter<UserModel>? = null
 
     @Inject
     lateinit var homeUseCase: HomeUseCase
+
+    private val homeViewModel: HomeViewModel by viewModels {
+        HomeViewModel.provideFactory(homeUseCase)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +55,7 @@ class HomeActivity : AppCompatActivity() {
         (this.application as App).getComponent().inject( this)
 
         keyboard = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        homeViewModel = HomeViewModel(homeUseCase, this.application)
+
         homeViewModel.getContacts()
         homeViewModel.contacts.observe(this, Observer {
             setAdapter(it)

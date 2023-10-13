@@ -7,7 +7,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.chatapp.App
 import com.example.chatapp.helpers.Session
 import com.example.chatapp.helpers.utils.Const
@@ -33,22 +36,39 @@ import retrofit2.Call
 import retrofit2.Response
 import javax.inject.Inject
 
-class HomeViewModel(private val provider: IHomeUseCase,
-                    application: Application): SocketEvent(), IHomeViewModel {
+class HomeViewModel(private val provider: IHomeUseCase): SocketEvent(), IHomeViewModel {
+    private lateinit var application: Application
+
+    constructor(provider: IHomeUseCase,
+        application: Application): this(provider) {
+
+            this.application = application
+    }
 
     private val _contacts: MutableLiveData<MutableList<UserModel>> = MutableLiveData<MutableList<UserModel>>()
     private lateinit var friendContacts: MutableList<UserModel>
     val contacts: LiveData<MutableList<UserModel>> = _contacts
     private var currentUser: String? = null
-    private val pushNotification: PushNotification = PushNotification(application.applicationContext)
+//    private val pushNotification: PushNotification = PushNotification(application.applicationContext)
 
     companion object {
         private const val DATA_USER: String = "data"
+
+        fun provideFactory(provider: IHomeUseCase): ViewModelProvider.Factory {
+            return object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(
+                    modelClass: Class<T>,
+                    extras: CreationExtras
+                ): T {
+                    return HomeViewModel(provider) as T
+                }
+            }
+        }
     }
 
     init {
-        pushNotification.notificationChannel()
-        pushNotification.smsNotificationChannel()
+//        pushNotification.notificationChannel()
+//        pushNotification.smsNotificationChannel()
         setUp()
     }
 
@@ -118,7 +138,7 @@ class HomeViewModel(private val provider: IHomeUseCase,
     }
 
     override fun receiveMessage(message: MessageModel) {
-        if (currentUser != message.fromU) { pushNotification.showSmsNotification(message) }
+//        if (currentUser != message.fromU) { pushNotification.showSmsNotification(message) }
         contacts.value?.forEach {
             if (it.id == message.fromU) {
                 it.lastMessage = message.message
@@ -129,7 +149,7 @@ class HomeViewModel(private val provider: IHomeUseCase,
     }
 
     override fun receiveNotifications(notification: HashMap<String, String>) {
-        pushNotification.showNotification(notification)
+//        pushNotification.showNotification(notification)
     }
 
     override fun isConnectivityAvailable(state: State) {
