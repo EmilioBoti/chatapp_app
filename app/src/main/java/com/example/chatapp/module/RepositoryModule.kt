@@ -4,17 +4,20 @@ import android.content.Context
 import androidx.room.Room
 import com.example.chatapp.helpers.utils.Utils
 import com.example.chatapp.remoteRepository.RemoteDataProvider
+import com.example.chatapp.remoteRepository.Repository
 import com.example.chatapp.repositoryLocal.database.AppDataBase
 import com.example.chatapp.useCases.AuthUseCase
 import com.example.chatapp.useCases.IAuthUseCase
 import com.example.chatapp.viewModels.chat.useCase.ChatUseCase
 import com.example.chatapp.viewModels.chat.useCase.IChatUseCase
+import com.example.chatapp.viewModels.chat.useCase.IChatUseCaseProvider
 import com.example.chatapp.views.ui.login.welcome.BasePresenter
 import com.example.chatapp.views.home.useCase.HomeUseCase
 import com.example.chatapp.views.home.useCase.IHomeUseCase
 import com.example.chatapp.viewModels.network.ConnectivityState
 import com.example.chatapp.viewModels.notifications.provider.INotificationUseCase
 import com.example.chatapp.viewModels.notifications.provider.NotificationUseCase
+import com.example.chatapp.views.home.chat.useCase.ChatUseCaseProvider
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -46,7 +49,7 @@ class RepositoryModule (private var context: Context) {
      */
     @Provides
     @Singleton
-    fun providerApiRepository(retrofit: Retrofit): RemoteDataProvider = RemoteDataProvider(retrofit)
+    fun providerApiRepository(retrofit: Retrofit): Repository = RemoteDataProvider(retrofit)
 
     /**
      * @param remote data provider
@@ -69,6 +72,13 @@ class RepositoryModule (private var context: Context) {
      */
     @Provides
     fun providerHomeUseCase() : IHomeUseCase = HomeUseCase()
+
+    /**
+     * @param remote data provider
+     * @return HomeUseCase class that provide all use cases
+     */
+    @Provides
+    fun providerChatUseCaseProvider() : IChatUseCaseProvider = ChatUseCaseProvider()
 
     /**
      * @return chatRoom UseCase class that provide all use cases

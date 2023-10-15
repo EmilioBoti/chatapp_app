@@ -1,6 +1,7 @@
 package com.example.chatapp.views.home.useCase
 
 import com.example.chatapp.remoteRepository.RemoteDataProvider
+import com.example.chatapp.remoteRepository.Repository
 import com.example.chatapp.remoteRepository.models.UserModel
 import com.example.chatapp.repositoryLocal.database.AppDataBase
 import com.example.chatapp.repositoryLocal.database.entity.UserEntity
@@ -17,7 +18,7 @@ class HomeUseCase @Inject constructor(): IHomeUseCase {
     lateinit var db: AppDataBase
 
     override fun getUserContact(token: String, res: IResponseProvider) {
-        provider.getUserContacts(token, res)
+//        provider.getUserContacts(token, res)
     }
 
     override suspend fun getUserContactLocal(token: String): MutableList<UserModel> {

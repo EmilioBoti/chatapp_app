@@ -11,9 +11,6 @@ import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.chatapp.App
 import com.example.chatapp.R
 import com.example.chatapp.databinding.ActivityMain2Binding
@@ -22,6 +19,7 @@ import com.example.chatapp.factory.adapter.ModelAdapter
 import com.example.chatapp.helpers.common.OnClickItem
 import com.example.chatapp.remoteRepository.models.NotificationModel
 import com.example.chatapp.remoteRepository.models.UserModel
+import com.example.chatapp.views.home.chat.ChatFragment
 import com.example.chatapp.views.home.useCase.HomeUseCase
 import com.example.chatapp.views.ui.browser.BrowserActivity
 import com.example.chatapp.views.ui.friend.FriendActivity
@@ -31,9 +29,6 @@ import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMain2Binding
-
-    private lateinit var keyboard: InputMethodManager
-    private var chatsAdapter: ModelAdapter<UserModel>? = null
 
     @Inject
     lateinit var homeUseCase: HomeUseCase
@@ -53,20 +48,15 @@ class HomeActivity : AppCompatActivity() {
 
         (this.application as App).getComponent().inject( this)
 
-        keyboard = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-
-        homeViewModel.getContacts()
-        homeViewModel.contacts.observe(this, Observer {
-            setAdapter(it)
-        })
+        setCurrentScreen()
 
         eventHandler()
     }
 
-    override fun onPause() {
-        super.onPause()
-
-        hideSearcherInput()
+    private fun setCurrentScreen() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.hostMainContainer, ChatFragment.newInstance())
+            .commit()
     }
 
     private fun eventHandler() {
@@ -88,40 +78,6 @@ class HomeActivity : AppCompatActivity() {
                 binding.btnBrowser.show()
             }
         }
-
-        binding.searcherInput.setOnFocusChangeListener { view, b ->
-            if (!b) {
-                binding.searcherInput.visibility = View.GONE
-            }
-        }
-
-        binding.searcherInput.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                homeViewModel.findYourFriends(p0.toString())
-            }
-
-            override fun afterTextChanged(p0: Editable?) {}
-
-        })
-        binding.toolbar.setOnMenuItemClickListener { menu ->
-            when(menu.itemId) {
-                R.id.logout -> alertToLogout()
-                R.id.notifications -> navigate(NotificationActivity())
-                R.id.search -> {
-                    if (!binding.searcherInput.isVisible) {
-                        showSearcherInput()
-                    }
-                }
-            }
-            true
-        }
-
-        binding.toolbar.setNavigationOnClickListener {
-            this.onBackPressed()
-        }
-
     }
 
     private fun <T> navigate(screen: T) {
@@ -130,48 +86,6 @@ class HomeActivity : AppCompatActivity() {
                 startActivity(this)
             }
         }
-    }
-
-    private fun setAdapter(contacts: MutableList<UserModel>) {
-
-        chatsAdapter = ModelAdapter<UserModel>(contacts, FactoryBuilder.CONTACT)
-        chatsAdapter?.setLayout(R.layout.user_item_2)
-        chatsAdapter?.setListener(object : OnClickItem {
-            override fun onClick(pos: Int) {
-                homeViewModel.navigateChatRoom(this@HomeActivity, pos)
-            }
-
-            override fun onAccept(notification: NotificationModel, view: View, position: Int) {
-            }
-
-            override fun onReject(notification: NotificationModel, view: View, position: Int) {
-            }
-
-        })
-
-        binding.userContainer.apply {
-            this.layoutManager = LinearLayoutManager(this@HomeActivity, RecyclerView.VERTICAL, false)
-            this.adapter = chatsAdapter
-        }
-    }
-
-    private fun showSearcherInput() {
-        binding.searcherInput.run {
-            visibility = View.VISIBLE
-            requestFocus()
-        }
-        binding.toolbar.setNavigationIcon(R.drawable.arrow_back_24)
-        keyboard.showSoftInput(binding.searcherInput, InputMethodManager.RESULT_SHOWN)
-    }
-
-    private fun hideSearcherInput() {
-        binding.searcherInput.setText("")
-        homeViewModel.findYourFriends("")
-        binding.searcherInput.visibility = View.GONE
-        keyboard.hideSoftInputFromWindow(binding.searcherInput.windowToken, 0)
-        binding.toolbar.navigationIcon = null
-        binding.btnFriends.hide()
-        binding.btnBrowser.hide()
     }
 
     private fun alertToLogout() {
@@ -188,12 +102,4 @@ class HomeActivity : AppCompatActivity() {
             alert.show()
     }
 
-    override fun onBackPressed() {
-        if (binding.searcherInput.isVisible) {
-            hideSearcherInput()
-        } else {
-            homeViewModel.disconnectSocket()
-            super.onBackPressed()
-        }
-    }
 }
