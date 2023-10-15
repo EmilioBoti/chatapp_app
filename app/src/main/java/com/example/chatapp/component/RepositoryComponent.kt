@@ -9,6 +9,7 @@ import com.example.chatapp.views.ui.login.signin.LoginViewModel
 import com.example.chatapp.viewModels.notifications.NotificationViewModel
 import com.example.chatapp.views.ui.login.welcome.BaseActivity
 import com.example.chatapp.views.home.HomeActivity
+import com.example.chatapp.views.home.chat.ChatFragment
 import com.example.chatapp.views.ui.browser.BrowserActivity
 import com.example.chatapp.views.ui.chatRoom.ChatRoom
 import com.example.chatapp.views.ui.login.signin.LoginFragment
@@ -33,4 +34,5 @@ interface RepositoryComponent {
     fun inject(homeActivity: HomeActivity)
     fun inject(chatRoom: ChatRoom)
     fun inject(browserActivity: BrowserActivity)
+    fun inject(chatFragment: ChatFragment)
 }
