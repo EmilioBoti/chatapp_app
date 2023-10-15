@@ -4,13 +4,14 @@ import com.example.chatapp.remoteRepository.models.auth.AuthApiResponse
 import com.example.chatapp.remoteRepository.models.UserLogin
 import com.example.chatapp.remoteRepository.models.NotificationModel
 import com.example.chatapp.remoteRepository.models.NotificationResponse
+import com.example.chatapp.remoteRepository.models.UserModel
 import com.example.chatapp.viewModels.login.IResponseProvider
 import retrofit2.Call
 import retrofit2.Response
 
 interface Repository: IChatRepository {
     fun getMessages(token: String, roomId: String, res: IResponseProvider)
-    fun getUserContacts(token: String, res: IResponseProvider)
+    suspend fun getUserChats(token: String) : Response<MutableList<UserModel>>
     suspend fun login(userLogin: UserLogin): Response<AuthApiResponse>
     suspend fun signIn(newUser: HashMap<String, String>): Response<AuthApiResponse>
     fun searchNewUser(token: String, value: String, res: IResponseProvider)

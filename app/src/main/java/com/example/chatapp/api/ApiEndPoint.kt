@@ -7,6 +7,7 @@ import com.example.chatapp.remoteRepository.models.NotificationModel
 import com.example.chatapp.remoteRepository.models.UserLogin
 import com.example.chatapp.remoteRepository.models.auth.AuthApiResponse
 import com.example.chatapp.remoteRepository.models.NotificationResponse
+import com.example.chatapp.remoteRepository.models.UserModel
 import retrofit2.Call
 import retrofit2.http.Header
 import retrofit2.http.Headers
@@ -22,7 +23,7 @@ interface ApiEndPoint {
     fun getNotifications(@Header("Authorization") auth: String): Call<MutableList<NotificationModel>?>
 
     @GET("contacts")
-    fun getContacts(@Header("Authorization") auth: String): Call<FriendEntity>
+    fun getUserChats(@Header("Authorization") auth: String): Call<MutableList<UserModel>>
 
     @GET("friends")
     fun getUserFriends(@Header("Authorization") auth: String): Call<FriendEntity>

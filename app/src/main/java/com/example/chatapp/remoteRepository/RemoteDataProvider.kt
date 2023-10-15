@@ -9,6 +9,7 @@ import com.example.chatapp.remoteRepository.models.NotificationModel
 import com.example.chatapp.remoteRepository.models.NotificationResponse
 import com.example.chatapp.remoteRepository.models.FriendEntity
 import com.example.chatapp.remoteRepository.models.NewFriendEntity
+import com.example.chatapp.remoteRepository.models.UserModel
 import com.example.chatapp.viewModels.login.ErrorLogin
 import com.example.chatapp.viewModels.login.Error
 import com.example.chatapp.viewModels.login.IResponseProvider
@@ -40,24 +41,10 @@ class RemoteDataProvider @Inject constructor(private val retrofit: Retrofit): Re
         })
     }
 
-    override fun getUserContacts(token: String, res: IResponseProvider) {
-        retrofit.create(ApiEndPoint::class.java).getContacts(token).enqueue(object : Callback<FriendEntity> {
-
-            override fun onResponse(call: Call<FriendEntity>, response: Response<FriendEntity>) {
-                if (response.isSuccessful) {
-                    response.body()?.body?.let { users ->
-                        res.response(users)
-                    }
-                } else {
-                    res.response(mutableListOf<FriendEntity>())
-                }
-            }
-
-            override fun onFailure(call: Call<FriendEntity>, t: Throwable) {
-                Log.e("error", t.message, t.cause)
-            }
-
-        })
+    override suspend fun getUserChats(token: String) : Response<MutableList<UserModel>> {
+        return withContext(Dispatchers.IO) {
+            retrofit.create(ApiEndPoint::class.java).getUserChats(token).execute()
+        }
     }
 
     override suspend fun login(userLogin: UserLogin): Response<AuthApiResponse> {
