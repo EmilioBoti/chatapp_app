@@ -15,7 +15,7 @@ class ChatUseCaseProvider : IChatUseCaseProvider {
     private val remoteProvider: Repository = RemoteDataProvider(Utils.getRetrofitBuilder())
 
     override suspend fun getUserChats(token: String): Response<MutableList<UserModel>> {
-        return remoteProvider.getUserContacts(token)
+        return remoteProvider.getUserChats(token)
     }
 
 }
