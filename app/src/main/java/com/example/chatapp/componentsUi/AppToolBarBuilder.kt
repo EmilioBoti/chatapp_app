@@ -67,9 +67,9 @@ class AppToolBarBuilder(private val context: Context?) {
             if (isActionNotification) toolbar?.menu?.findItem(R.id.notifications)?.isVisible = isActionSearch
 
 
-
             toolBarEventUi()
             checkIspreviuosToolbar()
+
             val v = rootView.findViewById<LinearLayoutCompat>(R.id.toolbar)
             v.addView(appToolbarView)
         }
@@ -79,8 +79,8 @@ class AppToolBarBuilder(private val context: Context?) {
         toolbar?.let { toolbar ->
             toolbar.setOnMenuItemClickListener { menu ->
                 when(menu.itemId) {
-                    R.id.logout -> {}
-                    R.id.notifications -> {}
+                    R.id.logout -> { toolBarListener?.onClickLogout() }
+                    R.id.notifications -> { toolBarListener?.onClickNotification() }
                     R.id.search -> {
                         if (searcherInput?.isVisible != true) {
                             showSearcherInput()
