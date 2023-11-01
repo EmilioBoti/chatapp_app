@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 
 class ChatViewModel(private val userCase: IChatUseCaseProvider): SocketEvent(), IChatViewModel {
 
+    private var chats: MutableList<UserModel> = arrayListOf()
     private var _chatList: MutableLiveData<MutableList<UserModel>> = MutableLiveData<MutableList<UserModel>>()
     var chatList: LiveData<MutableList<UserModel>> = _chatList
 
@@ -44,12 +45,24 @@ class ChatViewModel(private val userCase: IChatUseCaseProvider): SocketEvent(), 
                 val result = userCase.getUserChats(token)
 
                 if (result.isSuccessful) {
-                    _chatList.postValue(result.body())
+                    result.body()?.let {
+                        _chatList.postValue(it)
+                        chats = it
+                    }
                 }
 
             } catch (e: Exception) {
                 throw e
             }
+        }
+    }
+
+    fun searchChat(name: String) {
+        val chatFound = _chatList.value?.filter { it.name.lowercase().contains(name.lowercase()) } as MutableList<UserModel>
+        if (name.isEmpty()) {
+            _chatList.postValue(chats)
+        } else {
+            _chatList.postValue(chatFound)
         }
     }
 

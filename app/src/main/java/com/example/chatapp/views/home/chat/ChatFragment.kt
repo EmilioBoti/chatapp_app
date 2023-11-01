@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,13 +18,17 @@ import com.example.chatapp.componentsUi.AppToolBarListener
 import com.example.chatapp.databinding.FragmentChatBinding
 import com.example.chatapp.factory.adapter.FactoryBuilder
 import com.example.chatapp.factory.adapter.ModelAdapter
+import com.example.chatapp.helpers.Session
 import com.example.chatapp.helpers.common.OnClickItem
 import com.example.chatapp.remoteRepository.models.NotificationModel
 import com.example.chatapp.remoteRepository.models.UserModel
 import com.example.chatapp.viewModels.chat.useCase.IChatUseCaseProvider
+import com.example.chatapp.views.home.HomeActivity
 import com.example.chatapp.views.home.chat.useCase.ChatUseCaseProvider
 import com.example.chatapp.views.ui.BaseFragment
 import com.example.chatapp.views.ui.chatRoom.ChatRoom
+import com.example.chatapp.views.ui.login.welcome.BaseActivity
+import com.example.chatapp.views.ui.notification.NotificationActivity
 
 
 class ChatFragment : BaseFragment() {
@@ -66,14 +71,33 @@ class ChatFragment : BaseFragment() {
     }
 
     override fun initToolbar() {
-        activity?.let {
+        parentActivity?.let {
             AppToolBarBuilder(it)
                 .withActivity(it)
                 .setSearchAction(true)
                 .setSearchNotification(true)
                 .setToolBarListener( object : AppToolBarListener {
                     override fun onSeachListener(input: String) {
-                        Toast.makeText(activity, input, Toast.LENGTH_SHORT).show()
+                        viewModel.searchChat(input)
+                    }
+
+                    override fun onClickNotification() {
+                        navigateTo(NotificationActivity::class, null)
+                    }
+
+                    override fun onClickLogout() {
+                        AlertDialog.Builder(it)
+                            .setTitle(R.string.logout)
+                            .setMessage(R.string.logoutMessage)
+                            .setIcon(R.drawable.logout_24)
+                            .setNegativeButton("Cancel") { p0, p1 ->
+
+                            }
+                            .setPositiveButton("Accept") { p0, p1 ->
+                                Session.logout(it)
+                                navigateTo(BaseActivity::class, null, true)
+                            }
+                            .show()
                     }
                 })
                 .build()
@@ -88,10 +112,7 @@ class ChatFragment : BaseFragment() {
 
             override fun onClick(pos: Int) {
                 val user = viewModel.getUserSelected(pos)
-                Intent(activity, ChatRoom::class.java).apply {
-                    this.putExtra(USER_DATA, user)
-                    activity?.startActivity(this)
-                }
+                navigateTo(ChatRoom::class, user)
             }
 
             override fun onAccept(notification: NotificationModel, view: View, position: Int) {
