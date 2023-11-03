@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import com.example.chatapp.R
 import com.example.chatapp.componentsUi.AppToolBarBuilder
 import com.example.chatapp.viewModels.friend.FriendViewModel
-import com.example.chatapp.views.home.HomeActivity
+import com.example.chatapp.views.main.HomeActivity
 import kotlin.reflect.KClass
 
 

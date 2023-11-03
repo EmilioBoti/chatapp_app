@@ -1,7 +1,6 @@
-package com.example.chatapp.views.home
+package com.example.chatapp.views.main
 
 import android.app.Activity
-import android.content.Context
 
 interface IHomeViewModel {
     fun updateSocket(id: String)

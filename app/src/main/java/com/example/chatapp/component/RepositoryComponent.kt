@@ -4,12 +4,12 @@ import com.example.chatapp.module.RepositoryModule
 import com.example.chatapp.viewModels.browser.BrowserViewModel
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
 import com.example.chatapp.viewModels.chat.ChatViewModel
-import com.example.chatapp.views.home.HomeViewModel
+import com.example.chatapp.views.main.HomeViewModel
 import com.example.chatapp.views.ui.login.signin.LoginViewModel
 import com.example.chatapp.viewModels.notifications.NotificationViewModel
 import com.example.chatapp.views.ui.login.welcome.BaseActivity
-import com.example.chatapp.views.home.HomeActivity
-import com.example.chatapp.views.home.chat.ChatFragment
+import com.example.chatapp.views.main.HomeActivity
+import com.example.chatapp.views.main.chat.ChatFragment
 import com.example.chatapp.views.ui.browser.BrowserActivity
 import com.example.chatapp.views.ui.chatRoom.ChatRoom
 import com.example.chatapp.views.ui.login.signin.LoginFragment

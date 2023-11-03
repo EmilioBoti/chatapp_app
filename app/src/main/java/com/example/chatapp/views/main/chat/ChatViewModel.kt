@@ -1,15 +1,12 @@
-package com.example.chatapp.views.home.chat
+package com.example.chatapp.views.main.chat
 
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.chatapp.helpers.Session
 import com.example.chatapp.helpers.utils.Const
 import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.remoteRepository.models.UserModel

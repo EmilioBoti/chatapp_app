@@ -1,4 +1,4 @@
-package com.example.chatapp.views.home.adapter
+package com.example.chatapp.views.main.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.chatapp.R
 import com.example.chatapp.helpers.common.OnClickItem
 import com.example.chatapp.remoteRepository.models.UserModel
-import com.example.chatapp.views.home.adapter.UserViewHolder
 
 class UserAdapter(private val listContacts: MutableList<UserModel>, private val listener: OnClickItem?): RecyclerView.Adapter<UserViewHolder>() {
 

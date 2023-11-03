@@ -1,4 +1,4 @@
-package com.example.chatapp.views.home
+package com.example.chatapp.views.main
 
 import android.app.Activity
 import android.app.Application
@@ -16,7 +16,7 @@ import com.example.chatapp.remoteRepository.models.UserModel
 import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.remoteRepository.models.convertToUserEntity
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
-import com.example.chatapp.views.home.useCase.IHomeUseCase
+import com.example.chatapp.views.main.useCase.IHomeUseCase
 import com.example.chatapp.viewModels.login.ErrorLogin
 import com.example.chatapp.viewModels.login.IResponseProvider
 import com.example.chatapp.viewModels.network.State

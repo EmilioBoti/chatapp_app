@@ -1,12 +1,9 @@
-package com.example.chatapp.views.home.chat
+package com.example.chatapp.views.main.chat
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,8 +20,7 @@ import com.example.chatapp.helpers.common.OnClickItem
 import com.example.chatapp.remoteRepository.models.NotificationModel
 import com.example.chatapp.remoteRepository.models.UserModel
 import com.example.chatapp.viewModels.chat.useCase.IChatUseCaseProvider
-import com.example.chatapp.views.home.HomeActivity
-import com.example.chatapp.views.home.chat.useCase.ChatUseCaseProvider
+import com.example.chatapp.views.main.chat.useCase.ChatUseCaseProvider
 import com.example.chatapp.views.ui.BaseFragment
 import com.example.chatapp.views.ui.chatRoom.ChatRoom
 import com.example.chatapp.views.ui.login.welcome.BaseActivity

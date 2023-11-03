@@ -1,4 +1,4 @@
-package com.example.chatapp.views.home.chat
+package com.example.chatapp.views.main.chat
 
 import android.os.Bundle
 

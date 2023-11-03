@@ -12,12 +12,12 @@ import com.example.chatapp.viewModels.chat.useCase.ChatUseCase
 import com.example.chatapp.viewModels.chat.useCase.IChatUseCase
 import com.example.chatapp.viewModels.chat.useCase.IChatUseCaseProvider
 import com.example.chatapp.views.ui.login.welcome.BasePresenter
-import com.example.chatapp.views.home.useCase.HomeUseCase
-import com.example.chatapp.views.home.useCase.IHomeUseCase
+import com.example.chatapp.views.main.useCase.HomeUseCase
+import com.example.chatapp.views.main.useCase.IHomeUseCase
 import com.example.chatapp.viewModels.network.ConnectivityState
 import com.example.chatapp.viewModels.notifications.provider.INotificationUseCase
 import com.example.chatapp.viewModels.notifications.provider.NotificationUseCase
-import com.example.chatapp.views.home.chat.useCase.ChatUseCaseProvider
+import com.example.chatapp.views.main.chat.useCase.ChatUseCaseProvider
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit

@@ -4,19 +4,13 @@ import android.app.Activity
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.LinearLayoutCompat
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.view.ViewCompat
-import androidx.core.view.ViewGroupCompat
 import androidx.core.view.isVisible
 import com.example.chatapp.R
-import com.example.chatapp.databinding.AppMainToolbarBinding
-import com.example.chatapp.views.home.HomeActivity
 import com.google.android.material.appbar.MaterialToolbar
 
 class AppToolBarBuilder(private val context: Context?) {

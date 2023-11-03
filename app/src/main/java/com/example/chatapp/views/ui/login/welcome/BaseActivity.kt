@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.chatapp.App
 import com.example.chatapp.R
 import com.example.chatapp.databinding.ActivityBaseBinding
-import com.example.chatapp.views.home.HomeActivity
+import com.example.chatapp.views.main.HomeActivity
 import javax.inject.Inject
 
 class BaseActivity : AppCompatActivity(), IBaseViewPresenter {

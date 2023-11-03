@@ -1,7 +1,6 @@
-package com.example.chatapp.views.home.useCase
+package com.example.chatapp.views.main.useCase
 
 import com.example.chatapp.remoteRepository.RemoteDataProvider
-import com.example.chatapp.remoteRepository.Repository
 import com.example.chatapp.remoteRepository.models.UserModel
 import com.example.chatapp.repositoryLocal.database.AppDataBase
 import com.example.chatapp.repositoryLocal.database.entity.UserEntity

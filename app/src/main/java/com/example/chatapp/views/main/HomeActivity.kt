@@ -1,29 +1,18 @@
-package com.example.chatapp.views.home
+package com.example.chatapp.views.main
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import com.example.chatapp.App
 import com.example.chatapp.R
 import com.example.chatapp.databinding.ActivityMain2Binding
-import com.example.chatapp.factory.adapter.FactoryBuilder
-import com.example.chatapp.factory.adapter.ModelAdapter
-import com.example.chatapp.helpers.common.OnClickItem
-import com.example.chatapp.remoteRepository.models.NotificationModel
-import com.example.chatapp.remoteRepository.models.UserModel
-import com.example.chatapp.views.home.chat.ChatFragment
-import com.example.chatapp.views.home.useCase.HomeUseCase
+import com.example.chatapp.views.main.chat.ChatFragment
+import com.example.chatapp.views.main.useCase.HomeUseCase
 import com.example.chatapp.views.ui.browser.BrowserActivity
 import com.example.chatapp.views.ui.friend.FriendActivity
-import com.example.chatapp.views.ui.notification.NotificationActivity
 import javax.inject.Inject
 
 
