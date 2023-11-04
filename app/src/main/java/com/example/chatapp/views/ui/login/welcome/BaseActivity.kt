@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.chatapp.App
 import com.example.chatapp.R
 import com.example.chatapp.databinding.ActivityBaseBinding
-import com.example.chatapp.views.main.HomeActivity
+import com.example.chatapp.views.main.MainActivity
 import javax.inject.Inject
 
 class BaseActivity : AppCompatActivity(), IBaseViewPresenter {
@@ -47,7 +47,7 @@ class BaseActivity : AppCompatActivity(), IBaseViewPresenter {
     }
 
     override fun <T> navigateToHome(screen: T) {
-        val home = screen as HomeActivity
+        val home = screen as MainActivity
         Intent(this, home::class.java).apply {
             startActivity(this)
         }

@@ -25,7 +25,7 @@ import com.example.chatapp.views.ui.login.welcome.BaseActivity
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val provider: IHomeUseCase): SocketEvent(), IHomeViewModel {
+class MainViewModel(private val provider: IHomeUseCase): SocketEvent(), IMainViewModel {
     private lateinit var application: Application
 
     constructor(provider: IHomeUseCase,
@@ -49,7 +49,7 @@ class HomeViewModel(private val provider: IHomeUseCase): SocketEvent(), IHomeVie
                     modelClass: Class<T>,
                     extras: CreationExtras
                 ): T {
-                    return HomeViewModel(provider) as T
+                    return MainViewModel(provider) as T
                 }
             }
         }

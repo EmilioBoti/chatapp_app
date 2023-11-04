@@ -4,7 +4,7 @@ import android.content.Intent
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.chatapp.remoteRepository.models.ApiError
-import com.example.chatapp.views.main.HomeActivity
+import com.example.chatapp.views.main.MainActivity
 
 
 
@@ -13,7 +13,7 @@ open class BaseAuthFragment: Fragment(), IBaseAuthView {
 
     override fun navigateToHome() {
         activity?.let {
-            Intent(it, HomeActivity::class.java).apply {
+            Intent(it, MainActivity::class.java).apply {
                 startActivity(this)
             }
             it.finish()

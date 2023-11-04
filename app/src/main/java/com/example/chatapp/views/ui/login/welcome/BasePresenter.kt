@@ -3,7 +3,7 @@ package com.example.chatapp.views.ui.login.welcome
 import android.content.Context
 import com.example.chatapp.api.SocketCon
 import com.example.chatapp.helpers.Session
-import com.example.chatapp.views.main.HomeActivity
+import com.example.chatapp.views.main.MainActivity
 import javax.inject.Inject
 
 class BasePresenter @Inject constructor() : IBasePresenter {
@@ -20,7 +20,7 @@ class BasePresenter @Inject constructor() : IBasePresenter {
 
     override fun isUserLogin() {
         if (isLogin() && setSocket(getUserToken())) {
-            navigateToHome<HomeActivity>(HomeActivity())
+            navigateToHome<MainActivity>(MainActivity())
         } else {
             navigateToLogin()
         }

@@ -4,11 +4,11 @@ import com.example.chatapp.module.RepositoryModule
 import com.example.chatapp.viewModels.browser.BrowserViewModel
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
 import com.example.chatapp.viewModels.chat.ChatViewModel
-import com.example.chatapp.views.main.HomeViewModel
+import com.example.chatapp.views.main.MainViewModel
 import com.example.chatapp.views.ui.login.signin.LoginViewModel
 import com.example.chatapp.viewModels.notifications.NotificationViewModel
 import com.example.chatapp.views.ui.login.welcome.BaseActivity
-import com.example.chatapp.views.main.HomeActivity
+import com.example.chatapp.views.main.MainActivity
 import com.example.chatapp.views.main.chat.ChatFragment
 import com.example.chatapp.views.ui.browser.BrowserActivity
 import com.example.chatapp.views.ui.chatRoom.ChatRoom
@@ -21,7 +21,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [RepositoryModule::class])
 interface RepositoryComponent {
-    fun inject(homeViewModel: HomeViewModel)
+    fun inject(homeViewModel: MainViewModel)
     fun inject(browserViewModel: BrowserViewModel)
     fun inject(browserViewModel: ChatViewModel)
     fun inject(browserViewModel: LoginViewModel)
@@ -31,7 +31,7 @@ interface RepositoryComponent {
     fun inject(loginFragment: LoginFragment)
     fun inject(signFragment: SignUpFragment)
     fun inject(notificationActivity: NotificationActivity)
-    fun inject(homeActivity: HomeActivity)
+    fun inject(homeActivity: MainActivity)
     fun inject(chatRoom: ChatRoom)
     fun inject(browserActivity: BrowserActivity)
     fun inject(chatFragment: ChatFragment)

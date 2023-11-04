@@ -16,14 +16,14 @@ import com.example.chatapp.views.ui.friend.FriendActivity
 import javax.inject.Inject
 
 
-class HomeActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMain2Binding
 
     @Inject
     lateinit var homeUseCase: HomeUseCase
 
-    private val homeViewModel: HomeViewModel by viewModels {
-        HomeViewModel.provideFactory(homeUseCase)
+    private val homeViewModel: MainViewModel by viewModels {
+        MainViewModel.provideFactory(homeUseCase)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
