@@ -23,6 +23,7 @@ abstract class SocketEvent(): ViewModel() {
     init {
 
         Session.getToken()?.let { token = it }
+        if(!mSocket.connected()) mSocket.connect()
         eventListener()
         getConnectivity()
     }
