@@ -15,7 +15,6 @@ import com.example.chatapp.remoteRepository.IChatRepository
 import com.example.chatapp.remoteRepository.RemoteDataProvider
 import com.example.chatapp.remoteRepository.models.NotificationModel
 import com.example.chatapp.remoteRepository.models.UserModel
-import com.example.chatapp.viewModels.chat.useCase.IChatUseCase
 import com.example.chatapp.viewModels.friend.FriendUseCase
 import com.example.chatapp.viewModels.friend.FriendViewModel
 

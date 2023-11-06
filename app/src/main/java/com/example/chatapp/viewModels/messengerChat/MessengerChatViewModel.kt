@@ -1,4 +1,4 @@
-package com.example.chatapp.viewModels.chat
+package com.example.chatapp.viewModels.messengerChat
 
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
@@ -11,7 +11,7 @@ import com.example.chatapp.helpers.utils.Const
 import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.remoteRepository.models.convertToMessageEntity
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
-import com.example.chatapp.viewModels.chat.useCase.IChatUseCase
+import com.example.chatapp.viewModels.messengerChat.useCase.IChatUseCase
 import com.example.chatapp.viewModels.network.State
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
@@ -22,7 +22,7 @@ import java.util.Date
 import java.util.Locale
 import kotlin.collections.HashMap
 
-class ChatViewModel(private val chatProvider: IChatUseCase): SocketEvent(), IChat.Presenter {
+class MessengerChatViewModel(private val chatProvider: IChatUseCase): SocketEvent(), IMessengerChat.Presenter {
 
     val listMessages: MutableLiveData<MutableList<MessageModel>> = MutableLiveData<MutableList<MessageModel>>()
     private var bundle: Bundle? = null
@@ -42,7 +42,7 @@ class ChatViewModel(private val chatProvider: IChatUseCase): SocketEvent(), ICha
                     modelClass: Class<T>,
                     extras: CreationExtras
                 ): T {
-                    return ChatViewModel(chatProvider) as T
+                    return MessengerChatViewModel(chatProvider) as T
                 }
             }
         }

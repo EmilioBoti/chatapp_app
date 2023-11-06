@@ -19,7 +19,7 @@ import com.example.chatapp.helpers.Session
 import com.example.chatapp.helpers.common.OnClickItem
 import com.example.chatapp.remoteRepository.models.NotificationModel
 import com.example.chatapp.remoteRepository.models.UserModel
-import com.example.chatapp.viewModels.chat.useCase.IChatUseCaseProvider
+import com.example.chatapp.viewModels.messengerChat.useCase.IChatUseCaseProvider
 import com.example.chatapp.views.main.chat.useCase.ChatUseCaseProvider
 import com.example.chatapp.views.ui.BaseFragment
 import com.example.chatapp.views.ui.chatRoom.ChatRoom

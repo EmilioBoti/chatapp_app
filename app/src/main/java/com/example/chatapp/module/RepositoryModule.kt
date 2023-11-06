@@ -8,9 +8,9 @@ import com.example.chatapp.remoteRepository.Repository
 import com.example.chatapp.repositoryLocal.database.AppDataBase
 import com.example.chatapp.useCases.AuthUseCase
 import com.example.chatapp.useCases.IAuthUseCase
-import com.example.chatapp.viewModels.chat.useCase.ChatUseCase
-import com.example.chatapp.viewModels.chat.useCase.IChatUseCase
-import com.example.chatapp.viewModels.chat.useCase.IChatUseCaseProvider
+import com.example.chatapp.viewModels.messengerChat.useCase.ChatUseCase
+import com.example.chatapp.viewModels.messengerChat.useCase.IChatUseCase
+import com.example.chatapp.viewModels.messengerChat.useCase.IChatUseCaseProvider
 import com.example.chatapp.views.ui.login.welcome.BasePresenter
 import com.example.chatapp.views.main.useCase.HomeUseCase
 import com.example.chatapp.views.main.useCase.IHomeUseCase

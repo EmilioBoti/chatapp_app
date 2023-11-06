@@ -3,7 +3,7 @@ package com.example.chatapp.component
 import com.example.chatapp.module.RepositoryModule
 import com.example.chatapp.viewModels.browser.BrowserViewModel
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
-import com.example.chatapp.viewModels.chat.ChatViewModel
+import com.example.chatapp.viewModels.messengerChat.MessengerChatViewModel
 import com.example.chatapp.views.main.MainViewModel
 import com.example.chatapp.views.ui.login.signin.LoginViewModel
 import com.example.chatapp.viewModels.notifications.NotificationViewModel
@@ -23,7 +23,7 @@ import javax.inject.Singleton
 interface RepositoryComponent {
     fun inject(homeViewModel: MainViewModel)
     fun inject(browserViewModel: BrowserViewModel)
-    fun inject(browserViewModel: ChatViewModel)
+    fun inject(browserViewModel: MessengerChatViewModel)
     fun inject(browserViewModel: LoginViewModel)
     fun inject(browserViewModel: NotificationViewModel)
     fun inject(socketEvent: SocketEvent)

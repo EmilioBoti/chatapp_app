@@ -1,10 +1,10 @@
-package com.example.chatapp.viewModels.chat
+package com.example.chatapp.viewModels.messengerChat
 
 import android.os.Bundle
 import com.example.chatapp.remoteRepository.models.MessageModel
 import retrofit2.Call
 
-interface IChat {
+interface IMessengerChat {
     interface Presenter {
         fun setUp(bundle: Bundle?)
         fun getMessages()

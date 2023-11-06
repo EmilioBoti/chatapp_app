@@ -1,4 +1,4 @@
-package com.example.chatapp.viewModels.chat.useCase
+package com.example.chatapp.viewModels.messengerChat.useCase
 
 import com.example.chatapp.remoteRepository.RemoteDataProvider
 import com.example.chatapp.remoteRepository.models.MessageModel

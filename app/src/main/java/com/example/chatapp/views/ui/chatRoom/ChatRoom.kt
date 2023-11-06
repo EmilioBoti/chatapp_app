@@ -15,8 +15,8 @@ import com.example.chatapp.databinding.ActivityChatRoomBinding
 import com.example.chatapp.helpers.common.OnLongClickItem
 import com.example.chatapp.helpers.utils.Const
 import com.example.chatapp.remoteRepository.models.MessageModel
-import com.example.chatapp.viewModels.chat.ChatViewModel
-import com.example.chatapp.viewModels.chat.useCase.ChatUseCase
+import com.example.chatapp.viewModels.messengerChat.MessengerChatViewModel
+import com.example.chatapp.viewModels.messengerChat.useCase.ChatUseCase
 import com.vanniktech.emoji.EmojiPopup
 import javax.inject.Inject
 
@@ -28,8 +28,8 @@ class ChatRoom : AppCompatActivity() {
     @Inject
     lateinit var chatUseCase: ChatUseCase
 
-    private val chatViewModel: ChatViewModel by viewModels {
-        ChatViewModel.provideFactory(chatUseCase)
+    private val chatViewModel: MessengerChatViewModel by viewModels {
+        MessengerChatViewModel.provideFactory(chatUseCase)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

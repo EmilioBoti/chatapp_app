@@ -1,7 +1,6 @@
-package com.example.chatapp.viewModels.chat.useCase
+package com.example.chatapp.viewModels.messengerChat.useCase
 
 import com.example.chatapp.remoteRepository.models.UserModel
-import com.example.chatapp.repositoryLocal.database.entity.UserEntity
 import com.example.chatapp.viewModels.login.IResponseProvider
 import retrofit2.Response
 

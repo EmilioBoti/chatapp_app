@@ -11,7 +11,7 @@ import com.example.chatapp.helpers.utils.Const
 import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.remoteRepository.models.UserModel
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
-import com.example.chatapp.viewModels.chat.useCase.IChatUseCaseProvider
+import com.example.chatapp.viewModels.messengerChat.useCase.IChatUseCaseProvider
 import com.example.chatapp.viewModels.network.State
 import kotlinx.coroutines.launch
 

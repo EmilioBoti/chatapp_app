@@ -4,7 +4,7 @@ import com.example.chatapp.helpers.utils.Utils
 import com.example.chatapp.remoteRepository.RemoteDataProvider
 import com.example.chatapp.remoteRepository.Repository
 import com.example.chatapp.remoteRepository.models.UserModel
-import com.example.chatapp.viewModels.chat.useCase.IChatUseCaseProvider
+import com.example.chatapp.viewModels.messengerChat.useCase.IChatUseCaseProvider
 import retrofit2.Response
 
 
