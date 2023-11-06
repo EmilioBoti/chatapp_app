@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,11 +23,14 @@ import javax.inject.Inject
 class ChatRoom : AppCompatActivity() {
     private lateinit var binding: ActivityChatRoomBinding
     private var bundle: Bundle? = null
-    private lateinit var chatViewModel: ChatViewModel
     private val DATA: String = "data"
 
     @Inject
     lateinit var chatUseCase: ChatUseCase
+
+    private val chatViewModel: ChatViewModel by viewModels {
+        ChatViewModel.provideFactory(chatUseCase)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +44,6 @@ class ChatRoom : AppCompatActivity() {
 
         (this.application as App).getComponent().inject(this)
         bundle = intent.getBundleExtra(DATA)
-        chatViewModel = ChatViewModel(chatUseCase, this.application)
         chatViewModel.setUp(bundle)
         setToolbar()
         setEmoji()

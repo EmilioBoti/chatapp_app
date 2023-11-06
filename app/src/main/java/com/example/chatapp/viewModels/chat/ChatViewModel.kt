@@ -1,20 +1,18 @@
 package com.example.chatapp.viewModels.chat
 
-import android.app.Application
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.chatapp.helpers.Session
 import com.example.chatapp.helpers.utils.Const
 import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.remoteRepository.models.convertToMessageEntity
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
 import com.example.chatapp.viewModels.chat.useCase.IChatUseCase
-import com.example.chatapp.viewModels.login.ErrorLogin
-import com.example.chatapp.viewModels.login.IResponseProvider
-import com.example.chatapp.viewModels.network.NetConnectivity
 import com.example.chatapp.viewModels.network.State
-import com.example.chatapp.viewModels.notifications.PushNotification
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import java.sql.Timestamp
@@ -24,13 +22,11 @@ import java.util.Date
 import java.util.Locale
 import kotlin.collections.HashMap
 
-class ChatViewModel(private val chatProvider: IChatUseCase,
-                    application: Application): SocketEvent(), IChat.Presenter {
+class ChatViewModel(private val chatProvider: IChatUseCase): SocketEvent(), IChat.Presenter {
 
     val listMessages: MutableLiveData<MutableList<MessageModel>> = MutableLiveData<MutableList<MessageModel>>()
     private var bundle: Bundle? = null
     private var currentUser: Map<String, *>? = null
-    private val pushNotification: PushNotification = PushNotification(application.applicationContext)
     lateinit var currentUserId: String
 
     init {
@@ -38,26 +34,46 @@ class ChatViewModel(private val chatProvider: IChatUseCase,
         mSocket.on("disconnect") {}
     }
 
+    companion object {
+        fun provideFactory(chatProvider: IChatUseCase): ViewModelProvider.Factory {
+            return object : ViewModelProvider.Factory {
+
+                override fun <T : ViewModel> create(
+                    modelClass: Class<T>,
+                    extras: CreationExtras
+                ): T {
+                    return ChatViewModel(chatProvider) as T
+                }
+            }
+        }
+
+    }
+
     override fun setUp(bundle: Bundle?) {
         this.bundle = bundle
         this.bundle?.let { currentUserId =  it[Const.ID_USER].toString() }
         getMessages()
-//        checkConnectivity()
     }
 
     override fun getMessages() {
-        bundle?.getString(Const.ROOM_ID)?.let {roomId ->
-            chatProvider.getMessages(roomId, token, object : IResponseProvider {
-                override fun <T> response(data: T) {
-                    val list = data as MutableList<MessageModel>
-                    viewModelScope.launch { saveAllSmsLocal(list) }
-                    listMessages.postValue(list)
-                }
+        bundle?.getString(Const.ROOM_ID)?.let { roomId ->
 
-                override fun responseError(err: ErrorLogin) {
+            viewModelScope.launch {
+                try {
+                    val response = chatProvider.getMessages(roomId, token)
 
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            saveAllSmsLocal(it)
+                            listMessages.postValue(it)
+                        }
+                    } else {
+                        // not api error method implemented yet.
+                    }
+                } catch (e: Exception) {
+                    throw e // not applied change yet
                 }
-            })
+            }
         }
     }
 
@@ -101,17 +117,6 @@ class ChatViewModel(private val chatProvider: IChatUseCase,
         return format.format(date).lowercase()
     }
 
-    private fun checkConnectivity() {
-//        connectivityState.setUpListener(object : NetConnectivity {
-//            override fun network(state: State) {
-//                when(state) {
-//                    State.AVAILABLE -> getMessages()
-//                    State.UNAVAILABLE -> getContactMessage()
-//                }
-//            }
-//        })
-    }
-
     override fun getContactMessage() {
         bundle?.getString(Const.ROOM_ID)?.let { roomId ->
             viewModelScope.launch {
@@ -131,9 +136,7 @@ class ChatViewModel(private val chatProvider: IChatUseCase,
         }
     }
 
-    override fun receiveNotifications(notification: HashMap<String, String>) {
-        pushNotification.showNotification(notification)
-    }
+    override fun receiveNotifications(notification: HashMap<String, String>) {}
 
     override fun isConnectivityAvailable(state: State) {
 

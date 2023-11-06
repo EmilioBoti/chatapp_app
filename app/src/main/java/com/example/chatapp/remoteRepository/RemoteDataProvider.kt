@@ -1,6 +1,5 @@
 package com.example.chatapp.remoteRepository
 
-import android.util.Log
 import com.example.chatapp.api.ApiEndPoint
 import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.remoteRepository.models.auth.AuthApiResponse
@@ -23,22 +22,10 @@ import javax.inject.Inject
 
 class RemoteDataProvider @Inject constructor(private val retrofit: Retrofit): Repository {
 
-    override fun getMessages(token: String, roomId: String, res: IResponseProvider){
-        retrofit.create(ApiEndPoint::class.java).getMessage(roomId, token).enqueue(object : Callback<MutableList<MessageModel>> {
-            override fun onResponse(call: Call<MutableList<MessageModel>>, response: Response<MutableList<MessageModel>>) {
-                if(response.isSuccessful) {
-                    response.body()?.let { list ->
-                        res.response(list)
-                    }
-                } else {
-                    res.response(mutableListOf<MutableList<MessageModel>>())
-                }
-            }
-
-            override fun onFailure(call: Call<MutableList<MessageModel>>, t: Throwable) {
-                Log.e("error", t.message, t.cause)
-            }
-        })
+    override suspend fun getMessages(token: String, roomId: String): Response<MutableList<MessageModel>> {
+        return withContext(Dispatchers.IO) {
+            retrofit.create(ApiEndPoint::class.java).getMessage(roomId, token).execute()
+        }
     }
 
     override suspend fun getUserChats(token: String) : Response<MutableList<UserModel>> {
