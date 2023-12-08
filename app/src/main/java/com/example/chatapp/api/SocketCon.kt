@@ -11,7 +11,7 @@ object SocketCon {
     private lateinit var mSocket: Socket
 
     @Synchronized
-    fun setSocket(token: String) {
+    fun setSocket(token: String, socketConnectionError: SocketConnectionError? = null) {
         try {
             mSocket = IO.socket(Const.HOST, IO.Options().apply {
                 this.auth = HashMap<String, String>().apply {
@@ -19,7 +19,10 @@ object SocketCon {
                 }
             })
         }catch (err: URISyntaxException){
-            Log.e("socketErr", err.reason)
+            Log.e("socketError", err.reason)
+            socketConnectionError?.connectionError(
+                typeSocketError = TypeSocketError.CONNECTION_ERROR
+            )
         }
     }
     @Synchronized
