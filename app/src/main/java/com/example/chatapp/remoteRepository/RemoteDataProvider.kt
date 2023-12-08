@@ -1,16 +1,16 @@
 package com.example.chatapp.remoteRepository
 
 import com.example.chatapp.api.ApiEndPoint
+import com.example.chatapp.remoteRepository.models.FriendEntity
 import com.example.chatapp.remoteRepository.models.MessageModel
-import com.example.chatapp.remoteRepository.models.auth.AuthApiResponse
-import com.example.chatapp.remoteRepository.models.UserLogin
+import com.example.chatapp.remoteRepository.models.NewFriendEntity
 import com.example.chatapp.remoteRepository.models.NotificationModel
 import com.example.chatapp.remoteRepository.models.NotificationResponse
-import com.example.chatapp.remoteRepository.models.FriendEntity
-import com.example.chatapp.remoteRepository.models.NewFriendEntity
+import com.example.chatapp.remoteRepository.models.UserLogin
 import com.example.chatapp.remoteRepository.models.UserModel
-import com.example.chatapp.viewModels.login.ErrorLogin
+import com.example.chatapp.remoteRepository.models.auth.AuthApiResponse
 import com.example.chatapp.viewModels.login.Error
+import com.example.chatapp.viewModels.login.ErrorLogin
 import com.example.chatapp.viewModels.login.IResponseProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
