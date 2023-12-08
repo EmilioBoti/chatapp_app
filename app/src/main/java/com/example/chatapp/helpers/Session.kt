@@ -28,8 +28,8 @@ class Session {
                 }
         }
 
-        fun getToken(): String? {
-            return prefes?.getString(TOKEN, "")
+        fun getToken(): String {
+            return prefes?.getString(TOKEN, "") ?: ""
         }
 
         fun saveUser(context: Context, userModel: UserModel) {

@@ -1,6 +1,13 @@
 package com.example.chatapp.viewModels.messengerChat
 
+import android.content.ComponentName
+import android.content.Context
+import android.content.Context.BIND_AUTO_CREATE
+import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -10,6 +17,7 @@ import com.example.chatapp.helpers.Session
 import com.example.chatapp.helpers.utils.Const
 import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.remoteRepository.models.convertToMessageEntity
+import com.example.chatapp.service.MessageService
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
 import com.example.chatapp.viewModels.messengerChat.useCase.IChatUseCase
 import com.example.chatapp.viewModels.network.State
@@ -17,12 +25,12 @@ import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
-import java.util.UUID
 import java.util.Date
 import java.util.Locale
-import kotlin.collections.HashMap
+import java.util.UUID
 
-class MessengerChatViewModel(private val chatProvider: IChatUseCase): SocketEvent(), IMessengerChat.Presenter {
+class MessengerChatViewModel(private val chatProvider: IChatUseCase): SocketEvent(),
+    IMessengerChat.Presenter, MessageService.IMessengerEvent {
 
     val listMessages: MutableLiveData<MutableList<MessageModel>> = MutableLiveData<MutableList<MessageModel>>()
     private var bundle: Bundle? = null
@@ -31,7 +39,6 @@ class MessengerChatViewModel(private val chatProvider: IChatUseCase): SocketEven
 
     init {
         currentUser = Session.getSession()
-        mSocket.on("disconnect") {}
     }
 
     companion object {
@@ -55,6 +62,21 @@ class MessengerChatViewModel(private val chatProvider: IChatUseCase): SocketEven
         getMessages()
     }
 
+    fun initBindService(context: Context) {
+        context.bindService(Intent(context, MessageService::class.java), object : ServiceConnection {
+
+            override fun onServiceConnected(p0: ComponentName?, service: IBinder?) {
+                val messageService: MessageService = (service as MessageService.LocalBinder).getService()
+                messageService.init(mSocket, this@MessengerChatViewModel)
+            }
+
+            override fun onServiceDisconnected(p0: ComponentName?) {
+                Log.e("service", "service disconnected")
+            }
+
+        }, BIND_AUTO_CREATE)
+    }
+
     override fun getMessages() {
         bundle?.getString(Const.ROOM_ID)?.let { roomId ->
 
@@ -71,7 +93,7 @@ class MessengerChatViewModel(private val chatProvider: IChatUseCase): SocketEven
                         // not api error method implemented yet.
                     }
                 } catch (e: Exception) {
-                    throw e // not applied change yet
+                    throw e // not applied, change yet
                 }
             }
         }
@@ -92,7 +114,7 @@ class MessengerChatViewModel(private val chatProvider: IChatUseCase): SocketEven
                 map[Const.NAME_USER] = it[Const.NAME_USER].toString()
                 map[Const.MESSAGE] = text
                 map[Const.MESSAGE_ID] = messagedId
-                sendingMessage(map)
+                mSocket.emit(Const.PRIVATE_SMS, Gson().toJson(map))
             }
         }
     }
@@ -138,12 +160,21 @@ class MessengerChatViewModel(private val chatProvider: IChatUseCase): SocketEven
 
     override fun receiveNotifications(notification: HashMap<String, String>) {}
 
-    override fun isConnectivityAvailable(state: State) {
-
-    }
+    override fun isConnectivityAvailable(state: State) {}
 
     private fun isRoomUser(roomId: String): Boolean {
         return roomId == bundle?.getString(Const.ROOM_ID)
+    }
+
+    override fun onReceiveNewMessage(message: MessageModel) {
+        Log.e("newMessage", message.message)
+        if (isRoomUser(message.roomId)) {
+            listMessages.value?.add(message)
+            listMessages.postValue(listMessages.value)
+        }
+        viewModelScope.launch {
+            chatProvider.saveMessageLocal(message.convertToMessageEntity())
+        }
     }
 
 }

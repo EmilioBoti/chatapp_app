@@ -1,10 +1,10 @@
 package com.example.chatapp.views.ui.chatRoom
 
 import android.content.res.ColorStateList
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,6 +45,7 @@ class ChatRoom : AppCompatActivity() {
         (this.application as App).getComponent().inject(this)
         bundle = intent.getBundleExtra(DATA)
         chatViewModel.setUp(bundle)
+        chatViewModel.initBindService(this)
         setToolbar()
         setEmoji()
 
