@@ -2,6 +2,7 @@ package com.example.chatapp.api
 
 import android.util.Log
 import com.example.chatapp.helpers.Session
+import com.example.chatapp.helpers.enums.TypeError
 import com.example.chatapp.helpers.utils.Const
 import io.socket.client.IO
 import io.socket.client.Socket
@@ -21,7 +22,7 @@ object SocketCon {
         }catch (err: URISyntaxException){
             Log.e("socketError", err.reason)
             socketConnectionError?.connectionError(
-                typeSocketError = TypeSocketError.CONNECTION_ERROR
+                typeSocketError = TypeError.CONNECTION_ERROR
             )
         }
     }
