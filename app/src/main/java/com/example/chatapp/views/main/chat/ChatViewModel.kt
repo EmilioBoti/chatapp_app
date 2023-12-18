@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.chatapp.helpers.utils.Const
+import com.example.chatapp.remoteRepository.models.ErrorModel
 import com.example.chatapp.remoteRepository.models.MessageModel
 import com.example.chatapp.remoteRepository.models.UserModel
 import com.example.chatapp.viewModels.businessLogic.notification.SocketEvent
@@ -20,6 +21,7 @@ class ChatViewModel(private val userCase: IChatUseCaseProvider): SocketEvent(), 
     private var chats: MutableList<UserModel> = arrayListOf()
     private var _chatList: MutableLiveData<MutableList<UserModel>> = MutableLiveData<MutableList<UserModel>>()
     var chatList: LiveData<MutableList<UserModel>> = _chatList
+    var error: MutableLiveData<ErrorModel> = appError
 
 
     companion object {
@@ -46,10 +48,11 @@ class ChatViewModel(private val userCase: IChatUseCaseProvider): SocketEvent(), 
                         _chatList.postValue(it)
                         chats = it
                     }
+                } else {
+                    checkApiError(null, result)
                 }
-
             } catch (e: Exception) {
-                throw e
+                checkApiError(e, null)
             }
         }
     }

@@ -17,6 +17,7 @@ import com.example.chatapp.factory.adapter.FactoryBuilder
 import com.example.chatapp.factory.adapter.ModelAdapter
 import com.example.chatapp.helpers.Session
 import com.example.chatapp.helpers.common.OnClickItem
+import com.example.chatapp.helpers.enums.TypeError
 import com.example.chatapp.remoteRepository.models.NotificationModel
 import com.example.chatapp.remoteRepository.models.UserModel
 import com.example.chatapp.viewModels.messengerChat.useCase.IChatUseCaseProvider
@@ -63,6 +64,15 @@ class ChatFragment : BaseFragment() {
     private fun updateUi() {
         viewModel.chatList.observe(this.viewLifecycleOwner) {
             setAdapter(it)
+        }
+        viewModel.error.observe(this.viewLifecycleOwner) {
+            when(it.type) {
+                TypeError.POP_UP -> {
+                    infoScreenAlert(it) {
+                        logoutUser()
+                    }
+                } else -> { }
+            }
         }
     }
 

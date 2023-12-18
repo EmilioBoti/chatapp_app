@@ -7,17 +7,31 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.example.chatapp.R
-import com.example.chatapp.remoteRepository.models.ApiError
+import com.example.chatapp.databinding.FragmentInfoScreenBinding
+import com.example.chatapp.remoteRepository.models.ErrorModel
 import com.example.chatapp.views.main.MainActivity
 
 
 class InfoScreenFragment : BaseFragment() {
+    lateinit var binding: FragmentInfoScreenBinding
+
+
+    companion object {
+
+        const val TAG = "InfoScreenFragment"
+        const val INFO_TYPE = "INFO_TYPE"
+        const val DATA = "DATA"
+
+        fun newInstance(error: ErrorModel) =
+            InfoScreenFragment()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_info_screen, container, false)
+    ): View {
+        binding = FragmentInfoScreenBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onStart() {
@@ -25,17 +39,14 @@ class InfoScreenFragment : BaseFragment() {
 
         (parentActivity as MainActivity).findViewById<CoordinatorLayout>(R.id.searcherBar).visibility = View.GONE
         (parentActivity as MainActivity).findViewById<LinearLayoutCompat>(R.id.browserContainer).visibility = View.GONE
+
+        initEventListenr()
     }
 
-    companion object {
+    private fun initEventListenr() {
+        binding.mainBtn.setOnClickListener {
 
-        const val TAG = "InfoScreenFragment"
-
-        fun newInstance(error: ApiError) =
-            InfoScreenFragment().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
+        }
     }
+
 }

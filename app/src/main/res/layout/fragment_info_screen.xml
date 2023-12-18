@@ -6,15 +6,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".views.ui.InfoScreenFragment">
 
-    <TextView
+
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnContainer"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="this is a text"
+        android:textColor="@color/red_400"
+        android:textSize="@dimen/dimenSt_16"
         />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/btnContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/dimen_20"
+        >
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/mainBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="click"
+            android:textColor="@color/white"
+            android:background="@drawable/radius_corner_added_btn"
+            />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
